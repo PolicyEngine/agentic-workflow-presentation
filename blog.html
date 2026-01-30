@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automating government benefit implementation with multi-agent AI</title>
+    <title>Automating Government Benefit Implementation with Multi-Agent AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
@@ -559,38 +559,21 @@
 </head>
 <body>
     <article>
-        <h1>Automating government benefit implementation with multi-agent AI</h1>
+        <h1>Automating Government Benefit Implementation with Multi-Agent AI</h1>
         <p class="subtitle">How we built a system that transforms a policy request into a complete, tested pull request</p>
 
-        <h2>The challenge: 2-3 weeks of manual work</h2>
-        <p>Implementing a government benefit program in PolicyEngine requires:</p>
-        <ul>
-            <li><strong>Research</strong>: Reading statutes, administrative codes, policy manuals, and state plans across 5-10 government sources</li>
-            <li><strong>Translation</strong>: Converting legal language like "185 percent of the federal poverty level" into executable Python code</li>
-            <li><strong>Parameterization</strong>: Creating 10-20 YAML files with legal citations so every value traces to its source</li>
-            <li><strong>Testing</strong>: Writing 20-50 tests covering eligibility rules, benefit calculations, and edge cases</li>
-            <li><strong>Review</strong>: Handling 2-3 rounds of feedback on code patterns, naming conventions, and regulatory accuracy</li>
-            <li><strong>Documentation</strong>: Updating PR descriptions with formulas, references, and file structures</li>
-        </ul>
-        <p>Each step demands expertise in both tax-benefit policy and PolicyEngine's codebase. We built a multi-agent workflow to automate this process.</p>
+        <h2>The challenge</h2>
+        <p>When we add a new state benefit program to PolicyEngine, someone has to translate dozens of pages of legal language into working code. They read statutes, cross-reference policy manuals, write YAML parameters with legal citations, create dozens of tests, and handle multiple rounds of review.</p>
+        <p>It typically takes 2-3 weeks. We built a system that does it in 90 minutes.</p>
 
         <hr>
 
         <h2>The solution: encode-policy</h2>
-        <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the implementation process. The command takes a policy request:</p>
+        <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the entire implementation process. The command takes a policy request:</p>
         <pre><code>/encode-policy "California CalFresh"
 /encode-policy "Texas SNAP"
 /encode-policy "Oregon TANF"</code></pre>
         <p>The output: a pull request with parameters, variables, tests, and documentation.</p>
-
-        <h3>By the numbers</h3>
-        <table class="stats-table">
-            <tr><th>Component</th><th>Count</th></tr>
-            <tr><td>Specialized agents</td><td>10</td></tr>
-            <tr><td>Workflow phases</td><td>8</td></tr>
-            <tr><td>Reusable skill modules</td><td>10</td></tr>
-            <tr><td>Quality gates</td><td>3</td></tr>
-        </table>
 
         <hr>
 
@@ -688,17 +671,17 @@
 
                     <p><strong>Phase 4: Organization check</strong> — The validator loads 7 skills and checks naming conventions, file structure, metadata completeness, code patterns, and cross-references.</p>
 
-                    <p><strong>Phase 5: Test and fix</strong> — The ci-fixer runs tests locally (2-3 min vs 30-75 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
+                    <p><strong>Phase 5: Test and fix</strong> — The ci-fixer runs tests locally (2-3 min vs 20-30 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
                     <ul>
                         <li>Calculation errors → <code>rules-engineer</code></li>
                         <li>Test expectation errors → <code>test-creator</code></li>
                         <li>Parameter value errors → <code>parameter-architect</code></li>
                     </ul>
-                    <p>The loop continues until all tests pass.</p>
+                    <p>This cycle repeats until all tests pass.</p>
 
                     <p><strong>Phase 6: Format and push</strong> — The pr-pusher adds changelog, runs formatters (<code>black</code>, <code>isort</code>), and pushes.</p>
 
-                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents.</p>
+                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents. If discrepancies are found, findings are posted and the workflow returns to Phase 5 for fixes.</p>
                 </div>
 
                 <!-- Phase 8: Complete -->
@@ -720,26 +703,13 @@
         </div>
 
         <h3>Agents and skills</h3>
-        <p>Each agent has:</p>
+        <p>Each agent is configured with:</p>
         <ul>
-            <li><strong>Tools</strong>: Capabilities like bash commands, file operations, and web search</li>
-            <li><strong>Skills</strong>: Domain knowledge modules (parameter patterns, testing patterns, code style)</li>
+            <li><strong>Tools</strong>: A specific set of capabilities (bash commands, file operations, web search) tailored to its task</li>
+            <li><strong>Skills</strong>: Domain knowledge modules (parameter patterns, testing patterns, code style, etc.)</li>
             <li><strong>Model</strong>: Claude Opus for complex reasoning</li>
         </ul>
         <p>Skills are reusable knowledge modules. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
-
-        <hr>
-
-        <h2>What problems does this solve?</h2>
-        <table>
-            <tr><th>Problem</th><th>Prevention</th></tr>
-            <tr><td>Hard-coded values</td><td><code>rules-engineer</code> enforces parameterization</td></tr>
-            <tr><td>Incomplete implementations</td><td>Validator catches TODOs before PR</td></tr>
-            <tr><td>Non-existent test variables</td><td><code>test-creator</code> uses only real variables</td></tr>
-            <tr><td>Missing edge cases</td><td><code>edge-case-generator</code> covers boundaries</td></tr>
-            <tr><td>Federal/state mixing</td><td>Proper parameter organization enforced</td></tr>
-            <tr><td>Long review cycles</td><td>Most issues caught automatically</td></tr>
-        </table>
 
         <hr>
 
@@ -748,7 +718,7 @@
         <p><strong>Isolation</strong>: Test creators and implementers don't see each other's work. Mismatches reveal bugs.</p>
         <p><strong>Skills as knowledge</strong>: Domain expertise lives in reusable modules that multiple agents share.</p>
         <p><strong>Orchestrator pattern</strong>: The main command never writes code—only invokes specialists and checks quality gates.</p>
-        <p><strong>Local testing</strong>: Run tests locally (2-3 minutes) instead of waiting for GitHub CI (30-75 minutes).</p>
+        <p><strong>Local testing</strong>: Run tests locally (2-3 minutes) instead of waiting for GitHub CI (20-30 minutes).</p>
         <p><strong>Explicit limitations</strong>: Document non-simulatable rules upfront. PolicyEngine uses single-period calculations, so lifetime limits and work history tracking cannot be enforced.</p>
 
         <hr>
@@ -761,8 +731,8 @@
         <hr>
 
         <h2>Results</h2>
-        <p>The encode-policy workflow compresses 2-3 weeks of manual work into approximately 90 minutes. Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
-        <p>The workflow has produced TANF implementations for over 40 states. It has also been used for childcare subsidies and healthcare programs—each following consistent patterns and quality standards.</p>
+        <p>Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
+        <p>The workflow has produced TANF implementations for 42 states, plus childcare subsidies and healthcare programs. Each follows consistent patterns and quality standards.</p>
 
         <hr>
 
@@ -780,12 +750,12 @@ claude /encode-policy "Iowa TANF"</code></pre>
         <h2>What's next</h2>
         <p>The encode-policy workflow handles individual programs well. The next frontier is understanding how programs interact.</p>
 
-        <p><strong>Cross-program validation</strong> is our priority. Benefit programs form a connected system. SNAP benefits count as unearned income for TANF eligibility. Medicaid enrollment affects SSI payment calculations. Some programs are mutually exclusive—households cannot receive both. When Program A's output feeds Program B's input, which then feeds back into Program A, circular dependencies emerge. A cross-program validator would detect these interactions during implementation rather than in production.</p>
+        <p><strong>Cross-program validation</strong> is our priority. Benefit programs form a connected system—SNAP benefits count as unearned income for TANF, Medicaid enrollment affects SSI calculations, and some programs are mutually exclusive. A cross-program validator would detect these interactions during implementation rather than in production.</p>
 
-        <p><strong>Historical implementations</strong> present a different challenge. Parameters already support multiple effective dates—changing a threshold from $500 to $600 requires only a new YAML entry. But program reforms involve structural changes. A reform might eliminate a deduction entirely, add a new eligibility category, or restructure the benefit formula. These changes require variable logic updates, not just new parameter values. We are testing approaches to handle structural reforms across time.</p>
+        <p><strong>Historical implementations</strong> present a different challenge. Parameters support multiple effective dates, but program reforms often involve structural changes—eliminating deductions, adding eligibility categories, or restructuring formulas. We are testing approaches to handle these reforms across time.</p>
 
         <div class="footer">
-            <p>PolicyEngine is an open-source project building tools for tax and benefit policy analysis. Learn more at <a href="https://policyengine.org">policyengine.org</a>.</p>
+            <p>PolicyEngine is a nonprofit building free, open-source tools for tax and benefit policy analysis. Learn more at <a href="https://policyengine.org">policyengine.org</a>.</p>
         </div>
     </article>
 
