@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automating government benefit implementation with multi-agent AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        article {
+            max-width: 720px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 60px 80px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        strong {
+            color: #1a1a1a;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 25px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .ascii-diagram {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin-bottom: 25px;
+            white-space: pre;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover td {
+            background: #f8f9fa;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 40px 0;
+        }
+
+        .quality-gate {
+            background: #e8f4fd;
+            border-left: 4px solid #0066cc;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quality-gate p {
+            margin: 0;
+            color: #004085;
+        }
+
+        blockquote {
+            border-left: 4px solid #ddd;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .stats-table {
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stats-table th {
+            background: #e9ecef;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 30px 25px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Automating government benefit implementation with multi-agent AI</h1>
+        <p class="subtitle">How we built a system that transforms a policy request into a complete, tested pull request</p>
+
+        <h2>The challenge: 2-3 weeks of manual work</h2>
+        <p>Implementing a government benefit program in PolicyEngine requires:</p>
+        <ul>
+            <li><strong>Research</strong>: Reading statutes, administrative codes, policy manuals, and state plans across 5-10 government sources</li>
+            <li><strong>Translation</strong>: Converting legal language like "185 percent of the federal poverty level" into executable Python code</li>
+            <li><strong>Parameterization</strong>: Creating 10-20 YAML files with legal citations so every value traces to its source</li>
+            <li><strong>Testing</strong>: Writing 20-50 tests covering eligibility rules, benefit calculations, and edge cases</li>
+            <li><strong>Review</strong>: Handling 2-3 rounds of feedback on code patterns, naming conventions, and regulatory accuracy</li>
+            <li><strong>Documentation</strong>: Updating PR descriptions with formulas, references, and file structures</li>
+        </ul>
+        <p>Each step demands expertise in both tax-benefit policy and PolicyEngine's codebase. We built a multi-agent workflow to automate this process.</p>
+
+        <hr>
+
+        <h2>The solution: encode-policy</h2>
+        <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the implementation process. The command takes a policy request:</p>
+        <pre><code>/encode-policy "California CalFresh"
+/encode-policy "Texas SNAP"
+/encode-policy "Oregon TANF"</code></pre>
+        <p>The output: a pull request with parameters, variables, tests, and documentation.</p>
+
+        <h3>By the numbers</h3>
+        <table class="stats-table">
+            <tr><th>Component</th><th>Count</th></tr>
+            <tr><td>Specialized agents</td><td>10</td></tr>
+            <tr><td>Workflow phases</td><td>8</td></tr>
+            <tr><td>Reusable skill modules</td><td>10</td></tr>
+            <tr><td>Quality gates</td><td>3</td></tr>
+        </table>
+
+        <hr>
+
+        <h2>Architecture: the orchestrator pattern</h2>
+        <p>The encode-policy command never writes code. It invokes specialized agents and checks quality gates between phases.</p>
+
+        <div class="ascii-diagram">                    ┌─────────────────────┐
+                    │    ORCHESTRATOR     │
+                    │   (encode-policy)   │
+                    └──────────┬──────────┘
+                               │
+        ┌──────────────────────┼──────────────────────┐
+        │                      │                      │
+        ▼                      ▼                      ▼
+   ┌─────────┐          ┌─────────────┐        ┌─────────────┐
+   │  SETUP  │    →     │ DEVELOPMENT │   →    │ VALIDATION  │
+   └─────────┘          └─────────────┘        └─────────────┘</div>
+
+        <p>The orchestrator coordinates workflow while specialists handle domain-specific tasks.</p>
+
+        <h3>Agents and skills</h3>
+        <p>Each agent has:</p>
+        <ul>
+            <li><strong>Tools</strong>: Capabilities like bash commands, file operations, and web search</li>
+            <li><strong>Skills</strong>: Domain knowledge modules (parameter patterns, testing patterns, code style)</li>
+            <li><strong>Model</strong>: Claude Opus for complex reasoning</li>
+        </ul>
+        <p>Skills are reusable knowledge modules. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
+
+        <hr>
+
+        <h2>The workflow</h2>
+
+        <h3>Phase 1: issue and PR setup</h3>
+        <p>The <code>issue-manager</code> agent:</p>
+        <ol>
+            <li>Searches GitHub for existing issues to avoid duplicates</li>
+            <li>Creates a new issue with a status template if none exists</li>
+            <li>Creates a branch (<code>or-tanf</code>, <code>ky-tanf</code>)</li>
+            <li>Opens a draft PR to the upstream repository</li>
+        </ol>
+        <p>This establishes coordination points for all subsequent agents.</p>
+
+        <h3>Phase 2: document collection</h3>
+        <p>The <code>document-collector</code> agent researches official sources:</p>
+        <ul>
+            <li>State statutes and administrative codes</li>
+            <li>Policy manuals and handbooks</li>
+            <li>State plans submitted to federal agencies</li>
+            <li>Official benefit calculators and examples</li>
+        </ul>
+        <p>The agent discovers the state's official program name (California calls SNAP "CalFresh"), documents eligibility rules and benefit formulas, and flags rules that PolicyEngine cannot simulate (like lifetime time limits).</p>
+        <p>The output is <code>sources/working_references.md</code>—a single source of truth that all other agents reference.</p>
+        <div class="quality-gate">
+            <p><strong>Quality gate 1</strong>: Documentation must include the official program name, income limits, eligibility criteria, and legal citations before development begins.</p>
+        </div>
+
+        <h3>Phase 3: development</h3>
+        <p>Development happens in three steps:</p>
+
+        <p><strong>Step 3A: parameters</strong></p>
+        <p>The <code>parameter-architect</code> creates YAML files for configurable values:</p>
+        <pre><code># income_limit/rate.yaml
+description: Oregon limits gross income to this share of the
+  federal poverty level under the TANF program.
+
+values:
+  2024-01-01: 1.85  # 185% of FPL
+
+metadata:
+  unit: /1
+  period: year
+  label: Oregon TANF income limit
+  reference:
+    - title: OAR 461-155-0030(2)(c)
+      href: https://oregon.public.law/rules/oar_461-155-0030</code></pre>
+        <p>Key principle: store rates, not dollar amounts. When the federal poverty level updates, calculations adjust automatically.</p>
+
+        <p><strong>Step 3B: parallel implementation</strong></p>
+        <p>Two agents run simultaneously:</p>
+        <ul>
+            <li><code>test-creator</code> works in the <code>tests/</code> folder, creating tests from documentation</li>
+            <li><code>rules-engineer</code> works in the <code>variables/</code> folder, implementing from documentation</li>
+        </ul>
+        <p>Neither agent sees the other's output. This isolation means mismatches reveal bugs or misunderstandings—like two teams implementing the same spec independently.</p>
+
+        <p><strong>Step 3C: edge cases</strong></p>
+        <p>The <code>edge-case-generator</code> analyzes the implementation and adds boundary tests:</p>
+        <ul>
+            <li>Income at exactly the threshold</li>
+            <li>Zero income, maximum income</li>
+            <li>Single-person and maximum-size households</li>
+            <li>Benefit cliff effects</li>
+        </ul>
+        <div class="quality-gate">
+            <p><strong>Quality gates 2 and 3</strong>: Parameter values must match source documents. Implementation logic must match the documented formulas.</p>
+        </div>
+
+        <h3>Phase 4: organization check</h3>
+        <p>The <code>implementation-validator</code> loads 7 skills and checks:</p>
+        <table>
+            <tr><th>Check</th><th>What it validates</th></tr>
+            <tr><td>Naming</td><td>Variable names follow prefix conventions</td></tr>
+            <tr><td>Structure</td><td>Files organized logically</td></tr>
+            <tr><td>Parameters</td><td>All metadata present, descriptions formatted correctly</td></tr>
+            <tr><td>Code patterns</td><td><code>adds</code> vs <code>add()</code> usage, reference format</td></tr>
+            <tr><td>Cross-references</td><td>Every parameter used, every test variable exists</td></tr>
+        </table>
+        <p>Output: a structured report with exact code fixes.</p>
+
+        <h3>Phase 5: test and fix</h3>
+        <p>The <code>ci-fixer</code> agent:</p>
+        <ol>
+            <li>Implements pattern fixes from the validator</li>
+            <li>Runs tests locally (GitHub CI takes 30-75 minutes)</li>
+            <li>Analyzes failures</li>
+            <li>Fixes directly or delegates to specialists</li>
+        </ol>
+        <p>Delegation targets:</p>
+        <ul>
+            <li>Calculation errors → <code>rules-engineer</code></li>
+            <li>Test expectation errors → <code>test-creator</code></li>
+            <li>Parameter value errors → <code>parameter-architect</code></li>
+        </ul>
+        <p>The loop continues until all tests pass.</p>
+
+        <h3>Phase 6: format and push</h3>
+        <p>The <code>pr-pusher</code> agent:</p>
+        <ul>
+            <li>Creates or validates the changelog entry</li>
+            <li>Runs formatters (<code>black</code>, <code>isort</code>)</li>
+            <li>Pushes the branch</li>
+        </ul>
+
+        <h3>Phase 7: review</h3>
+        <p>The <code>program-reviewer</code> agent researches regulations <strong>before</strong> reading the code, preventing confirmation bias. It compares the implementation against source documents and flags discrepancies.</p>
+
+        <h3>Phase 8: documentation</h3>
+        <p>The reviewer updates the PR description with:</p>
+        <ul>
+            <li>Regulatory authority citations</li>
+            <li>Income eligibility tests with sources</li>
+            <li>Benefit calculation formulas</li>
+            <li>Files added and test coverage</li>
+        </ul>
+        <p>The PR remains a draft—humans make the final merge decision.</p>
+
+        <hr>
+
+        <h2>What problems does this solve?</h2>
+        <table>
+            <tr><th>Problem</th><th>Prevention</th></tr>
+            <tr><td>Hard-coded values</td><td><code>rules-engineer</code> enforces parameterization</td></tr>
+            <tr><td>Incomplete implementations</td><td>Validator catches TODOs before PR</td></tr>
+            <tr><td>Non-existent test variables</td><td><code>test-creator</code> uses only real variables</td></tr>
+            <tr><td>Missing edge cases</td><td><code>edge-case-generator</code> covers boundaries</td></tr>
+            <tr><td>Federal/state mixing</td><td>Proper parameter organization enforced</td></tr>
+            <tr><td>Long review cycles</td><td>Most issues caught automatically</td></tr>
+        </table>
+
+        <hr>
+
+        <h2>Design principles</h2>
+        <p><strong>Source authority</strong>: Statutes beat regulations beat websites. Every value traces to its most authoritative source.</p>
+        <p><strong>Isolation</strong>: Test creators and implementers don't see each other's work. Mismatches reveal bugs.</p>
+        <p><strong>Skills as knowledge</strong>: Domain expertise lives in reusable modules that multiple agents share.</p>
+        <p><strong>Orchestrator pattern</strong>: The main command never writes code—only invokes specialists and checks quality gates.</p>
+        <p><strong>Local testing</strong>: Run tests locally (2-3 minutes) instead of waiting for GitHub CI (30-75 minutes).</p>
+        <p><strong>Explicit limitations</strong>: Document non-simulatable rules upfront. PolicyEngine uses single-period calculations, so lifetime limits and work history tracking cannot be enforced.</p>
+
+        <hr>
+
+        <h2>Reusable components: review-pr and fix-pr</h2>
+        <p>The validation and fixing logic from phases 4-7 also exists as standalone commands.</p>
+        <p><code>/review-pr</code> runs 4 validators (regulatory accuracy, reference quality, code patterns, test coverage) and posts prioritized findings to GitHub. <code>/fix-pr</code> reads those findings and delegates to specialist agents—parameter-architect, rules-engineer, ci-fixer—to resolve issues automatically.</p>
+        <p>Both commands work on any PR, not just those created by encode-policy.</p>
+
+        <hr>
+
+        <h2>Results</h2>
+        <p>The encode-policy workflow compresses 2-3 weeks of manual work into approximately 90 minutes. Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
+        <p>The workflow has produced TANF implementations for over 40 states. It has also been used for childcare subsidies and healthcare programs—each following consistent patterns and quality standards.</p>
+
+        <hr>
+
+        <h2>Try it yourself</h2>
+        <p>The encode-policy command is part of the <a href="https://github.com/PolicyEngine/policyengine-claude">policyengine-claude</a> repository. To implement a new benefit program:</p>
+        <pre><code># Install the plugin
+claude /plugin marketplace add PolicyEngine/policyengine-claude
+
+# Run the workflow
+claude /encode-policy "Iowa TANF"</code></pre>
+        <p>The workflow guides you through each phase, checks quality gates, and fixes issues automatically.</p>
+
+        <hr>
+
+        <h2>What's next</h2>
+        <p>The encode-policy workflow handles individual programs well. The next frontier is understanding how programs interact.</p>
+
+        <p><strong>Cross-program validation</strong> is our priority. Benefit programs form a connected system. SNAP benefits count as unearned income for TANF eligibility. Medicaid enrollment affects SSI payment calculations. Some programs are mutually exclusive—households cannot receive both. When Program A's output feeds Program B's input, which then feeds back into Program A, circular dependencies emerge. A cross-program validator would detect these interactions during implementation rather than in production.</p>
+
+        <p><strong>Historical implementations</strong> present a different challenge. Parameters already support multiple effective dates—changing a threshold from $500 to $600 requires only a new YAML entry. But program reforms involve structural changes. A reform might eliminate a deduction entirely, add a new eligibility category, or restructure the benefit formula. These changes require variable logic updates, not just new parameter values. We are testing approaches to handle structural reforms across time.</p>
+
+        <div class="footer">
+            <p>PolicyEngine is an open-source project building tools for tax and benefit policy analysis. Learn more at <a href="https://policyengine.org">policyengine.org</a>.</p>
+        </div>
+    </article>
+</body>
+</html>
