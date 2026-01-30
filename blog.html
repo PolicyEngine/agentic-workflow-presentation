@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automating government benefit implementation with multi-agent AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* Light Blueprint Palette */
+            --bg-diagram: #f9f8f6;
+            --bg-card: #ffffff;
+            --grid-color: rgba(13, 115, 119, 0.08);
+            --accent: #0d7377;
+            --accent-light: rgba(13, 115, 119, 0.1);
+            --accent-mid: rgba(13, 115, 119, 0.2);
+            --text-dark: #1e3a3a;
+            --text-mid: #4a6363;
+            --text-light: #7a9494;
+            --border: #d4dede;
+            --border-accent: rgba(13, 115, 119, 0.4);
+            --warning: #b45309;
+            --warning-bg: rgba(180, 83, 9, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,93 +32,101 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Source Serif 4', Georgia, serif;
             line-height: 1.8;
-            color: #333;
-            background: #fafafa;
+            color: #2d3748;
+            background: #f7f8fa;
             padding: 40px 20px;
         }
 
         article {
-            max-width: 720px;
+            max-width: 900px;
             margin: 0 auto;
             background: #fff;
             padding: 60px 80px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            border-radius: 8px;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+            border-radius: 3px;
         }
 
         h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
             font-size: 2.4rem;
             font-weight: 700;
-            color: #1a1a1a;
+            color: #1a202c;
             margin-bottom: 15px;
-            line-height: 1.3;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: #666;
+            font-size: 1.15rem;
+            color: #64748b;
             font-style: italic;
             margin-bottom: 40px;
             padding-bottom: 40px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         h2 {
-            font-size: 1.6rem;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1a1a1a;
+            color: #1a202c;
             margin-top: 50px;
             margin-bottom: 20px;
+            letter-spacing: -0.01em;
         }
 
         h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #333;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2d3748;
             margin-top: 30px;
             margin-bottom: 15px;
         }
 
         p {
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            color: #4a5568;
         }
 
         ul, ol {
             margin-bottom: 20px;
-            padding-left: 30px;
+            padding-left: 28px;
         }
 
         li {
             margin-bottom: 10px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            color: #4a5568;
         }
 
         strong {
-            color: #1a1a1a;
+            color: #1a202c;
+            font-weight: 600;
         }
 
         code {
-            font-family: 'SF Mono', 'Consolas', monospace;
-            background: #f4f4f4;
-            padding: 2px 6px;
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f5f9;
+            padding: 2px 7px;
             border-radius: 4px;
-            font-size: 0.9em;
-            color: #d63384;
+            font-size: 0.85em;
+            color: #0f766e;
         }
 
         pre {
-            background: #1e1e2e;
-            color: #cdd6f4;
-            padding: 20px 25px;
-            border-radius: 8px;
+            background: #1e2d2f;
+            color: #e8f0f0;
+            padding: 24px 28px;
+            border-radius: 6px;
             overflow-x: auto;
             margin-bottom: 25px;
-            font-family: 'SF Mono', 'Consolas', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            border: 1px solid #2d4244;
         }
 
         pre code {
@@ -107,95 +135,402 @@
             color: inherit;
         }
 
-        .ascii-diagram {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'SF Mono', 'Consolas', monospace;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            overflow-x: auto;
-            margin-bottom: 25px;
-            white-space: pre;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 25px;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         th {
-            background: #f8f9fa;
-            padding: 12px 15px;
+            background: #f8fafc;
+            padding: 14px 16px;
             text-align: left;
             font-weight: 600;
-            border-bottom: 2px solid #dee2e6;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1a202c;
         }
 
         td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #4a5568;
         }
 
         tr:hover td {
-            background: #f8f9fa;
+            background: #f8fafc;
         }
 
         hr {
             border: none;
-            border-top: 1px solid #eee;
-            margin: 40px 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 45px 0;
         }
 
         .quality-gate {
-            background: #e8f4fd;
-            border-left: 4px solid #0066cc;
-            padding: 15px 20px;
+            background: linear-gradient(90deg, rgba(0, 212, 170, 0.08) 0%, rgba(0, 212, 170, 0.02) 100%);
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
             margin-bottom: 25px;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 6px 6px 0;
         }
 
         .quality-gate p {
             margin: 0;
-            color: #004085;
-        }
-
-        blockquote {
-            border-left: 4px solid #ddd;
-            padding-left: 20px;
-            margin: 20px 0;
-            color: #666;
-            font-style: italic;
+            color: #0f766e;
+            font-size: 0.95rem;
         }
 
         .footer {
             margin-top: 50px;
             padding-top: 30px;
-            border-top: 1px solid #eee;
-            font-size: 1rem;
-            color: #666;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            color: #64748b;
             font-style: italic;
         }
 
         a {
-            color: #0066cc;
+            color: #0f766e;
             text-decoration: none;
+            border-bottom: 1px solid rgba(15, 118, 110, 0.3);
+            transition: border-color 0.2s;
         }
 
         a:hover {
-            text-decoration: underline;
+            border-color: #0f766e;
         }
 
         .stats-table {
-            background: #f8f9fa;
-            border-radius: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+            overflow: hidden;
         }
 
         .stats-table th {
-            background: #e9ecef;
+            background: #f1f5f9;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           INTERACTIVE WORKFLOW DIAGRAM - Light Blueprint Aesthetic
+           ══════════════════════════════════════════════════════════════ */
+
+        .workflow-diagram {
+            background: var(--bg-diagram);
+            background-image:
+                radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 8px;
+            padding: 50px 35px 40px;
+            margin: 35px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .workflow-diagram::before {
+            content: 'WORKFLOW';
+            position: absolute;
+            top: 18px;
+            left: 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .workflow-diagram::after {
+            content: '';
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+
+        .orchestrator-box {
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px 40px;
+            text-align: center;
+            max-width: 200px;
+            margin: 0 auto 30px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(13, 115, 119, 0.08);
+        }
+
+        .orchestrator-box .title {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .orchestrator-box .cmd {
+            color: var(--text-dark);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .connection-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            position: relative;
+        }
+
+        .connection-line::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .connection-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 7px solid var(--accent);
+        }
+
+        .phases-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .phase-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 120px;
+            position: relative;
+        }
+
+        .phase-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            border-radius: 6px 6px 0 0;
+            transition: background 0.2s;
+        }
+
+        .phase-box:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 115, 119, 0.1);
+        }
+
+        .phase-box:hover::before {
+            background: var(--accent);
+        }
+
+        .phase-box.active {
+            border-color: var(--accent);
+            background: var(--bg-card);
+            box-shadow: 0 4px 25px rgba(13, 115, 119, 0.12);
+        }
+
+        .phase-box.active::before {
+            background: var(--accent);
+        }
+
+        .phase-box .phase-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--text-light);
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+            transition: color 0.2s;
+        }
+
+        .phase-box:hover .phase-num,
+        .phase-box.active .phase-num {
+            color: var(--accent);
+        }
+
+        .phase-box .phase-title {
+            color: var(--text-dark);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .phase-connector {
+            color: var(--text-light);
+            font-size: 1rem;
+            padding: 0 2px;
+        }
+
+        .click-hint {
+            text-align: center;
+            color: var(--text-light);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.03em;
+            margin-top: 22px;
+            transition: opacity 0.3s;
+        }
+
+        /* Phase Detail Panels */
+        .phase-details {
+            margin-top: 22px;
+        }
+
+        .phase-detail {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 24px 28px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .phase-detail.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .phase-detail h4 {
+            color: var(--text-dark);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .phase-detail p {
+            color: var(--text-mid);
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            line-height: 1.7;
+        }
+
+        .phase-detail ul {
+            color: var(--text-mid);
+            padding-left: 18px;
+            margin-bottom: 16px;
+        }
+
+        .phase-detail li {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: var(--text-mid);
+        }
+
+        .phase-detail li::marker {
+            color: var(--accent);
+        }
+
+        .phase-detail code {
+            background: var(--accent-light);
+            color: var(--accent);
+            border: none;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+        }
+
+        .phase-detail strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .agent-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .agent-tag {
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-mid);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .agent-tag::before {
+            content: '›';
+            margin-right: 5px;
+            opacity: 0.7;
+        }
+
+        .quality-gate-inline {
+            background: var(--warning-bg);
+            border: 1px solid rgba(180, 83, 9, 0.2);
+            border-left: 3px solid var(--warning);
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .quality-gate-inline p {
+            margin: 0;
+            color: #92400e;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+
+        .quality-gate-inline strong {
+            color: var(--warning);
         }
 
         @media (max-width: 768px) {
@@ -204,6 +539,20 @@
             }
             h1 {
                 font-size: 1.8rem;
+            }
+            .workflow-diagram {
+                padding: 45px 20px 35px;
+            }
+            .phases-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .phase-connector {
+                transform: rotate(90deg);
+            }
+            .phase-box {
+                width: 100%;
+                max-width: 180px;
             }
         }
     </style>
@@ -246,21 +595,129 @@
         <hr>
 
         <h2>Architecture: the orchestrator pattern</h2>
-        <p>The encode-policy command never writes code. It invokes specialized agents and checks quality gates between phases.</p>
+        <p>The encode-policy command never writes code. It invokes specialized agents and checks quality gates between phases. Click each phase below to explore:</p>
 
-        <div class="ascii-diagram">                    ┌─────────────────────┐
-                    │    ORCHESTRATOR     │
-                    │   (encode-policy)   │
-                    └──────────┬──────────┘
-                               │
-        ┌──────────────────────┼──────────────────────┐
-        │                      │                      │
-        ▼                      ▼                      ▼
-   ┌─────────┐          ┌─────────────┐        ┌─────────────┐
-   │  SETUP  │    →     │ DEVELOPMENT │   →    │ VALIDATION  │
-   └─────────┘          └─────────────┘        └─────────────┘</div>
+        <!-- Interactive Workflow Diagram -->
+        <div class="workflow-diagram">
+            <div class="orchestrator-box">
+                <div class="title">Orchestrator</div>
+                <div class="cmd">encode-policy</div>
+            </div>
 
-        <p>The orchestrator coordinates workflow while specialists handle domain-specific tasks.</p>
+            <div class="connection-line"></div>
+
+            <div class="phases-container">
+                <div class="phase-box" data-phase="setup" onclick="showPhase('setup')">
+                    <div class="phase-num">PHASE 1</div>
+                    <div class="phase-title">Setup</div>
+                </div>
+                <span class="phase-connector">→</span>
+                <div class="phase-box" data-phase="development" onclick="showPhase('development')">
+                    <div class="phase-num">PHASE 2-3</div>
+                    <div class="phase-title">Development</div>
+                </div>
+                <span class="phase-connector">→</span>
+                <div class="phase-box" data-phase="validation" onclick="showPhase('validation')">
+                    <div class="phase-num">PHASE 4-7</div>
+                    <div class="phase-title">Validation</div>
+                </div>
+                <span class="phase-connector">→</span>
+                <div class="phase-box" data-phase="complete" onclick="showPhase('complete')">
+                    <div class="phase-num">PHASE 8</div>
+                    <div class="phase-title">Complete</div>
+                </div>
+            </div>
+
+            <p class="click-hint">Select a phase to inspect</p>
+
+            <div class="phase-details">
+                <!-- Phase 1: Setup -->
+                <div class="phase-detail" id="phase-setup">
+                    <h4>Phase 1 — Issue and PR Setup</h4>
+                    <div class="agent-tags">
+                        <span class="agent-tag">issue-manager</span>
+                    </div>
+                    <p>The workflow begins by establishing coordination points:</p>
+                    <ul>
+                        <li>Searches GitHub for existing issues to avoid duplicates</li>
+                        <li>Creates a new issue with a status template if none exists</li>
+                        <li>Creates a branch (<code>or-tanf</code>, <code>ia-tanf</code>)</li>
+                        <li>Opens a draft PR to the upstream repository</li>
+                    </ul>
+                    <p>Every subsequent agent references this issue and PR for coordination.</p>
+                </div>
+
+                <!-- Phase 2-3: Development -->
+                <div class="phase-detail" id="phase-development">
+                    <h4>Phase 2-3 — Document Collection & Development</h4>
+                    <div class="agent-tags">
+                        <span class="agent-tag">document-collector</span>
+                        <span class="agent-tag">parameter-architect</span>
+                        <span class="agent-tag">test-creator</span>
+                        <span class="agent-tag">rules-engineer</span>
+                        <span class="agent-tag">edge-case-generator</span>
+                    </div>
+
+                    <p><strong>Phase 2: Research</strong> — The document-collector researches official sources: statutes, policy manuals, state plans, and benefit calculators. Output: <code>sources/working_references.md</code></p>
+
+                    <div class="quality-gate-inline">
+                        <p><strong>Quality gate 1:</strong> Documentation must include the official program name, income limits, eligibility criteria, and legal citations.</p>
+                    </div>
+
+                    <p><strong>Phase 3: Build</strong> — Three parallel tracks:</p>
+                    <ul>
+                        <li><strong>Parameters:</strong> The parameter-architect creates YAML files with legal citations</li>
+                        <li><strong>Implementation:</strong> test-creator and rules-engineer work simultaneously from the same docs — neither sees the other's output</li>
+                        <li><strong>Edge cases:</strong> The edge-case-generator adds boundary tests</li>
+                    </ul>
+
+                    <div class="quality-gate-inline">
+                        <p><strong>Quality gates 2 & 3:</strong> Parameter values must match source documents. Implementation logic must match documented formulas.</p>
+                    </div>
+                </div>
+
+                <!-- Phase 4-7: Validation -->
+                <div class="phase-detail" id="phase-validation">
+                    <h4>Phase 4-7 — Validation & Fixes</h4>
+                    <div class="agent-tags">
+                        <span class="agent-tag">implementation-validator</span>
+                        <span class="agent-tag">ci-fixer</span>
+                        <span class="agent-tag">pr-pusher</span>
+                        <span class="agent-tag">program-reviewer</span>
+                    </div>
+
+                    <p><strong>Phase 4: Organization check</strong> — The validator loads 7 skills and checks naming conventions, file structure, metadata completeness, code patterns, and cross-references.</p>
+
+                    <p><strong>Phase 5: Test and fix</strong> — The ci-fixer runs tests locally (2-3 min vs 30-75 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
+                    <ul>
+                        <li>Calculation errors → <code>rules-engineer</code></li>
+                        <li>Test expectation errors → <code>test-creator</code></li>
+                        <li>Parameter value errors → <code>parameter-architect</code></li>
+                    </ul>
+                    <p>The loop continues until all tests pass.</p>
+
+                    <p><strong>Phase 6: Format and push</strong> — The pr-pusher adds changelog, runs formatters (<code>black</code>, <code>isort</code>), and pushes.</p>
+
+                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents.</p>
+                </div>
+
+                <!-- Phase 8: Complete -->
+                <div class="phase-detail" id="phase-complete">
+                    <h4>Phase 8 — Documentation & Handoff</h4>
+                    <div class="agent-tags">
+                        <span class="agent-tag">program-reviewer</span>
+                    </div>
+                    <p>The reviewer updates the PR description with:</p>
+                    <ul>
+                        <li>Regulatory authority citations</li>
+                        <li>Income eligibility tests with sources</li>
+                        <li>Benefit calculation formulas</li>
+                        <li>Files added and test coverage</li>
+                    </ul>
+                    <p>The PR remains a draft — <strong>humans make the final merge decision</strong>.</p>
+                </div>
+            </div>
+        </div>
 
         <h3>Agents and skills</h3>
         <p>Each agent has:</p>
@@ -270,124 +727,6 @@
             <li><strong>Model</strong>: Claude Opus for complex reasoning</li>
         </ul>
         <p>Skills are reusable knowledge modules. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
-
-        <hr>
-
-        <h2>The workflow</h2>
-
-        <h3>Phase 1: issue and PR setup</h3>
-        <p>The <code>issue-manager</code> agent:</p>
-        <ol>
-            <li>Searches GitHub for existing issues to avoid duplicates</li>
-            <li>Creates a new issue with a status template if none exists</li>
-            <li>Creates a branch (<code>or-tanf</code>, <code>ky-tanf</code>)</li>
-            <li>Opens a draft PR to the upstream repository</li>
-        </ol>
-        <p>This establishes coordination points for all subsequent agents.</p>
-
-        <h3>Phase 2: document collection</h3>
-        <p>The <code>document-collector</code> agent researches official sources:</p>
-        <ul>
-            <li>State statutes and administrative codes</li>
-            <li>Policy manuals and handbooks</li>
-            <li>State plans submitted to federal agencies</li>
-            <li>Official benefit calculators and examples</li>
-        </ul>
-        <p>The agent discovers the state's official program name (California calls SNAP "CalFresh"), documents eligibility rules and benefit formulas, and flags rules that PolicyEngine cannot simulate (like lifetime time limits).</p>
-        <p>The output is <code>sources/working_references.md</code>—a single source of truth that all other agents reference.</p>
-        <div class="quality-gate">
-            <p><strong>Quality gate 1</strong>: Documentation must include the official program name, income limits, eligibility criteria, and legal citations before development begins.</p>
-        </div>
-
-        <h3>Phase 3: development</h3>
-        <p>Development happens in three steps:</p>
-
-        <p><strong>Step 3A: parameters</strong></p>
-        <p>The <code>parameter-architect</code> creates YAML files for configurable values:</p>
-        <pre><code># income_limit/rate.yaml
-description: Oregon limits gross income to this share of the
-  federal poverty level under the TANF program.
-
-values:
-  2024-01-01: 1.85  # 185% of FPL
-
-metadata:
-  unit: /1
-  period: year
-  label: Oregon TANF income limit
-  reference:
-    - title: OAR 461-155-0030(2)(c)
-      href: https://oregon.public.law/rules/oar_461-155-0030</code></pre>
-        <p>Key principle: store rates, not dollar amounts. When the federal poverty level updates, calculations adjust automatically.</p>
-
-        <p><strong>Step 3B: parallel implementation</strong></p>
-        <p>Two agents run simultaneously:</p>
-        <ul>
-            <li><code>test-creator</code> works in the <code>tests/</code> folder, creating tests from documentation</li>
-            <li><code>rules-engineer</code> works in the <code>variables/</code> folder, implementing from documentation</li>
-        </ul>
-        <p>Neither agent sees the other's output. This isolation means mismatches reveal bugs or misunderstandings—like two teams implementing the same spec independently.</p>
-
-        <p><strong>Step 3C: edge cases</strong></p>
-        <p>The <code>edge-case-generator</code> analyzes the implementation and adds boundary tests:</p>
-        <ul>
-            <li>Income at exactly the threshold</li>
-            <li>Zero income, maximum income</li>
-            <li>Single-person and maximum-size households</li>
-            <li>Benefit cliff effects</li>
-        </ul>
-        <div class="quality-gate">
-            <p><strong>Quality gates 2 and 3</strong>: Parameter values must match source documents. Implementation logic must match the documented formulas.</p>
-        </div>
-
-        <h3>Phase 4: organization check</h3>
-        <p>The <code>implementation-validator</code> loads 7 skills and checks:</p>
-        <table>
-            <tr><th>Check</th><th>What it validates</th></tr>
-            <tr><td>Naming</td><td>Variable names follow prefix conventions</td></tr>
-            <tr><td>Structure</td><td>Files organized logically</td></tr>
-            <tr><td>Parameters</td><td>All metadata present, descriptions formatted correctly</td></tr>
-            <tr><td>Code patterns</td><td><code>adds</code> vs <code>add()</code> usage, reference format</td></tr>
-            <tr><td>Cross-references</td><td>Every parameter used, every test variable exists</td></tr>
-        </table>
-        <p>Output: a structured report with exact code fixes.</p>
-
-        <h3>Phase 5: test and fix</h3>
-        <p>The <code>ci-fixer</code> agent:</p>
-        <ol>
-            <li>Implements pattern fixes from the validator</li>
-            <li>Runs tests locally (GitHub CI takes 30-75 minutes)</li>
-            <li>Analyzes failures</li>
-            <li>Fixes directly or delegates to specialists</li>
-        </ol>
-        <p>Delegation targets:</p>
-        <ul>
-            <li>Calculation errors → <code>rules-engineer</code></li>
-            <li>Test expectation errors → <code>test-creator</code></li>
-            <li>Parameter value errors → <code>parameter-architect</code></li>
-        </ul>
-        <p>The loop continues until all tests pass.</p>
-
-        <h3>Phase 6: format and push</h3>
-        <p>The <code>pr-pusher</code> agent:</p>
-        <ul>
-            <li>Creates or validates the changelog entry</li>
-            <li>Runs formatters (<code>black</code>, <code>isort</code>)</li>
-            <li>Pushes the branch</li>
-        </ul>
-
-        <h3>Phase 7: review</h3>
-        <p>The <code>program-reviewer</code> agent researches regulations <strong>before</strong> reading the code, preventing confirmation bias. It compares the implementation against source documents and flags discrepancies.</p>
-
-        <h3>Phase 8: documentation</h3>
-        <p>The reviewer updates the PR description with:</p>
-        <ul>
-            <li>Regulatory authority citations</li>
-            <li>Income eligibility tests with sources</li>
-            <li>Benefit calculation formulas</li>
-            <li>Files added and test coverage</li>
-        </ul>
-        <p>The PR remains a draft—humans make the final merge decision.</p>
 
         <hr>
 
@@ -449,5 +788,28 @@ claude /encode-policy "Iowa TANF"</code></pre>
             <p>PolicyEngine is an open-source project building tools for tax and benefit policy analysis. Learn more at <a href="https://policyengine.org">policyengine.org</a>.</p>
         </div>
     </article>
+
+    <script>
+        function showPhase(phase) {
+            // Remove active class from all boxes
+            document.querySelectorAll('.phase-box').forEach(box => {
+                box.classList.remove('active');
+            });
+
+            // Hide all phase details
+            document.querySelectorAll('.phase-detail').forEach(detail => {
+                detail.classList.remove('active');
+            });
+
+            // Add active class to clicked box
+            document.querySelector(`.phase-box[data-phase="${phase}"]`).classList.add('active');
+
+            // Show corresponding phase detail
+            document.getElementById(`phase-${phase}`).classList.add('active');
+
+            // Hide the hint
+            document.querySelector('.click-hint').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
