@@ -481,9 +481,9 @@
             <div class="flow-arrow">→</div>
             <div class="flow-box">Phase 2-3<br><span class="small-text">Development</span></div>
             <div class="flow-arrow">→</div>
-            <div class="flow-box">Phase 4-7<br><span class="small-text">Validation</span></div>
+            <div class="flow-box">Phase 4-6<br><span class="small-text">Validation</span></div>
             <div class="flow-arrow">→</div>
-            <div class="flow-box">Phase 8<br><span class="small-text">Complete</span></div>
+            <div class="flow-box">Phase 7-8<br><span class="small-text">Review & Complete</span></div>
         </div>
         <div class="success-box" style="margin-top: 50px;">
             <p><strong>Key insight:</strong> The orchestrator never writes code — it only invokes specialists and checks quality gates</p>
@@ -548,7 +548,7 @@
                 <strong>Phase 4:</strong> Organization Check → <span class="code">implementation-validator</span>
             </div>
             <div class="timeline-item">
-                <strong>Phase 5:</strong> Test & Fix → <span class="code">ci-fixer</span>
+                <strong>Phase 5:</strong> Validate, Test & Fix → <span class="code">reference-validator</span> + <span class="code">ci-fixer</span>
             </div>
             <div class="timeline-item">
                 <strong>Phase 6:</strong> Format & Push → <span class="code">pr-pusher</span>
@@ -940,14 +940,29 @@ earned + unearned  <span class="comment"># ❌ Manual add</span>
     <!-- Slide 18: Phase 5 -->
     <div class="slide">
         <span class="phase-badge">Phase 5</span>
-        <h2>ci-fixer: The Iterative Problem Solver</h2>
-        <div class="agent-card" style="max-width: 700px;">
-            <h3>🤖 Agent Details</h3>
-            <p class="small-text"><strong>Tools:</strong> Bash, Read, Write, Edit, MultiEdit, Grep, Glob</p>
-            <p class="small-text"><strong>Skills:</strong> 8 skills loaded (testing, variable, aggregation, code-style...)</p>
+        <h2>Validate, Test & Fix</h2>
+        <div class="two-column" style="margin-top: 20px;">
+            <div class="agent-card">
+                <h3>🔗 reference-validator (Step 5A)</h3>
+                <p class="small-text">Checks all parameters have proper references</p>
+                <ul style="font-size: 1rem; margin-top: 15px;">
+                    <li>Find missing references</li>
+                    <li>Check format (page #s, sections)</li>
+                    <li>Verify jurisdiction match</li>
+                </ul>
+            </div>
+            <div class="agent-card">
+                <h3>🔧 ci-fixer (Step 5B)</h3>
+                <p class="small-text">Iterative problem solver</p>
+                <ul style="font-size: 1rem; margin-top: 15px;">
+                    <li>Run tests LOCALLY</li>
+                    <li>Analyze failures</li>
+                    <li>Fix or delegate to specialists</li>
+                </ul>
+            </div>
         </div>
-        <div class="flow-diagram" style="margin-top: 30px;">
-            <div class="flow-box">Apply validator fixes</div>
+        <div class="flow-diagram" style="margin-top: 20px;">
+            <div class="flow-box">reference-validator</div>
             <div class="flow-arrow">→</div>
             <div class="flow-box active-flow">Run tests LOCALLY</div>
             <div class="flow-arrow">→</div>
@@ -955,7 +970,7 @@ earned + unearned  <span class="comment"># ❌ Manual add</span>
             <div class="flow-arrow">→</div>
             <div class="flow-box">Fix or delegate</div>
         </div>
-        <div class="warning-box" style="margin-top: 30px;">
+        <div class="warning-box" style="margin-top: 20px;">
             <p><strong>Key insight:</strong> Runs tests LOCALLY — doesn't wait 30+ minutes for GitHub CI</p>
         </div>
         <div class="slide-number">18 / 24</div>
@@ -992,10 +1007,10 @@ earned + unearned  <span class="comment"># ❌ Manual add</span>
         <div class="slide-number">19 / 24</div>
     </div>
 
-    <!-- Slide 20: Phase 6-7 -->
+    <!-- Slide 20: Phase 6-8 -->
     <div class="slide">
-        <span class="phase-badge">Phase 6-7</span>
-        <h2>Format, Push & Review</h2>
+        <span class="phase-badge">Phase 6-8</span>
+        <h2>Format, Push, Review & Complete</h2>
         <div class="two-column">
             <div class="column">
                 <div class="agent-card">
@@ -1010,12 +1025,12 @@ earned + unearned  <span class="comment"># ❌ Manual add</span>
             </div>
             <div class="column">
                 <div class="agent-card">
-                    <h3>📋 program-reviewer (Phase 7)</h3>
+                    <h3>📋 program-reviewer (Phase 7-8)</h3>
                     <ul style="font-size: 1.1rem;">
                         <li>Researches regulations FIRST</li>
                         <li>Then compares to implementation</li>
-                        <li>Updates PR description</li>
-                        <li>Adds comprehensive documentation</li>
+                        <li>Posts findings if discrepancies found</li>
+                        <li>Updates PR description with full docs</li>
                     </ul>
                 </div>
             </div>
