@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automating Government Benefit Implementation with Multi-Agent AI</title>
+    <title>Automating Tax and Benefit Policy Modeling with Multi-Agent AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
@@ -555,15 +555,369 @@
                 max-width: 180px;
             }
         }
+
+        /* ══════════════════════════════════════════════════════════════
+           AGENT FLOW DIAGRAM
+           ══════════════════════════════════════════════════════════════ */
+
+        .agent-flow-container {
+            background: var(--bg-diagram);
+            background-image:
+                radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 8px;
+            padding: 40px 20px;
+            margin: 35px 0;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+            overflow-x: auto;
+        }
+
+        .agent-flow-container::before {
+            content: 'AGENT FLOW';
+            position: absolute;
+            top: 14px;
+            left: 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .agent-flow-svg {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .agent-flow-svg .agent-node {
+            fill: var(--bg-card);
+            stroke: var(--border);
+            stroke-width: 1.5;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .agent-flow-svg .agent-node:hover {
+            stroke: var(--accent);
+            stroke-width: 2;
+            filter: drop-shadow(0 4px 8px rgba(13, 115, 119, 0.15));
+        }
+
+        .agent-flow-svg .agent-node.parallel {
+            stroke: var(--accent);
+            stroke-dasharray: 4 2;
+        }
+
+        .agent-flow-svg .agent-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            fill: var(--text-dark);
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .agent-flow-svg .agent-sublabel {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 7px;
+            fill: var(--text-light);
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .agent-flow-svg .flow-line {
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* Build phase lines - static by default */
+        .agent-flow-svg .build-line {
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            fill: none;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+
+        /* Build phase lines - animated when active */
+        .agent-flow-svg.show-build .build-line {
+            stroke-width: 2.5;
+            stroke-dasharray: 8 4;
+            opacity: 1;
+            animation: flowDown 1s linear infinite;
+        }
+
+        @keyframes flowDown {
+            from { stroke-dashoffset: 24; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .agent-flow-svg .flow-arrow {
+            fill: var(--accent);
+        }
+
+        /* Fix cycle box - static by default */
+        .agent-flow-svg .fix-cycle-box {
+            stroke: #6366f1;
+            stroke-width: 2;
+            stroke-dasharray: 8 6;
+            fill: none;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        /* Fix cycle box - animated when active */
+        .agent-flow-svg.show-fix .fix-cycle-box {
+            stroke-width: 2.5;
+            fill: rgba(99, 102, 241, 0.05);
+            opacity: 1;
+            animation: marchingAnts 0.5s linear infinite;
+        }
+
+        @keyframes marchingAnts {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -14; }
+        }
+
+        .agent-flow-svg .fix-cycle-arrow {
+            fill: #6366f1;
+        }
+
+        /* Review cycle box - static by default */
+        .agent-flow-svg .review-loop-box {
+            stroke: var(--warning);
+            stroke-width: 2;
+            stroke-dasharray: 8 6;
+            fill: none;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        /* Review cycle box - animated when active */
+        .agent-flow-svg.show-review .review-loop-box {
+            stroke-width: 2.5;
+            fill: rgba(180, 83, 9, 0.05);
+            opacity: 1;
+            animation: marchingAntsReview 0.5s linear infinite;
+        }
+
+        @keyframes marchingAntsReview {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -14; }
+        }
+
+        .agent-flow-svg .loop-arrow {
+            fill: var(--warning);
+        }
+
+        .agent-flow-svg .loop-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            fill: var(--warning);
+            text-anchor: middle;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .agent-flow-svg.show-review .loop-label {
+            opacity: 1;
+        }
+
+        .agent-flow-svg .fix-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            fill: #6366f1;
+            text-anchor: middle;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .agent-flow-svg.show-fix .fix-label {
+            opacity: 1;
+        }
+
+        /* Clickable phase regions */
+        .agent-flow-svg .phase-region {
+            fill: transparent;
+            cursor: pointer;
+            transition: fill 0.2s;
+        }
+
+        .agent-flow-svg .phase-region:hover {
+            fill: rgba(13, 115, 119, 0.05);
+        }
+
+        .flow-diagram-hint {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 12px;
+        }
+
+        .agent-flow-svg .parallel-bracket {
+            stroke: var(--accent);
+            stroke-width: 1;
+            stroke-dasharray: 3 2;
+            fill: none;
+        }
+
+        .agent-flow-svg .parallel-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            fill: var(--accent);
+            font-style: italic;
+        }
+
+        .agent-flow-svg .specialist-pool {
+            stroke: #6366f1;
+            stroke-width: 2;
+            stroke-dasharray: 6 3;
+            fill: rgba(99, 102, 241, 0.04);
+            rx: 6;
+        }
+
+        .agent-flow-svg .pool-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            font-weight: 600;
+            fill: #6366f1;
+            letter-spacing: 0.1em;
+        }
+
+        .agent-flow-svg .delegation-arrow {
+            stroke: #6366f1;
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 4 2;
+        }
+
+        .agent-flow-svg .phase-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            fill: var(--text-light);
+            text-anchor: end;
+        }
+
+        .agent-flow-svg .flow-line.dashed {
+            stroke-dasharray: 6 4;
+        }
+
+        .agent-flow-svg .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            fill: var(--text-light);
+            letter-spacing: 0.1em;
+        }
+
+        /* Network diagram styles */
+        .agent-flow-svg .network-line {
+            stroke: var(--text-light);
+            stroke-width: 1.5;
+            stroke-dasharray: 6 4;
+            fill: none;
+        }
+
+        .agent-flow-svg:hover .network-line {
+            animation: flowLine 3s linear infinite;
+        }
+
+        @keyframes flowLine {
+            from { stroke-dashoffset: 20; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .agent-flow-svg .network-line.delegate {
+            stroke: #6366f1;
+            stroke-width: 1.5;
+            opacity: 0.7;
+        }
+
+        .agent-flow-svg:hover .network-line.delegate {
+            animation: flowLineReverse 1.5s linear infinite;
+        }
+
+        @keyframes flowLineReverse {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: 20; }
+        }
+
+        .agent-flow-svg .network-node {
+            fill: var(--bg-card);
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .agent-flow-svg .network-node.specialist {
+            stroke-dasharray: 4 2;
+        }
+
+        .agent-flow-svg .network-node.output {
+            stroke-dasharray: 3 2;
+            stroke: var(--text-light);
+        }
+
+        .agent-flow-svg .network-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            fill: var(--text-mid);
+            text-anchor: middle;
+        }
+
+        .agent-flow-svg .node-icon {
+            font-size: 36px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+        }
+
+        .agent-flow-svg .node-icon.large {
+            font-size: 44px;
+        }
+
+        .agent-flow-svg .node-icon.small {
+            font-size: 28px;
+        }
+
+        .agent-flow-svg .delegate-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            fill: #6366f1;
+            text-anchor: middle;
+            font-style: italic;
+        }
+
+        .agent-flow-svg .loop-indicator {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-dasharray: 12 6;
+            opacity: 0.3;
+        }
+
+        .agent-flow-svg:hover .loop-indicator {
+            animation: loopRotate 10s linear infinite;
+        }
+
+        @keyframes loopRotate {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -108; }
+        }
     </style>
 </head>
 <body>
     <article>
-        <h1>Automating Government Benefit Implementation with Multi-Agent AI</h1>
+        <h1>Automating Tax and Benefit Policy Modeling with Multi-Agent AI</h1>
         <p class="subtitle">How we built a system that transforms a policy request into a complete, tested pull request</p>
 
-        <h2>The challenge</h2>
-        <p>When we add a new state benefit program to PolicyEngine, someone has to translate dozens of pages of legal language into working code. They read statutes, cross-reference policy manuals, write YAML parameters with legal citations, create dozens of tests, and handle multiple rounds of review.</p>
+        <h2>The manual process</h2>
+        <p>When we add a new state benefit program to PolicyEngine, someone has to translate dozens of pages of legal language into working code. The process follows a predictable pattern: research official sources, extract eligibility rules and benefit formulas, write YAML parameters with legal citations, implement the calculation logic, create integration tests, validate against source documents, and handle multiple rounds of review. Each step requires domain expertise and careful attention to regulatory details.</p>
         <p>It typically takes 2-3 weeks. We built a system that does it in 90 minutes.</p>
 
         <hr>
@@ -601,13 +955,13 @@
                 </div>
                 <span class="phase-connector">→</span>
                 <div class="phase-box" data-phase="validation" onclick="showPhase('validation')">
-                    <div class="phase-num">PHASE 4-7</div>
+                    <div class="phase-num">PHASE 4-6</div>
                     <div class="phase-title">Validation</div>
                 </div>
                 <span class="phase-connector">→</span>
                 <div class="phase-box" data-phase="complete" onclick="showPhase('complete')">
-                    <div class="phase-num">PHASE 8</div>
-                    <div class="phase-title">Complete</div>
+                    <div class="phase-num">PHASE 7-8</div>
+                    <div class="phase-title">Review & Complete</div>
                 </div>
             </div>
 
@@ -659,19 +1013,19 @@
                     </div>
                 </div>
 
-                <!-- Phase 4-7: Validation -->
+                <!-- Phase 4-6: Validation -->
                 <div class="phase-detail" id="phase-validation">
-                    <h4>Phase 4-7 — Validation & Fixes</h4>
+                    <h4>Phase 4-6 — Validation & Fixes</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">implementation-validator</span>
+                        <span class="agent-tag">reference-validator</span>
                         <span class="agent-tag">ci-fixer</span>
                         <span class="agent-tag">pr-pusher</span>
-                        <span class="agent-tag">program-reviewer</span>
                     </div>
 
                     <p><strong>Phase 4: Organization check</strong> — The validator loads 7 skills and checks naming conventions, file structure, metadata completeness, code patterns, and cross-references.</p>
 
-                    <p><strong>Phase 5: Test and fix</strong> — The ci-fixer runs tests locally (2-3 min vs 20-30 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
+                    <p><strong>Phase 5: Validate and fix</strong> — First, the reference-validator checks that all parameters have proper citations. Then the ci-fixer runs tests locally (2-3 min vs 20-30 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
                     <ul>
                         <li>Calculation errors → <code>rules-engineer</code></li>
                         <li>Test expectation errors → <code>test-creator</code></li>
@@ -680,17 +1034,18 @@
                     <p>This cycle repeats until all tests pass.</p>
 
                     <p><strong>Phase 6: Format and push</strong> — The pr-pusher adds changelog, runs formatters (<code>black</code>, <code>isort</code>), and pushes.</p>
-
-                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents. If discrepancies are found, findings are posted and the workflow returns to Phase 5 for fixes.</p>
                 </div>
 
-                <!-- Phase 8: Complete -->
+                <!-- Phase 7-8: Review & Complete -->
                 <div class="phase-detail" id="phase-complete">
-                    <h4>Phase 8 — Documentation & Handoff</h4>
+                    <h4>Phase 7-8 — Review & Complete</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">program-reviewer</span>
                     </div>
-                    <p>The reviewer updates the PR description with:</p>
+
+                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents. If discrepancies are found, findings are posted to the PR for human review.</p>
+
+                    <p><strong>Phase 8: Documentation</strong> — The reviewer updates the PR description with:</p>
                     <ul>
                         <li>Regulatory authority citations</li>
                         <li>Income eligibility tests with sources</li>
@@ -702,6 +1057,115 @@
             </div>
         </div>
 
+        <!-- Agent Flow Diagram -->
+        <h3>Agent flow</h3>
+        <p>The diagram below shows how agents connect. Three agents run in parallel during development, then converge for validation. The fix cycle iterates until tests pass, then the PR is handed off for human review.</p>
+
+        <div class="agent-flow-container">
+            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 700 400" width="700" height="400">
+                <!-- Dashed line connections (drawn first, behind nodes) -->
+
+                <!-- Loop indicator - ellipse around middle agents -->
+                <ellipse class="loop-indicator" cx="350" cy="200" rx="160" ry="180" />
+
+                <!-- Entry: issue-manager to document-collector -->
+                <line class="network-line" x1="60" y1="200" x2="130" y2="200" />
+
+                <!-- document-collector to circular arrangement -->
+                <line class="network-line" x1="130" y1="200" x2="230" y2="80" />
+                <line class="network-line" x1="130" y1="200" x2="230" y2="200" />
+                <line class="network-line" x1="130" y1="200" x2="230" y2="320" />
+
+                <!-- Circular connections between agents -->
+                <!-- Top arc -->
+                <line class="network-line" x1="230" y1="80" x2="350" y2="50" />
+                <line class="network-line" x1="350" y1="50" x2="470" y2="80" />
+
+                <!-- Middle connections -->
+                <line class="network-line" x1="230" y1="200" x2="350" y2="200" />
+                <line class="network-line" x1="350" y1="200" x2="470" y2="200" />
+
+                <!-- Bottom arc -->
+                <line class="network-line" x1="230" y1="320" x2="350" y2="350" />
+                <line class="network-line" x1="350" y1="350" x2="470" y2="320" />
+
+                <!-- Cross connections in circle -->
+                <line class="network-line" x1="230" y1="80" x2="350" y2="200" />
+                <line class="network-line" x1="230" y1="320" x2="350" y2="200" />
+                <line class="network-line" x1="350" y1="50" x2="470" y2="200" />
+                <line class="network-line" x1="350" y1="350" x2="470" y2="200" />
+
+
+                <!-- Exit: pr-pusher to program-reviewer to Draft PR -->
+                <line class="network-line" x1="470" y1="80" x2="560" y2="140" />
+                <line class="network-line" x1="470" y1="320" x2="560" y2="260" />
+                <line class="network-line" x1="560" y1="140" x2="560" y2="200" />
+                <line class="network-line" x1="560" y1="260" x2="560" y2="200" />
+                <line class="network-line" x1="560" y1="200" x2="640" y2="200" />
+
+                <!-- NODES arranged in circular pattern -->
+
+                <!-- Entry nodes (left) -->
+                <circle class="network-node" cx="60" cy="200" r="20" />
+                <text class="node-icon small" x="60" y="205">📋</text>
+                <text class="network-label" x="60" y="235">issue-manager</text>
+
+                <circle class="network-node" cx="130" cy="200" r="32" />
+                <text class="node-icon large" x="130" y="205">📄</text>
+                <text class="network-label" x="130" y="248">document-</text>
+                <text class="network-label" x="130" y="260">collector</text>
+
+                <!-- Circular arrangement (specialists on left arc) -->
+                <circle class="network-node specialist" cx="230" cy="80" r="28" />
+                <text class="node-icon" x="230" y="85">⚙️</text>
+                <text class="network-label" x="230" y="35">parameter-architect</text>
+
+                <circle class="network-node specialist" cx="230" cy="200" r="28" />
+                <text class="node-icon" x="230" y="205">✓</text>
+                <text class="network-label" x="230" y="245">test-creator</text>
+
+                <circle class="network-node specialist" cx="230" cy="320" r="28" />
+                <text class="node-icon" x="230" y="325">{ }</text>
+                <text class="network-label" x="230" y="365">rules-engineer</text>
+
+                <!-- Center of circle -->
+                <circle class="network-node" cx="350" cy="50" r="24" />
+                <text class="node-icon" x="350" y="55">🔍</text>
+                <text class="network-label" x="350" y="20">impl-validator</text>
+
+                <circle class="network-node" cx="350" cy="200" r="34" />
+                <text class="node-icon large" x="350" y="205">🔧</text>
+                <text class="network-label" x="350" y="250">ci-fixer</text>
+
+                <circle class="network-node" cx="350" cy="350" r="22" />
+                <text class="node-icon small" x="350" y="355">🔗</text>
+                <text class="network-label" x="350" y="388">reference-validator</text>
+
+                <!-- Right arc -->
+                <circle class="network-node" cx="470" cy="80" r="20" />
+                <text class="node-icon small" x="470" y="85">⬆</text>
+                <text class="network-label" x="470" y="35">pr-pusher</text>
+
+                <circle class="network-node" cx="470" cy="200" r="22" />
+                <text class="node-icon small" x="470" y="205">⚡</text>
+                <text class="network-label" x="470" y="238">edge-case-gen</text>
+
+                <circle class="network-node" cx="470" cy="320" r="20" />
+                <text class="node-icon small" x="470" y="325">✨</text>
+                <text class="network-label" x="470" y="358">doc-enricher</text>
+
+                <!-- Exit nodes (right) -->
+                <circle class="network-node" cx="560" cy="200" r="32" />
+                <text class="node-icon large" x="560" y="205">📖</text>
+                <text class="network-label" x="560" y="248">program-reviewer</text>
+
+                <circle class="network-node output" cx="640" cy="200" r="28" />
+                <text class="node-icon" x="640" y="205">📝</text>
+                <text class="network-label" x="640" y="245">Draft PR</text>
+
+            </svg>
+        </div>
+
         <h3>Agents and skills</h3>
         <p>Each agent is configured with:</p>
         <ul>
@@ -710,6 +1174,7 @@
             <li><strong>Model</strong>: Claude Opus for complex reasoning</li>
         </ul>
         <p>Skills are reusable knowledge modules. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
+        <p>Skills follow Anthropic's <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Agent Skills open standard</a>, which works across multiple AI tools. See the <a href="https://code.claude.com/docs/en/skills">Claude Code documentation</a> for details.</p>
 
         <hr>
 
@@ -723,16 +1188,39 @@
 
         <hr>
 
-        <h2>Reusable components: review-pr and fix-pr</h2>
-        <p>The validation and fixing logic from phases 4-7 also exists as standalone commands.</p>
+        <h2>The evolution: from prompt to workflow</h2>
+        <p>The current system didn't emerge fully formed. It evolved through several iterations, each solving problems revealed by the previous approach.</p>
+
+        <h3>Stage 1: One long prompt</h3>
+        <p>We started with a single prompt asking Claude to implement a TANF program end-to-end. The results were poor—too many aspects for one context to handle well. Research, parameters, variables, tests, documentation—each requires different expertise and attention.</p>
+
+        <h3>Stage 2: Specialized agents</h3>
+        <p>Breaking the work into specialized agents helped: a research agent, a parameter agent, a test agent, a variable agent. Each prompt taught the agent how to build for the policyengine-us repository. But without a skills feature (this was before October 2025), prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently.</p>
+
+        <h3>Stage 3: The test problem</h3>
+        <p>The most critical issue: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
+        <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies. We added an edge-case-generator that creates boundary tests after implementation—covering zero income, maximum benefits, cliff edges—based on real-world scenarios rather than implementation details.</p>
+
+        <h3>Stage 4: The forgetting problem</h3>
+        <p>Results improved, but formatting and code style issues persisted. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
+        <p>Then Claude Code released the skills feature in October 2025. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
+        <p>We re-engineered every agent and workflow around skills. The improvement was significant.</p>
+
+        <h3>Stage 5: User feedback</h3>
+        <p>Colleagues using the workflow provided feedback that shaped new features. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline. This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) but expose them for standalone use. The components became building blocks, not just steps in a sequence.</p>
+
+        <hr>
+
+        <h2>Reusable components</h2>
+        <p>Every agent and skill in the workflow can run independently outside the encode-policy flow. The <code>/review-pr</code> and <code>/fix-pr</code> commands demonstrate this—they use the same validation and fixing agents to review any PR, not just those created by encode-policy.</p>
         <p><code>/review-pr</code> runs 4 validators (regulatory accuracy, reference quality, code patterns, test coverage) and posts prioritized findings to GitHub. <code>/fix-pr</code> reads those findings and delegates to specialist agents—parameter-architect, rules-engineer, ci-fixer—to resolve issues automatically.</p>
-        <p>Both commands work on any PR, not just those created by encode-policy.</p>
+        <p>Skills work the same way. The <code>policyengine-testing-patterns-skill</code> can be loaded by any agent or user session to get consistent test formatting rules. Skills are context you can inject into any conversation—not tied to specific commands or workflows.</p>
 
         <hr>
 
         <h2>Results</h2>
         <p>Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
-        <p>The workflow has produced TANF implementations for 42 states, plus childcare subsidies and healthcare programs. Each follows consistent patterns and quality standards.</p>
+        <p>The workflow has produced TANF implementations for 42 states, generating over 60,000 lines of code. We have also used it for childcare subsidies and healthcare programs, each following consistent patterns and quality standards.</p>
 
         <hr>
 
@@ -780,6 +1268,22 @@ claude /encode-policy "Iowa TANF"</code></pre>
             // Hide the hint
             document.querySelector('.click-hint').style.display = 'none';
         }
+
+        function showFlowPhase(phase) {
+            const svg = document.getElementById('agentFlowSvg');
+
+            // Remove all phase classes
+            svg.classList.remove('show-build', 'show-fix', 'show-review');
+
+            // Add the selected phase class
+            svg.classList.add('show-' + phase);
+
+            // Auto-reset after 5 seconds
+            setTimeout(() => {
+                svg.classList.remove('show-build', 'show-fix', 'show-review');
+            }, 5000);
+        }
+
     </script>
 </body>
 </html>
