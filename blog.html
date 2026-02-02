@@ -818,10 +818,14 @@
 
         /* Network diagram styles */
         .agent-flow-svg .network-line {
-            stroke: var(--text-light);
-            stroke-width: 1.5;
+            stroke: var(--text-mid);
+            stroke-width: 2;
             stroke-dasharray: 6 4;
             fill: none;
+        }
+
+        .agent-flow-svg .network-line.thick {
+            stroke-width: 2.5;
         }
 
         .agent-flow-svg:hover .network-line {
@@ -865,24 +869,24 @@
 
         .agent-flow-svg .network-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 8px;
+            font-size: 13px;
             fill: var(--text-mid);
             text-anchor: middle;
         }
 
         .agent-flow-svg .node-icon {
-            font-size: 36px;
+            font-size: 56px;
             text-anchor: middle;
-            dominant-baseline: middle;
+            dominant-baseline: central;
             pointer-events: none;
         }
 
         .agent-flow-svg .node-icon.large {
-            font-size: 44px;
+            font-size: 68px;
         }
 
         .agent-flow-svg .node-icon.small {
-            font-size: 28px;
+            font-size: 46px;
         }
 
         .agent-flow-svg .delegate-label {
@@ -895,13 +899,14 @@
 
         .agent-flow-svg .loop-indicator {
             fill: none;
-            stroke: var(--accent);
-            stroke-width: 2;
+            stroke: var(--text-mid);
+            stroke-width: 2.5;
             stroke-dasharray: 12 6;
-            opacity: 0.3;
+            opacity: 0.5;
         }
 
         .agent-flow-svg:hover .loop-indicator {
+            opacity: 0.7;
             animation: loopRotate 10s linear infinite;
         }
 
@@ -1062,106 +1067,91 @@
         <p>The diagram below shows how agents connect. Three agents run in parallel during development, then converge for validation. The fix cycle iterates until tests pass, then the PR is handed off for human review.</p>
 
         <div class="agent-flow-container">
-            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 700 400" width="700" height="400">
-                <!-- Dashed line connections (drawn first, behind nodes) -->
+            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 1150 580" width="1150" height="580">
+                <!-- Loop indicator - ellipse around development/validation agents, now centered -->
+                <ellipse class="loop-indicator" cx="520" cy="290" rx="300" ry="250" />
 
-                <!-- Loop indicator - ellipse around middle agents -->
-                <ellipse class="loop-indicator" cx="350" cy="200" rx="160" ry="180" />
+                <!-- CONNECTIONS -->
 
-                <!-- Entry: issue-manager to document-collector -->
-                <line class="network-line" x1="60" y1="200" x2="130" y2="200" />
+                <!-- Entry flow -->
+                <line class="network-line" x1="100" y1="290" x2="118" y2="290" />
+                <line class="network-line thick" x1="222" y1="260" x2="295" y2="140" />
+                <line class="network-line thick" x1="222" y1="290" x2="288" y2="290" />
+                <line class="network-line thick" x1="222" y1="320" x2="295" y2="440" />
 
-                <!-- document-collector to circular arrangement -->
-                <line class="network-line" x1="130" y1="200" x2="230" y2="80" />
-                <line class="network-line" x1="130" y1="200" x2="230" y2="200" />
-                <line class="network-line" x1="130" y1="200" x2="230" y2="320" />
+                <!-- Development: parameter-architect feeds test-creator and rules-engineer -->
+                <line class="network-line thick" x1="340" y1="152" x2="340" y2="238" />
+                <line class="network-line thick" x1="340" y1="152" x2="340" y2="428" />
 
-                <!-- Circular connections between agents -->
-                <!-- Top arc -->
-                <line class="network-line" x1="230" y1="80" x2="350" y2="50" />
-                <line class="network-line" x1="350" y1="50" x2="470" y2="80" />
+                <!-- Parallel: test-creator and rules-engineer to edge-case-gen -->
+                <line class="network-line thick" x1="392" y1="310" x2="455" y2="385" />
+                <line class="network-line thick" x1="385" y1="440" x2="455" y2="430" />
 
-                <!-- Middle connections -->
-                <line class="network-line" x1="230" y1="200" x2="350" y2="200" />
-                <line class="network-line" x1="350" y1="200" x2="470" y2="200" />
+                <!-- Development to validation -->
+                <line class="network-line thick" x1="392" y1="100" x2="510" y2="85" />
+                <line class="network-line thick" x1="530" y1="435" x2="606" y2="470" />
+                <line class="network-line thick" x1="620" y1="125" x2="685" y2="245" />
+                <line class="network-line thick" x1="680" y1="450" x2="695" y2="345" />
 
-                <!-- Bottom arc -->
-                <line class="network-line" x1="230" y1="320" x2="350" y2="350" />
-                <line class="network-line" x1="350" y1="350" x2="470" y2="320" />
+                <!-- Main flow through ci-fixer to exit -->
+                <line class="network-line" x1="790" y1="290" x2="815" y2="290" />
+                <line class="network-line" x1="905" y1="290" x2="935" y2="290" />
+                <line class="network-line" x1="1025" y1="290" x2="1055" y2="290" />
 
-                <!-- Cross connections in circle -->
-                <line class="network-line" x1="230" y1="80" x2="350" y2="200" />
-                <line class="network-line" x1="230" y1="320" x2="350" y2="200" />
-                <line class="network-line" x1="350" y1="50" x2="470" y2="200" />
-                <line class="network-line" x1="350" y1="350" x2="470" y2="200" />
+                <!-- NODES -->
 
+                <!-- Entry (left) -->
+                <circle class="network-node" cx="55" cy="290" r="45" />
+                <text class="node-icon" x="55" y="288">📋</text>
+                <text class="network-label" x="55" y="355">issue-manager</text>
 
-                <!-- Exit: pr-pusher to program-reviewer to Draft PR -->
-                <line class="network-line" x1="470" y1="80" x2="560" y2="140" />
-                <line class="network-line" x1="470" y1="320" x2="560" y2="260" />
-                <line class="network-line" x1="560" y1="140" x2="560" y2="200" />
-                <line class="network-line" x1="560" y1="260" x2="560" y2="200" />
-                <line class="network-line" x1="560" y1="200" x2="640" y2="200" />
+                <circle class="network-node" cx="170" cy="290" r="52" />
+                <text class="node-icon large" x="170" y="288">📚</text>
+                <text class="network-label" x="170" y="362">document-</text>
+                <text class="network-label" x="170" y="378">collector</text>
 
-                <!-- NODES arranged in circular pattern -->
+                <!-- Development (left side of circle) -->
+                <circle class="network-node specialist" cx="340" cy="100" r="52" />
+                <text class="node-icon large" x="340" y="98">⚙️</text>
+                <text class="network-label" x="340" y="35">parameter-architect</text>
 
-                <!-- Entry nodes (left) -->
-                <circle class="network-node" cx="60" cy="200" r="20" />
-                <text class="node-icon small" x="60" y="205">📋</text>
-                <text class="network-label" x="60" y="235">issue-manager</text>
+                <circle class="network-node specialist" cx="340" cy="290" r="52" />
+                <text class="node-icon large" x="340" y="288">🧪</text>
+                <text class="network-label" x="340" y="362">test-creator</text>
 
-                <circle class="network-node" cx="130" cy="200" r="32" />
-                <text class="node-icon large" x="130" y="205">📄</text>
-                <text class="network-label" x="130" y="248">document-</text>
-                <text class="network-label" x="130" y="260">collector</text>
+                <circle class="network-node specialist" cx="340" cy="480" r="52" />
+                <text class="node-icon large" x="340" y="478">λ</text>
+                <text class="network-label" x="340" y="552">rules-engineer</text>
 
-                <!-- Circular arrangement (specialists on left arc) -->
-                <circle class="network-node specialist" cx="230" cy="80" r="28" />
-                <text class="node-icon" x="230" y="85">⚙️</text>
-                <text class="network-label" x="230" y="35">parameter-architect</text>
+                <circle class="network-node" cx="490" cy="420" r="44" />
+                <text class="node-icon" x="490" y="418">⚡</text>
+                <text class="network-label" x="490" y="482">edge-case-gen</text>
 
-                <circle class="network-node specialist" cx="230" cy="200" r="28" />
-                <text class="node-icon" x="230" y="205">🧪</text>
-                <text class="network-label" x="230" y="245">test-creator</text>
+                <!-- Validation (center-right of circle) -->
+                <circle class="network-node" cx="570" cy="80" r="60" />
+                <text class="node-icon large" x="570" y="78">🔍</text>
+                <text class="network-label" x="570" y="10">impl-validator</text>
 
-                <circle class="network-node specialist" cx="230" cy="320" r="28" />
-                <text class="node-icon" x="230" y="325">{ }</text>
-                <text class="network-label" x="230" y="365">rules-engineer</text>
+                <circle class="network-node" cx="650" cy="480" r="44" />
+                <text class="node-icon" x="650" y="478">🔗</text>
+                <text class="network-label" x="650" y="542">reference-validator</text>
 
-                <!-- Center of circle -->
-                <circle class="network-node" cx="350" cy="50" r="24" />
-                <text class="node-icon" x="350" y="55">🔍</text>
-                <text class="network-label" x="350" y="20">impl-validator</text>
+                <circle class="network-node" cx="730" cy="290" r="60" />
+                <text class="node-icon large" x="730" y="288">🔧</text>
+                <text class="network-label" x="730" y="370">ci-fixer</text>
 
-                <circle class="network-node" cx="350" cy="200" r="34" />
-                <text class="node-icon large" x="350" y="205">🔧</text>
-                <text class="network-label" x="350" y="250">ci-fixer</text>
+                <!-- Exit (right) -->
+                <circle class="network-node" cx="860" cy="290" r="45" />
+                <text class="node-icon" x="860" y="288">⬆</text>
+                <text class="network-label" x="860" y="355">pr-pusher</text>
 
-                <circle class="network-node" cx="350" cy="350" r="22" />
-                <text class="node-icon small" x="350" y="355">🔗</text>
-                <text class="network-label" x="350" y="388">reference-validator</text>
+                <circle class="network-node" cx="980" cy="290" r="45" />
+                <text class="node-icon" x="980" y="288">📖</text>
+                <text class="network-label" x="980" y="355">program-reviewer</text>
 
-                <!-- Right arc -->
-                <circle class="network-node" cx="470" cy="80" r="20" />
-                <text class="node-icon small" x="470" y="85">⬆</text>
-                <text class="network-label" x="470" y="35">pr-pusher</text>
-
-                <circle class="network-node" cx="470" cy="200" r="22" />
-                <text class="node-icon small" x="470" y="205">⚡</text>
-                <text class="network-label" x="470" y="238">edge-case-gen</text>
-
-                <circle class="network-node" cx="470" cy="320" r="20" />
-                <text class="node-icon small" x="470" y="325">✨</text>
-                <text class="network-label" x="470" y="358">doc-enricher</text>
-
-                <!-- Exit nodes (right) -->
-                <circle class="network-node" cx="560" cy="200" r="32" />
-                <text class="node-icon large" x="560" y="205">📖</text>
-                <text class="network-label" x="560" y="248">program-reviewer</text>
-
-                <circle class="network-node output" cx="640" cy="200" r="28" />
-                <text class="node-icon" x="640" y="205">📝</text>
-                <text class="network-label" x="640" y="245">Draft PR</text>
+                <circle class="network-node output" cx="1100" cy="290" r="45" />
+                <text class="node-icon" x="1100" y="288">📝</text>
+                <text class="network-label" x="1100" y="355">Draft PR</text>
 
             </svg>
         </div>
