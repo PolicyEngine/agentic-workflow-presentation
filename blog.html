@@ -994,8 +994,8 @@
         <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the entire implementation process. Give it a policy name like "Oregon TANF" and the output is a pull request with parameters, variables, tests, and documentation.</p>
 
         <h3>Agents and skills</h3>
-        <p>Agents are specialized AI assistants. Instead of one prompt handling research, coding, and testing, each agent focuses on a single task with tools tailored to that job. The document-collector can search the web but can't write code. The rules-engineer can write code but doesn't search. This separation ensures focus and prevents errors.</p>
-        <p>Skills are reusable knowledge modules that multiple agents share. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
+        <p>Agents are specialized AI assistants. Instead of one prompt handling research, coding, and testing, each agent focuses on a single task with tools tailored to that job. See the <a href="https://code.claude.com/docs/en/sub-agents">Claude Code documentation</a> for more on agents.</p>
+        <p>Skills are reusable knowledge modules that multiple agents share. The <a href="https://github.com/PolicyEngine/policyengine-claude/tree/master/skills/technical-patterns/policyengine-variable-patterns-skill">policyengine-variable-patterns-skill</a> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
 
         <hr>
 
@@ -1237,12 +1237,34 @@
                 <line class="network-line thick" x1="222" y1="320" x2="295" y2="440" />
 
                 <!-- Development to edge-case-gen (after parallel work completes) -->
-                <line class="network-line thick" x1="392" y1="310" x2="455" y2="385" />
-                <line class="network-line thick" x1="385" y1="440" x2="455" y2="430" />
+                <line class="network-line thick" x1="392" y1="310" x2="450" y2="340" />
+                <line class="network-line thick" x1="385" y1="440" x2="450" y2="375" />
 
-                <!-- Connections to test-creator from validators -->
+                <!-- Connections from test-creator to validators -->
                 <line class="network-line thick" x1="392" y1="290" x2="640" y2="120" />
                 <line class="network-line thick" x1="392" y1="290" x2="760" y2="290" />
+
+                <!-- ci-fixer feedback to specialists (iteration loop) -->
+                <line class="network-line thick" x1="760" y1="270" x2="400" y2="120" />
+                <line class="network-line thick" x1="760" y1="310" x2="400" y2="460" />
+
+                <!-- parameter-architect to impl-validator -->
+                <line class="network-line thick" x1="392" y1="100" x2="640" y2="100" />
+
+                <!-- rules-engineer to reference-validator -->
+                <line class="network-line thick" x1="392" y1="480" x2="626" y2="507" />
+
+                <!-- impl-validator to ci-fixer -->
+                <line class="network-line thick" x1="740" y1="140" x2="790" y2="240" />
+
+                <!-- reference-validator to ci-fixer -->
+                <line class="network-line thick" x1="700" y1="475" x2="790" y2="340" />
+
+                <!-- edge-case-gen to ci-fixer -->
+                <line class="network-line thick" x1="534" y1="360" x2="760" y2="300" />
+
+                <!-- rules-engineer to ci-fixer (straight line) -->
+                <line class="network-line thick" x1="392" y1="480" x2="760" y2="310" />
 
                 <!-- Main flow through ci-fixer to exit -->
                 <line class="network-line" x1="880" y1="290" x2="888" y2="290" />
@@ -1274,9 +1296,9 @@
                 <g transform="translate(340,488) scale(1.6)"><use href="#icon-lambda" class="svg-icon"/></g>
                 <text class="network-label" x="340" y="552">rules-engineer</text>
 
-                <circle class="network-node" cx="490" cy="420" r="44" />
-                <g transform="translate(490,420) scale(1.4)"><use href="#icon-lightning" class="svg-icon"/></g>
-                <text class="network-label" x="490" y="482">edge-case-gen</text>
+                <circle class="network-node" cx="490" cy="360" r="44" />
+                <g transform="translate(490,360) scale(1.4)"><use href="#icon-lightning" class="svg-icon"/></g>
+                <text class="network-label" x="490" y="422">edge-case-gen</text>
 
                 <!-- Validation (center-right of circle) -->
                 <circle class="network-node" cx="700" cy="100" r="60" />
@@ -1312,11 +1334,11 @@
         <hr>
 
         <h2>Design principles</h2>
-        <p><strong>Source authority</strong>: Statutes beat regulations beat websites. Every value traces to its most authoritative source.</p>
-        <p><strong>Isolation</strong>: Test creators and implementers don't see each other's work. Mismatches reveal bugs.</p>
-        <p><strong>Skills as knowledge</strong>: Domain expertise lives in reusable modules that multiple agents share.</p>
-        <p><strong>Orchestrator pattern</strong>: The main command never writes code—only invokes specialists and checks quality gates.</p>
-        <p><strong>Explicit limitations</strong>: Document non-simulatable rules upfront. PolicyEngine uses single-period calculations, so we cannot enforce lifetime limits and work history tracking.</p>
+        <p><strong>Source authority</strong>: Collect only primary sources. Anchor parameters to legal documents—statutes, regulations, state plans—and use forms and benefit calculators as supporting references.</p>
+        <p><strong>Isolation</strong>: Certain agents operate in isolation to prevent confirmation bias. When agents cannot see each other's output, mismatches between implementation and tests reveal actual bugs rather than shared misconceptions.</p>
+        <p><strong>Skills as knowledge base</strong>: Domain expertise lives in reusable modules shared by agents throughout the workflow.</p>
+        <p><strong>Orchestrator pattern</strong>: The orchestrator coordinates without implementing. It invokes specialized agents, checks quality gates, and manages workflow state—but never writes code itself.</p>
+        <p><strong>Code standards</strong>: Agents enforce repository-specific coding practices—naming conventions, file structure, parameter formatting, and test patterns—through skills that encode these standards.</p>
 
         <hr>
 
@@ -1327,15 +1349,15 @@
         <p>We started with a single prompt asking Claude to implement a TANF program end-to-end. The results fell short—error rates exceeded 70%, parameters lacked citations, tests passed despite incorrect formulas, and variables hard-coded values. Too many aspects for one context to handle well.</p>
 
         <h3>Stage 2: Specialized agents</h3>
-        <p>Breaking the work into specialized agents helped: a research agent, a parameter agent, a test agent, a variable agent. Each prompt taught the agent how to build for the policyengine-us repository. But without a skills feature (this was before October 2025), prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently.</p>
+        <p>Breaking down the development workflow to mirror knowledge gathering, implementation patterns, and review steps reduced error rates. A research agent, a parameter agent, a test agent, a variable agent—each focused on one concern. But without a skills feature, prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently.</p>
 
-        <h3>Stage 3: Parallel isolation</h3>
+        <h3>Stage 3: Parallelized agent execution</h3>
         <p>A critical issue: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
         <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies. We added an edge-case-generator that creates boundary tests after implementation—covering zero income, maximum benefits, cliff edges—based on real-world scenarios rather than implementation details.</p>
 
         <h3>Stage 4: Modular skills</h3>
         <p>Results improved, but formatting and code style issues persisted. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
-        <p>Then Claude Code released the skills feature in October 2025. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
+        <p>Then Claude Code released the skills feature. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
         <p>We re-engineered every agent and workflow around skills. Error rates dropped from 40% to 15%.</p>
 
         <hr>
