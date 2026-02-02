@@ -828,9 +828,7 @@
             stroke-width: 2.5;
         }
 
-        .agent-flow-svg:hover .network-line {
-            animation: flowLine 3s linear infinite;
-        }
+        /* Network lines stay static - only ellipse animates */
 
         @keyframes flowLine {
             from { stroke-dashoffset: 20; }
@@ -843,9 +841,7 @@
             opacity: 0.7;
         }
 
-        .agent-flow-svg:hover .network-line.delegate {
-            animation: flowLineReverse 1.5s linear infinite;
-        }
+        /* Delegate lines stay static */
 
         @keyframes flowLineReverse {
             from { stroke-dashoffset: 0; }
@@ -859,12 +855,11 @@
         }
 
         .agent-flow-svg .network-node.specialist {
-            stroke-dasharray: 4 2;
+            /* solid border, same as other nodes */
         }
 
         .agent-flow-svg .network-node.output {
-            stroke-dasharray: 3 2;
-            stroke: var(--text-light);
+            /* solid border, same as other nodes */
         }
 
         .agent-flow-svg .network-label {
@@ -889,6 +884,11 @@
             font-size: 46px;
         }
 
+        .agent-flow-svg .svg-icon {
+            color: var(--text-mid);
+            pointer-events: none;
+        }
+
         .agent-flow-svg .delegate-label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 8px;
@@ -898,11 +898,74 @@
         }
 
         .agent-flow-svg .loop-indicator {
-            fill: none;
-            stroke: var(--text-mid);
+            fill: rgba(13, 115, 119, 0.03);
+            stroke: var(--accent);
             stroke-width: 2.5;
             stroke-dasharray: 12 6;
-            opacity: 0.5;
+            opacity: 0.7;
+        }
+
+        .agent-flow-svg .loop-indicator {
+            animation: rotateLoop 6s linear infinite;
+        }
+
+        @keyframes rotateLoop {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -72; }
+        }
+
+        .agent-flow-svg .loop-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            font-style: italic;
+            fill: #1a202c;
+            text-anchor: middle;
+            letter-spacing: 0.03em;
+        }
+
+        /* Diagram tabs */
+        .diagram-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .diagram-tab {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .diagram-tab:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .diagram-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .diagram-panel {
+            display: none;
+        }
+
+        .diagram-panel.active {
+            display: block;
+        }
+
+        .diagram-hint {
+            font-size: 0.95rem;
+            color: var(--text-mid);
+            margin-bottom: 15px;
         }
 
         .agent-flow-svg:hover .loop-indicator {
@@ -928,17 +991,26 @@
         <hr>
 
         <h2>The solution: encode-policy</h2>
-        <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the entire implementation process. The command takes a policy request:</p>
-        <pre><code>/encode-policy "California CalFresh"
-/encode-policy "Texas SNAP"
-/encode-policy "Oregon TANF"</code></pre>
-        <p>The output: a pull request with parameters, variables, tests, and documentation.</p>
+        <p>The <code>encode-policy</code> command orchestrates specialized AI agents to automate the entire implementation process. Give it a policy name like "Oregon TANF" and the output is a pull request with parameters, variables, tests, and documentation.</p>
+
+        <h3>Agents and skills</h3>
+        <p>Agents are specialized AI assistants. Instead of one prompt handling research, coding, and testing, each agent focuses on a single task with tools tailored to that job. The document-collector can search the web but can't write code. The rules-engineer can write code but doesn't search. This separation ensures focus and prevents errors.</p>
+        <p>Skills are reusable knowledge modules that multiple agents share. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
 
         <hr>
 
         <h2>Architecture: the orchestrator pattern</h2>
-        <p>The encode-policy command never writes code. It invokes specialized agents and checks quality gates between phases. Click each phase below to explore:</p>
+        <p>The encode-policy command never writes code. It invokes specialized agents and checks quality gates between phases.</p>
 
+        <!-- Tab buttons -->
+        <div class="diagram-tabs">
+            <button class="diagram-tab active" onclick="showDiagramTab('workflow')">Workflow Phases</button>
+            <button class="diagram-tab" onclick="showDiagramTab('agentflow')">Agent Flow</button>
+        </div>
+
+        <!-- Workflow Diagram Tab -->
+        <div class="diagram-panel active" id="panel-workflow">
+        <p class="diagram-hint">Click each phase below to explore:</p>
         <!-- Interactive Workflow Diagram -->
         <div class="workflow-diagram">
             <div class="orchestrator-box">
@@ -955,18 +1027,18 @@
                 </div>
                 <span class="phase-connector">→</span>
                 <div class="phase-box" data-phase="development" onclick="showPhase('development')">
-                    <div class="phase-num">PHASE 2-3</div>
+                    <div class="phase-num">PHASE 2</div>
                     <div class="phase-title">Development</div>
                 </div>
                 <span class="phase-connector">→</span>
                 <div class="phase-box" data-phase="validation" onclick="showPhase('validation')">
-                    <div class="phase-num">PHASE 4-6</div>
+                    <div class="phase-num">PHASE 3</div>
                     <div class="phase-title">Validation</div>
                 </div>
                 <span class="phase-connector">→</span>
                 <div class="phase-box" data-phase="complete" onclick="showPhase('complete')">
-                    <div class="phase-num">PHASE 7-8</div>
-                    <div class="phase-title">Review & Complete</div>
+                    <div class="phase-num">PHASE 4</div>
+                    <div class="phase-title">Review</div>
                 </div>
             </div>
 
@@ -975,7 +1047,7 @@
             <div class="phase-details">
                 <!-- Phase 1: Setup -->
                 <div class="phase-detail" id="phase-setup">
-                    <h4>Phase 1 — Issue and PR Setup</h4>
+                    <h4>Phase 1: Setup (Step 1)</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">issue-manager</span>
                     </div>
@@ -989,9 +1061,9 @@
                     <p>Every subsequent agent references this issue and PR for coordination.</p>
                 </div>
 
-                <!-- Phase 2-3: Development -->
+                <!-- Phase 2: Development -->
                 <div class="phase-detail" id="phase-development">
-                    <h4>Phase 2-3 — Document Collection & Development</h4>
+                    <h4>Phase 2: Development (Steps 2–3)</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">document-collector</span>
                         <span class="agent-tag">parameter-architect</span>
@@ -1000,13 +1072,13 @@
                         <span class="agent-tag">edge-case-generator</span>
                     </div>
 
-                    <p><strong>Phase 2: Research</strong> — The document-collector researches official sources: statutes, policy manuals, state plans, and benefit calculators. Output: <code>sources/working_references.md</code></p>
+                    <p><strong>Step 2: Research</strong> — The document-collector researches official sources: statutes, policy manuals, state plans, and benefit calculators. Output: <code>sources/working_references.md</code></p>
 
                     <div class="quality-gate-inline">
                         <p><strong>Quality gate 1:</strong> Documentation must include the official program name, income limits, eligibility criteria, and legal citations.</p>
                     </div>
 
-                    <p><strong>Phase 3: Build</strong> — Three parallel tracks:</p>
+                    <p><strong>Step 3: Build</strong> — Three parallel tracks:</p>
                     <ul>
                         <li><strong>Parameters:</strong> The parameter-architect creates YAML files with legal citations</li>
                         <li><strong>Implementation:</strong> test-creator and rules-engineer work simultaneously from the same docs — neither sees the other's output</li>
@@ -1018,9 +1090,9 @@
                     </div>
                 </div>
 
-                <!-- Phase 4-6: Validation -->
+                <!-- Phase 3: Validation -->
                 <div class="phase-detail" id="phase-validation">
-                    <h4>Phase 4-6 — Validation & Fixes</h4>
+                    <h4>Phase 3: Validation (Steps 4–6)</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">implementation-validator</span>
                         <span class="agent-tag">reference-validator</span>
@@ -1028,9 +1100,9 @@
                         <span class="agent-tag">pr-pusher</span>
                     </div>
 
-                    <p><strong>Phase 4: Organization check</strong> — The validator loads 7 skills and checks naming conventions, file structure, metadata completeness, code patterns, and cross-references.</p>
+                    <p><strong>Step 4: Organization check</strong> — The validator loads 7 skills and checks naming conventions, file structure, metadata completeness, code patterns, and cross-references.</p>
 
-                    <p><strong>Phase 5: Validate and fix</strong> — First, the reference-validator checks that all parameters have proper citations. Then the ci-fixer runs tests locally (2-3 min vs 20-30 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
+                    <p><strong>Step 5: Validate and fix</strong> — First, the reference-validator checks that all parameters have proper citations. Then the ci-fixer runs tests locally (2-3 min vs 20-30 min on GitHub CI), analyzes failures, and delegates to specialists:</p>
                     <ul>
                         <li>Calculation errors → <code>rules-engineer</code></li>
                         <li>Test expectation errors → <code>test-creator</code></li>
@@ -1038,19 +1110,19 @@
                     </ul>
                     <p>This cycle repeats until all tests pass.</p>
 
-                    <p><strong>Phase 6: Format and push</strong> — The pr-pusher adds changelog, runs formatters (<code>black</code>, <code>isort</code>), and pushes.</p>
+                    <p><strong>Step 6: Format and push</strong> — The pr-pusher adds changelog, runs formatters (<code>black</code>, <code>isort</code>), and pushes.</p>
                 </div>
 
-                <!-- Phase 7-8: Review & Complete -->
+                <!-- Phase 4: Review -->
                 <div class="phase-detail" id="phase-complete">
-                    <h4>Phase 7-8 — Review & Complete</h4>
+                    <h4>Phase 4: Review (Steps 7–8)</h4>
                     <div class="agent-tags">
                         <span class="agent-tag">program-reviewer</span>
                     </div>
 
-                    <p><strong>Phase 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents. If discrepancies are found, findings are posted to the PR for human review.</p>
+                    <p><strong>Step 7: Review</strong> — The program-reviewer researches regulations <em>before</em> reading code (preventing confirmation bias), then compares implementation against source documents. If discrepancies are found, findings are posted to the PR for human review.</p>
 
-                    <p><strong>Phase 8: Documentation</strong> — The reviewer updates the PR description with:</p>
+                    <p><strong>Step 8: Documentation</strong> — The reviewer updates the PR description with:</p>
                     <ul>
                         <li>Regulatory authority citations</li>
                         <li>Income eligibility tests with sources</li>
@@ -1061,110 +1133,181 @@
                 </div>
             </div>
         </div>
+        </div>
 
-        <!-- Agent Flow Diagram -->
-        <h3>Agent flow</h3>
-        <p>The diagram below shows how agents connect. Three agents run in parallel during development, then converge for validation. The fix cycle iterates until tests pass, then the PR is handed off for human review.</p>
-
+        <!-- Agent Flow Diagram Tab -->
+        <div class="diagram-panel" id="panel-agentflow">
+        <p class="diagram-hint">The diagram shows how agents connect. The ellipse represents the iteration loop—agents cycle until tests pass.</p>
         <div class="agent-flow-container">
-            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 1150 580" width="1150" height="580">
-                <!-- Loop indicator - ellipse around development/validation agents, now centered -->
+            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 1130 580" width="1130" height="580">
+                <!-- Icon definitions -->
+                <defs>
+                    <!-- Clipboard icon -->
+                    <g id="icon-clipboard">
+                        <rect x="-12" y="-16" width="24" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <rect x="-6" y="-20" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-7" y1="-4" x2="7" y2="-4" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-7" y1="3" x2="7" y2="3" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-7" y1="10" x2="4" y2="10" stroke="currentColor" stroke-width="2"/>
+                    </g>
+                    <!-- Books/documents icon -->
+                    <g id="icon-books">
+                        <rect x="-14" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-10)"/>
+                        <rect x="-4" y="-10" width="8" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <rect x="6" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(10)"/>
+                    </g>
+                    <!-- Gear icon -->
+                    <g id="icon-gear">
+                        <circle cx="0" cy="0" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M0,-16 L3,-12 L3,-10 L-3,-10 L-3,-12 Z" fill="currentColor"/>
+                        <path d="M0,16 L3,12 L3,10 L-3,10 L-3,12 Z" fill="currentColor"/>
+                        <path d="M-16,0 L-12,3 L-10,3 L-10,-3 L-12,-3 Z" fill="currentColor"/>
+                        <path d="M16,0 L12,3 L10,3 L10,-3 L12,-3 Z" fill="currentColor"/>
+                        <path d="M-11,-11 L-9,-8 L-7,-9 L-9,-12 Z" fill="currentColor" transform="rotate(0)"/>
+                        <path d="M11,-11 L9,-8 L7,-9 L9,-12 Z" fill="currentColor"/>
+                        <path d="M-11,11 L-9,8 L-7,9 L-9,12 Z" fill="currentColor"/>
+                        <path d="M11,11 L9,8 L7,9 L9,12 Z" fill="currentColor"/>
+                    </g>
+                    <!-- Flask/beaker icon -->
+                    <g id="icon-flask">
+                        <path d="M-5,-16 L-5,-4 L-14,14 L14,14 L5,-4 L5,-16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <line x1="-7" y1="-16" x2="7" y2="-16" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-9" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/>
+                    </g>
+                    <!-- Lambda icon -->
+                    <g id="icon-lambda">
+                        <text x="0" y="8" font-family="Georgia, serif" font-size="40" font-weight="400" fill="currentColor" text-anchor="middle">λ</text>
+                    </g>
+                    <!-- Lightning bolt icon -->
+                    <g id="icon-lightning">
+                        <polygon points="2,-16 -8,2 -1,2 -4,16 8,-2 1,-2" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                    </g>
+                    <!-- Magnifying glass icon -->
+                    <g id="icon-search">
+                        <circle cx="-3" cy="-3" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                        <line x1="6" y1="6" x2="16" y2="16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </g>
+                    <!-- Chain link icon -->
+                    <g id="icon-link">
+                        <ellipse cx="-6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+                        <ellipse cx="6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+                    </g>
+                    <!-- Wrench icon -->
+                    <g id="icon-wrench">
+                        <path d="M-6,-16 C-12,-10 -12,-2 -6,4 L8,18 L14,12 L0,-2 C6,-8 6,-14 0,-16 L-2,-10 L-6,-10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </g>
+                    <!-- Upload arrow icon -->
+                    <g id="icon-upload">
+                        <line x1="0" y1="12" x2="0" y2="-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <polyline points="-8,-2 0,-12 8,-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="-12" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                    <!-- Open book icon -->
+                    <g id="icon-book">
+                        <path d="M0,-12 L0,14" stroke="currentColor" stroke-width="2"/>
+                        <path d="M0,-12 C-6,-14 -12,-12 -16,-8 L-16,12 C-12,8 -6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M0,-12 C6,-14 12,-12 16,-8 L16,12 C12,8 6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-12" y1="-4" x2="-4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="-12" y1="2" x2="-4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="12" y1="-4" x2="4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="12" y1="2" x2="4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                    </g>
+                    <!-- Document icon -->
+                    <g id="icon-document">
+                        <path d="M-10,-16 L6,-16 L14,-8 L14,16 L-10,16 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M6,-16 L6,-8 L14,-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <line x1="-5" y1="0" x2="9" y2="0" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-5" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2"/>
+                        <line x1="-5" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="2"/>
+                    </g>
+                </defs>
+
+                <!-- Loop indicator - ellipse around development/validation agents -->
                 <ellipse class="loop-indicator" cx="520" cy="290" rx="300" ry="250" />
+                <text class="loop-label" x="520" y="555">iterate until tests pass</text>
 
                 <!-- CONNECTIONS -->
 
-                <!-- Entry flow -->
+                <!-- Entry flow: issue-manager to document-collector -->
                 <line class="network-line" x1="100" y1="290" x2="118" y2="290" />
+
+                <!-- document-collector feeds into the development loop -->
                 <line class="network-line thick" x1="222" y1="260" x2="295" y2="140" />
                 <line class="network-line thick" x1="222" y1="290" x2="288" y2="290" />
                 <line class="network-line thick" x1="222" y1="320" x2="295" y2="440" />
 
-                <!-- Development: parameter-architect feeds test-creator and rules-engineer -->
-                <line class="network-line thick" x1="340" y1="152" x2="340" y2="238" />
-                <line class="network-line thick" x1="340" y1="152" x2="340" y2="428" />
-
-                <!-- Parallel: test-creator and rules-engineer to edge-case-gen -->
+                <!-- Development to edge-case-gen (after parallel work completes) -->
                 <line class="network-line thick" x1="392" y1="310" x2="455" y2="385" />
                 <line class="network-line thick" x1="385" y1="440" x2="455" y2="430" />
 
-                <!-- Development to validation -->
-                <line class="network-line thick" x1="392" y1="100" x2="510" y2="85" />
-                <line class="network-line thick" x1="530" y1="435" x2="606" y2="470" />
-                <line class="network-line thick" x1="620" y1="125" x2="685" y2="245" />
-                <line class="network-line thick" x1="680" y1="450" x2="695" y2="345" />
+                <!-- Connections to test-creator from validators -->
+                <line class="network-line thick" x1="392" y1="290" x2="640" y2="120" />
+                <line class="network-line thick" x1="392" y1="290" x2="760" y2="290" />
 
                 <!-- Main flow through ci-fixer to exit -->
-                <line class="network-line" x1="790" y1="290" x2="815" y2="290" />
-                <line class="network-line" x1="905" y1="290" x2="935" y2="290" />
-                <line class="network-line" x1="1025" y1="290" x2="1055" y2="290" />
+                <line class="network-line" x1="880" y1="290" x2="888" y2="290" />
+                <line class="network-line" x1="952" y1="290" x2="968" y2="290" />
+                <line class="network-line" x1="1032" y1="290" x2="1048" y2="290" />
 
                 <!-- NODES -->
 
                 <!-- Entry (left) -->
                 <circle class="network-node" cx="55" cy="290" r="45" />
-                <text class="node-icon" x="55" y="288">📋</text>
+                <g transform="translate(55,290) scale(1.4)"><use href="#icon-clipboard" class="svg-icon"/></g>
                 <text class="network-label" x="55" y="355">issue-manager</text>
 
                 <circle class="network-node" cx="170" cy="290" r="52" />
-                <text class="node-icon large" x="170" y="288">📚</text>
+                <g transform="translate(170,282) scale(1.6)"><use href="#icon-books" class="svg-icon"/></g>
                 <text class="network-label" x="170" y="362">document-</text>
                 <text class="network-label" x="170" y="378">collector</text>
 
                 <!-- Development (left side of circle) -->
                 <circle class="network-node specialist" cx="340" cy="100" r="52" />
-                <text class="node-icon large" x="340" y="98">⚙️</text>
+                <g transform="translate(340,100) scale(1.6)"><use href="#icon-gear" class="svg-icon"/></g>
                 <text class="network-label" x="340" y="35">parameter-architect</text>
 
                 <circle class="network-node specialist" cx="340" cy="290" r="52" />
-                <text class="node-icon large" x="340" y="288">🧪</text>
+                <g transform="translate(340,290) scale(1.6)"><use href="#icon-flask" class="svg-icon"/></g>
                 <text class="network-label" x="340" y="362">test-creator</text>
 
                 <circle class="network-node specialist" cx="340" cy="480" r="52" />
-                <text class="node-icon large" x="340" y="478">λ</text>
+                <g transform="translate(340,488) scale(1.6)"><use href="#icon-lambda" class="svg-icon"/></g>
                 <text class="network-label" x="340" y="552">rules-engineer</text>
 
                 <circle class="network-node" cx="490" cy="420" r="44" />
-                <text class="node-icon" x="490" y="418">⚡</text>
+                <g transform="translate(490,420) scale(1.4)"><use href="#icon-lightning" class="svg-icon"/></g>
                 <text class="network-label" x="490" y="482">edge-case-gen</text>
 
                 <!-- Validation (center-right of circle) -->
-                <circle class="network-node" cx="570" cy="80" r="60" />
-                <text class="node-icon large" x="570" y="78">🔍</text>
-                <text class="network-label" x="570" y="10">impl-validator</text>
+                <circle class="network-node" cx="700" cy="100" r="60" />
+                <g transform="translate(700,100) scale(1.8)"><use href="#icon-search" class="svg-icon"/></g>
+                <text class="network-label" x="700" y="35">impl-validator</text>
 
-                <circle class="network-node" cx="650" cy="480" r="44" />
-                <text class="node-icon" x="650" y="478">🔗</text>
-                <text class="network-label" x="650" y="542">reference-validator</text>
+                <circle class="network-node" cx="670" cy="507" r="44" />
+                <g transform="translate(670,507) scale(1.4)"><use href="#icon-link" class="svg-icon"/></g>
+                <text class="network-label" x="670" y="569">reference-validator</text>
 
-                <circle class="network-node" cx="730" cy="290" r="60" />
-                <text class="node-icon large" x="730" y="288">🔧</text>
-                <text class="network-label" x="730" y="370">ci-fixer</text>
+                <circle class="network-node" cx="820" cy="290" r="60" />
+                <g transform="translate(820,290) scale(1.8)"><use href="#icon-wrench" class="svg-icon"/></g>
+                <text class="network-label" x="820" y="370">ci-fixer</text>
 
-                <!-- Exit (right) -->
-                <circle class="network-node" cx="860" cy="290" r="45" />
-                <text class="node-icon" x="860" y="288">⬆</text>
-                <text class="network-label" x="860" y="355">pr-pusher</text>
+                <!-- Exit (right) - smaller nodes to emphasize the ellipse -->
+                <circle class="network-node" cx="920" cy="290" r="32" />
+                <g transform="translate(920,290) scale(1.0)"><use href="#icon-upload" class="svg-icon"/></g>
+                <text class="network-label" x="920" y="338">pr-pusher</text>
 
-                <circle class="network-node" cx="980" cy="290" r="45" />
-                <text class="node-icon" x="980" y="288">📖</text>
-                <text class="network-label" x="980" y="355">program-reviewer</text>
+                <circle class="network-node" cx="1000" cy="290" r="32" />
+                <g transform="translate(1000,290) scale(1.0)"><use href="#icon-book" class="svg-icon"/></g>
+                <text class="network-label" x="1000" y="338">program-</text>
+                <text class="network-label" x="1000" y="352">reviewer</text>
 
-                <circle class="network-node output" cx="1100" cy="290" r="45" />
-                <text class="node-icon" x="1100" y="288">📝</text>
-                <text class="network-label" x="1100" y="355">Draft PR</text>
+                <circle class="network-node output" cx="1080" cy="290" r="32" />
+                <g transform="translate(1080,290) scale(1.0)"><use href="#icon-document" class="svg-icon"/></g>
+                <text class="network-label" x="1080" y="338">Draft PR</text>
 
             </svg>
         </div>
-
-        <h3>Agents and skills</h3>
-        <p>Each agent is configured with:</p>
-        <ul>
-            <li><strong>Tools</strong>: A specific set of capabilities (bash commands, file operations, web search) tailored to its task</li>
-            <li><strong>Skills</strong>: Domain knowledge modules (parameter patterns, testing patterns, code style, etc.)</li>
-            <li><strong>Model</strong>: Claude Opus for complex reasoning</li>
-        </ul>
-        <p>Skills are reusable knowledge modules. The <code>policyengine-variable-patterns-skill</code> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow.</p>
-        <p>Skills follow Anthropic's <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Agent Skills open standard</a>, which works across multiple AI tools. See the <a href="https://code.claude.com/docs/en/skills">Claude Code documentation</a> for details.</p>
+        </div>
 
         <hr>
 
@@ -1173,43 +1316,38 @@
         <p><strong>Isolation</strong>: Test creators and implementers don't see each other's work. Mismatches reveal bugs.</p>
         <p><strong>Skills as knowledge</strong>: Domain expertise lives in reusable modules that multiple agents share.</p>
         <p><strong>Orchestrator pattern</strong>: The main command never writes code—only invokes specialists and checks quality gates.</p>
-        <p><strong>Local testing</strong>: Run tests locally (2-3 minutes) instead of waiting for GitHub CI (20-30 minutes).</p>
-        <p><strong>Explicit limitations</strong>: Document non-simulatable rules upfront. PolicyEngine uses single-period calculations, so lifetime limits and work history tracking cannot be enforced.</p>
+        <p><strong>Explicit limitations</strong>: Document non-simulatable rules upfront. PolicyEngine uses single-period calculations, so we cannot enforce lifetime limits and work history tracking.</p>
 
         <hr>
 
         <h2>The evolution: from prompt to workflow</h2>
         <p>The current system didn't emerge fully formed. It evolved through several iterations, each solving problems revealed by the previous approach.</p>
 
-        <h3>Stage 1: One long prompt</h3>
-        <p>We started with a single prompt asking Claude to implement a TANF program end-to-end. The results were poor—too many aspects for one context to handle well. Research, parameters, variables, tests, documentation—each requires different expertise and attention.</p>
+        <h3>Stage 1: Single prompt</h3>
+        <p>We started with a single prompt asking Claude to implement a TANF program end-to-end. The results fell short—error rates exceeded 70%, parameters lacked citations, tests passed despite incorrect formulas, and variables hard-coded values. Too many aspects for one context to handle well.</p>
 
         <h3>Stage 2: Specialized agents</h3>
         <p>Breaking the work into specialized agents helped: a research agent, a parameter agent, a test agent, a variable agent. Each prompt taught the agent how to build for the policyengine-us repository. But without a skills feature (this was before October 2025), prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently.</p>
 
-        <h3>Stage 3: The test problem</h3>
-        <p>The most critical issue: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
+        <h3>Stage 3: Parallel isolation</h3>
+        <p>A critical issue: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
         <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies. We added an edge-case-generator that creates boundary tests after implementation—covering zero income, maximum benefits, cliff edges—based on real-world scenarios rather than implementation details.</p>
 
-        <h3>Stage 4: The forgetting problem</h3>
+        <h3>Stage 4: Modular skills</h3>
         <p>Results improved, but formatting and code style issues persisted. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
         <p>Then Claude Code released the skills feature in October 2025. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
-        <p>We re-engineered every agent and workflow around skills. The improvement was significant.</p>
-
-        <h3>Stage 5: User feedback</h3>
-        <p>Colleagues using the workflow provided feedback that shaped new features. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline. This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) but expose them for standalone use. The components became building blocks, not just steps in a sequence.</p>
+        <p>We re-engineered every agent and workflow around skills. Error rates dropped from 40% to 15%.</p>
 
         <hr>
 
-        <h2>Reusable components</h2>
-        <p>Every agent and skill in the workflow can run independently outside the encode-policy flow. The <code>/review-pr</code> and <code>/fix-pr</code> commands demonstrate this—they use the same validation and fixing agents to review any PR, not just those created by encode-policy.</p>
-        <p><code>/review-pr</code> runs 4 validators (regulatory accuracy, reference quality, code patterns, test coverage) and posts prioritized findings to GitHub. <code>/fix-pr</code> reads those findings and delegates to specialist agents—parameter-architect, rules-engineer, ci-fixer—to resolve issues automatically.</p>
+        <h2>Beyond encode-policy</h2>
+        <p>Colleagues using the workflow provided feedback that shaped new features. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline. This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) to review any PR, not just those created by encode-policy. The components became building blocks, not just steps in a sequence.</p>
         <p>Skills work the same way. The <code>policyengine-testing-patterns-skill</code> can be loaded by any agent or user session to get consistent test formatting rules. Skills are context you can inject into any conversation—not tied to specific commands or workflows.</p>
 
         <hr>
 
         <h2>Results</h2>
-        <p>Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
+        <p>What used to take 2-3 weeks now takes 90 minutes. Specialized agents handle the mechanical work—research, parameterization, testing, documentation—while humans review the final PR and make the merge decision.</p>
         <p>The workflow has produced TANF implementations for 42 states, generating over 60,000 lines of code. We have also used it for childcare subsidies and healthcare programs, each following consistent patterns and quality standards.</p>
 
         <hr>
@@ -1226,9 +1364,9 @@ claude /encode-policy "Iowa TANF"</code></pre>
         <hr>
 
         <h2>What's next</h2>
-        <p>The encode-policy workflow handles individual programs well. The next frontier is understanding how programs interact.</p>
+        <p>The encode-policy workflow handles individual programs. The next challenge is understanding how programs interact.</p>
 
-        <p><strong>Cross-program validation</strong> is our priority. Benefit programs form a connected system—SNAP benefits count as unearned income for TANF, Medicaid enrollment affects SSI calculations, and some programs are mutually exclusive. A cross-program validator would detect these interactions during implementation rather than in production.</p>
+        <p><strong>Cross-program validation</strong> is the next focus. Benefit programs form a connected system—SNAP benefits count as unearned income for TANF, Medicaid enrollment affects SSI calculations, and some programs are mutually exclusive. A cross-program validator would detect these interactions during implementation rather than in production.</p>
 
         <p><strong>Historical implementations</strong> present a different challenge. Parameters support multiple effective dates, but program reforms often involve structural changes—eliminating deductions, adding eligibility categories, or restructuring formulas. We are testing approaches to handle these reforms across time.</p>
 
@@ -1272,6 +1410,16 @@ claude /encode-policy "Iowa TANF"</code></pre>
             setTimeout(() => {
                 svg.classList.remove('show-build', 'show-fix', 'show-review');
             }, 5000);
+        }
+
+        function showDiagramTab(tab) {
+            // Remove active class from all tabs and panels
+            document.querySelectorAll('.diagram-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.diagram-panel').forEach(p => p.classList.remove('active'));
+
+            // Add active class to selected tab and panel
+            event.target.classList.add('active');
+            document.getElementById('panel-' + tab).classList.add('active');
         }
 
     </script>
