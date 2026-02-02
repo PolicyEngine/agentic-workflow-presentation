@@ -1237,22 +1237,28 @@
                 <line class="network-line thick" x1="222" y1="320" x2="295" y2="440" />
 
                 <!-- Development to edge-case-gen (after parallel work completes) -->
-                <line class="network-line thick" x1="392" y1="310" x2="450" y2="340" />
-                <line class="network-line thick" x1="385" y1="440" x2="450" y2="375" />
+                <line class="network-line thick" x1="392" y1="310" x2="490" y2="360" />
+                <line class="network-line thick" x1="381" y1="448" x2="490" y2="360" />
 
                 <!-- Connections from test-creator to validators -->
-                <line class="network-line thick" x1="392" y1="290" x2="640" y2="120" />
+                <line class="network-line thick" x1="392" y1="290" x2="640" y2="100" />
                 <line class="network-line thick" x1="392" y1="290" x2="760" y2="290" />
 
-                <!-- ci-fixer feedback to specialists (iteration loop) -->
-                <line class="network-line thick" x1="760" y1="270" x2="400" y2="120" />
-                <line class="network-line thick" x1="760" y1="310" x2="400" y2="460" />
-
+                
                 <!-- parameter-architect to impl-validator -->
                 <line class="network-line thick" x1="392" y1="100" x2="640" y2="100" />
 
+                <!-- parameter-architect to ci-fixer -->
+                <line class="network-line thick" x1="387" y1="121" x2="760" y2="290" />
+
+                <!-- rules-engineer to ci-fixer -->
+                <line class="network-line thick" x1="392" y1="480" x2="790" y2="340" />
+
+                <!-- parameter-architect to reference-validator -->
+                <line class="network-line thick" x1="376" y1="138" x2="700" y2="475" />
+
                 <!-- rules-engineer to reference-validator -->
-                <line class="network-line thick" x1="392" y1="480" x2="626" y2="507" />
+                <line class="network-line thick" x1="392" y1="480" x2="700" y2="475" />
 
                 <!-- impl-validator to ci-fixer -->
                 <line class="network-line thick" x1="740" y1="140" x2="790" y2="240" />
@@ -1261,10 +1267,7 @@
                 <line class="network-line thick" x1="700" y1="475" x2="790" y2="340" />
 
                 <!-- edge-case-gen to ci-fixer -->
-                <line class="network-line thick" x1="534" y1="360" x2="760" y2="300" />
-
-                <!-- rules-engineer to ci-fixer (straight line) -->
-                <line class="network-line thick" x1="392" y1="480" x2="760" y2="310" />
+                <line class="network-line thick" x1="534" y1="360" x2="760" y2="290" />
 
                 <!-- Main flow through ci-fixer to exit -->
                 <line class="network-line" x1="880" y1="290" x2="888" y2="290" />
@@ -1376,11 +1379,14 @@
 
         <h2>Try it yourself</h2>
         <p>The encode-policy command is part of the <a href="https://github.com/PolicyEngine/policyengine-claude">policyengine-claude</a> repository. To implement a new benefit program:</p>
-        <pre><code># Install the plugin
-claude /plugin marketplace add PolicyEngine/policyengine-claude
+        <pre><code># Add the marketplace
+/plugin marketplace add PolicyEngine/policyengine-claude
+
+# Install the complete plugin (includes encode-policy command)
+/plugin install complete@policyengine-claude
 
 # Run the workflow
-claude /encode-policy "Iowa TANF"</code></pre>
+/encode-policy "Iowa TANF"</code></pre>
         <p>The workflow guides you through each phase, checks quality gates, and fixes issues automatically.</p>
 
         <hr>
