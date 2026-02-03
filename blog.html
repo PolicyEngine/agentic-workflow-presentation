@@ -1226,7 +1226,7 @@
         <hr>
 
         <h2>The evolution: from prompt to workflow</h2>
-        <p>Getting to 90 minutes took several iterations, each solving problems revealed by the previous approach.</p>
+        <p>Getting to 90 minutes with a single command took several iterations, each solving problems revealed by the previous.</p>
 
         <!-- Interactive Iteration Accordion -->
         <div class="iteration-accordion">
@@ -1311,7 +1311,7 @@
                 </div>
                 <div class="iteration-panel" id="iteration-iter3">
                     <p>Specialization helped with error rates, but a deeper problem emerged: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
-                    <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies between what the code does and what the regulation requires. This principle of <strong>agent isolation</strong> became central to the workflow's reliability.</p>
+                    <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies between what the code does and what the regulation requires. This principle of <strong>agent isolation</strong> became central to the workflow's reliability. Error rates dropped to 40%.</p>
 
                     <div class="agent-flow-container stage-diagram" style="margin-top: 20px;">
                         <svg class="agent-flow-svg" viewBox="0 0 700 420">
@@ -1461,14 +1461,19 @@
                 </div>
                 <div class="iteration-panel" id="iteration-iter5">
                     <p>With skills in place, the architecture stabilized—and users started asking for more. Colleagues using the workflow provided feedback that shaped new capabilities. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline.</p>
-                    <p>This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) to review any PR, not just those created by encode-policy. The components became building blocks, not just steps in a sequence.</p>
+                    <p>This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) to review any PR, not just those created by <code>/encode-policy</code>. The components became building blocks, not just steps in a sequence.</p>
                     <p>Skills work the same way. The <code>policyengine-testing-patterns-skill</code> can be loaded by any agent or user session to get consistent test formatting rules. Skills are context you can inject into any conversation—not tied to specific commands or workflows.</p>
                     <p>This composability is the key insight: <strong>agents and skills are primitives, workflows are compositions</strong>.</p>
 
                     <p><strong>Commands</strong> (like <code>/encode-policy</code>) are user-invoked workflows. <strong>Agents</strong> (like <code>rules-engineer</code> or <code>ci-fixer</code>) are autonomous LLM workers that handle specific tasks. <strong>Skills</strong> are reusable knowledge modules—domain expertise that agents load as needed. The hierarchy flows from commands invoking agents, which load skills.</p>
 
                     <div class="agent-flow-container stage-diagram" style="margin-top: 20px;">
-                        <svg class="agent-flow-svg" viewBox="0 0 700 520">
+                        <svg class="agent-flow-svg" viewBox="-80 0 780 520">
+                            <!-- Row labels on left -->
+                            <text x="-10" y="52" text-anchor="end" font-family="JetBrains Mono" font-size="12" fill="var(--text-mid)" font-weight="600">Commands</text>
+                            <text x="-10" y="245" text-anchor="end" font-family="JetBrains Mono" font-size="12" fill="var(--text-mid)" font-weight="600">Agents</text>
+                            <text x="-10" y="392" text-anchor="end" font-family="JetBrains Mono" font-size="12" fill="var(--text-mid)" font-weight="600">Skills</text>
+
                             <!-- Three Commands at top -->
                             <rect x="70" y="20" width="150" height="55" rx="8" fill="var(--accent)" />
                             <text x="145" y="52" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="white" font-weight="600">/encode-policy</text>
@@ -1515,6 +1520,9 @@
                             <g transform="translate(580,240) scale(1.1)"><use href="#icon-wrench" class="svg-icon"/></g>
                             <text class="network-label" x="580" y="295">ci-fixer</text>
 
+                            <!-- More agents indicator -->
+                            <text x="660" y="250" font-family="JetBrains Mono" font-size="24" fill="var(--text-light)">...</text>
+
                             <!-- Root lines from agents to skills -->
                             <line x1="235" y1="278" x2="80" y2="370" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4 2"/>
                             <line x1="235" y1="278" x2="160" y2="370" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4 2"/>
@@ -1553,6 +1561,9 @@
                             <rect x="610" y="370" width="60" height="35" rx="4" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="1.5"/>
                             <text x="640" y="392" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#6366f1">review</text>
 
+                            <!-- More skills indicator -->
+                            <text x="685" y="395" font-family="JetBrains Mono" font-size="18" fill="#6366f1">...</text>
+
                             <!-- Labels -->
                             <text x="350" y="440" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="var(--text-light)">COMMANDS → AGENTS → SKILLS</text>
                             <text x="350" y="460" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--text-mid)" font-style="italic">primitives compose into workflows</text>
@@ -1570,12 +1581,12 @@
         <p><strong>Isolation</strong>: Certain agents operate in isolation to prevent confirmation bias. When agents cannot see each other's output, mismatches between implementation and tests reveal actual bugs rather than shared misconceptions.</p>
         <p><strong>Skills as knowledge base</strong>: Domain expertise lives in reusable modules shared by agents throughout the workflow.</p>
         <p><strong>Orchestrator pattern</strong>: The orchestrator coordinates without implementing. It invokes specialized agents, checks quality gates, and manages workflow state—but never writes code itself.</p>
-        <p><strong>Composability</strong>: Agents and skills are primitives that can be combined into different workflows. A validator agent works in encode-policy, review-pr, and fix-pr alike.</p>
+        <p><strong>Composability</strong>: Agents and skills are primitives that can be combined into different workflows. A validator agent works in <code>/encode-policy</code>, <code>/review-pr</code>, and <code>/fix-pr</code> alike.</p>
 
         <hr>
 
-        <h2>The architecture today: encode-policy</h2>
-        <p>The <code>encode-policy</code> command is one instantiation of these patterns. It orchestrates specialized agents to transform a policy request like "Oregon TANF" into a complete pull request with parameters, variables, tests, and documentation. The orchestrator never writes code—it invokes specialized agents and checks quality gates between phases.</p>
+        <h2>The architecture today</h2>
+        <p>The <code>/encode-policy</code> command is the most comprehensive instantiation of these patterns—but <code>/review-pr</code> and <code>/fix-pr</code> use the same agents and skills for focused tasks. Here's how <code>/encode-policy</code> works in detail: it orchestrates specialized agents to transform a policy request like "Oregon TANF" into a complete pull request with parameters, variables, tests, and documentation. The orchestrator never writes code—it invokes specialized agents and checks quality gates between phases.</p>
 
         <h3>Workflow phases</h3>
         <p class="diagram-hint">Click each phase below to explore:</p>
@@ -1583,7 +1594,7 @@
         <div class="workflow-diagram">
             <div class="orchestrator-box">
                 <div class="title">Orchestrator</div>
-                <div class="cmd">encode-policy</div>
+                <div class="cmd">/encode-policy</div>
             </div>
 
             <div class="connection-line"></div>
@@ -1711,7 +1722,7 @@
         <hr>
 
         <h2>Try it yourself</h2>
-        <p>The encode-policy command is part of the <a href="https://github.com/PolicyEngine/policyengine-claude">policyengine-claude</a> repository. To implement a new benefit program:</p>
+        <p>The <code>/encode-policy</code> command is part of the <a href="https://github.com/PolicyEngine/policyengine-claude">policyengine-claude</a> repository. To implement a new benefit program:</p>
         <pre><code># Add the marketplace
 /plugin marketplace add PolicyEngine/policyengine-claude
 
@@ -1725,7 +1736,7 @@
         <hr>
 
         <h2>What's next</h2>
-        <p>The encode-policy workflow handles individual programs. The next challenge is understanding how programs interact.</p>
+        <p>The <code>/encode-policy</code> workflow handles individual programs. The next challenge is understanding how programs interact.</p>
 
         <p><strong>Cross-program validation</strong> is the next focus. Benefit programs form a connected system—SNAP benefits count as unearned income for TANF, Medicaid enrollment affects SSI calculations, and some programs are mutually exclusive. A cross-program validator would detect these interactions during implementation rather than in production.</p>
 
