@@ -1132,6 +1132,90 @@
 </head>
 <body>
     <article>
+        <!-- Hidden SVG for icon definitions -->
+        <svg style="display: none;">
+            <defs>
+                <!-- Clipboard icon -->
+                <g id="icon-clipboard">
+                    <rect x="-12" y="-16" width="24" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <rect x="-6" y="-20" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-7" y1="-4" x2="7" y2="-4" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-7" y1="3" x2="7" y2="3" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-7" y1="10" x2="4" y2="10" stroke="currentColor" stroke-width="2"/>
+                </g>
+                <!-- Books/documents icon -->
+                <g id="icon-books">
+                    <rect x="-14" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-10)"/>
+                    <rect x="-4" y="-10" width="8" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <rect x="6" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(10)"/>
+                </g>
+                <!-- Gear icon -->
+                <g id="icon-gear">
+                    <circle cx="0" cy="0" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M0,-16 L3,-12 L3,-10 L-3,-10 L-3,-12 Z" fill="currentColor"/>
+                    <path d="M0,16 L3,12 L3,10 L-3,10 L-3,12 Z" fill="currentColor"/>
+                    <path d="M-16,0 L-12,3 L-10,3 L-10,-3 L-12,-3 Z" fill="currentColor"/>
+                    <path d="M16,0 L12,3 L10,3 L10,-3 L12,-3 Z" fill="currentColor"/>
+                    <path d="M-11,-11 L-9,-8 L-7,-9 L-9,-12 Z" fill="currentColor" transform="rotate(0)"/>
+                    <path d="M11,-11 L9,-8 L7,-9 L9,-12 Z" fill="currentColor"/>
+                    <path d="M-11,11 L-9,8 L-7,9 L-9,12 Z" fill="currentColor"/>
+                    <path d="M11,11 L9,8 L7,9 L9,12 Z" fill="currentColor"/>
+                </g>
+                <!-- Flask/beaker icon -->
+                <g id="icon-flask">
+                    <path d="M-5,-16 L-5,-4 L-14,14 L14,14 L5,-4 L5,-16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <line x1="-7" y1="-16" x2="7" y2="-16" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-9" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/>
+                </g>
+                <!-- Lambda icon -->
+                <g id="icon-lambda">
+                    <text x="0" y="8" font-family="Georgia, serif" font-size="40" font-weight="400" fill="currentColor" text-anchor="middle">λ</text>
+                </g>
+                <!-- Lightning bolt icon -->
+                <g id="icon-lightning">
+                    <polygon points="2,-16 -8,2 -1,2 -4,16 8,-2 1,-2" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                </g>
+                <!-- Magnifying glass icon -->
+                <g id="icon-search">
+                    <circle cx="-3" cy="-3" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                    <line x1="6" y1="6" x2="16" y2="16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <!-- Chain link icon -->
+                <g id="icon-link">
+                    <ellipse cx="-6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+                    <ellipse cx="6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+                </g>
+                <!-- Wrench icon -->
+                <g id="icon-wrench">
+                    <path d="M-6,-16 C-12,-10 -12,-2 -6,4 L8,18 L14,12 L0,-2 C6,-8 6,-14 0,-16 L-2,-10 L-6,-10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </g>
+                <!-- Upload arrow icon -->
+                <g id="icon-upload">
+                    <line x1="0" y1="12" x2="0" y2="-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    <polyline points="-8,-2 0,-12 8,-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="-12" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </g>
+                <!-- Open book icon -->
+                <g id="icon-book">
+                    <path d="M0,-12 L0,14" stroke="currentColor" stroke-width="2"/>
+                    <path d="M0,-12 C-6,-14 -12,-12 -16,-8 L-16,12 C-12,8 -6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M0,-12 C6,-14 12,-12 16,-8 L16,12 C12,8 6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-12" y1="-4" x2="-4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="-12" y1="2" x2="-4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="12" y1="-4" x2="4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="12" y1="2" x2="4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+                </g>
+                <!-- Document icon -->
+                <g id="icon-document">
+                    <path d="M-10,-16 L6,-16 L14,-8 L14,16 L-10,16 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M6,-16 L6,-8 L14,-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <line x1="-5" y1="0" x2="9" y2="0" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-5" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2"/>
+                    <line x1="-5" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="2"/>
+                </g>
+            </defs>
+        </svg>
+
         <h1>Automating Tax and Benefit Policy Modeling with Multi-Agent AI</h1>
         <p class="subtitle">How we built a multi-agent system that encodes policy into code</p>
 
@@ -1183,7 +1267,7 @@
                     <span class="iteration-arrow">+</span>
                 </div>
                 <div class="iteration-panel" id="iteration-iter2">
-                    <p>Breaking down the workflow to mirror knowledge gathering, implementation patterns, and review steps reduced error rates. A research agent, a parameter agent, a test agent, a variable agent—each focused on one concern.</p>
+                    <p>If one prompt couldn't handle everything, we needed to divide the work. Breaking down the workflow to mirror knowledge gathering, implementation patterns, and review steps reduced error rates. A research agent, a parameter agent, a test agent, a variable agent—each focused on one concern.</p>
                     <p>But without a mechanism to share knowledge, prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently. Agents are specialized AI assistants that focus on a single task with tools tailored to that job. See the <a href="https://code.claude.com/docs/en/sub-agents">Claude Code documentation</a> for more on agents.</p>
 
                     <div class="agent-flow-container stage-diagram" style="margin-top: 20px;">
@@ -1226,7 +1310,7 @@
                     <span class="iteration-arrow">+</span>
                 </div>
                 <div class="iteration-panel" id="iteration-iter3">
-                    <p>A critical issue emerged: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
+                    <p>Specialization helped with error rates, but a deeper problem emerged: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
                     <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies between what the code does and what the regulation requires. This principle of <strong>agent isolation</strong> became central to the workflow's reliability.</p>
 
                     <div class="agent-flow-container stage-diagram" style="margin-top: 20px;">
@@ -1279,7 +1363,7 @@
                     <span class="iteration-arrow">+</span>
                 </div>
                 <div class="iteration-panel" id="iteration-iter4">
-                    <p>Results improved, but formatting and code style issues persisted. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
+                    <p>Even with isolation, consistency issues persisted. Formatting and code style varied across agents. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
                     <p>Then Claude Code released the skills feature. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern.</p>
                     <p>The <a href="https://github.com/PolicyEngine/policyengine-claude/tree/master/skills/technical-patterns/policyengine-variable-patterns-skill">policyengine-variable-patterns-skill</a> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
                     <p>We added an edge-case-generator that creates boundary tests—zero income, maximum benefits, cliff edges—based on real-world scenarios. The implementation-validator checks code against skill patterns, while the reference-validator verifies citations match source documents. The ci-fixer runs tests locally and iterates until they pass, loading the same skills to ensure fixes follow consistent patterns.</p>
@@ -1376,7 +1460,7 @@
                     <span class="iteration-arrow">+</span>
                 </div>
                 <div class="iteration-panel" id="iteration-iter5">
-                    <p>Colleagues using the workflow provided feedback that shaped new capabilities. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline.</p>
+                    <p>With skills in place, the architecture stabilized—and users started asking for more. Colleagues using the workflow provided feedback that shaped new capabilities. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline.</p>
                     <p>This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) to review any PR, not just those created by encode-policy. The components became building blocks, not just steps in a sequence.</p>
                     <p>Skills work the same way. The <code>policyengine-testing-patterns-skill</code> can be loaded by any agent or user session to get consistent test formatting rules. Skills are context you can inject into any conversation—not tied to specific commands or workflows.</p>
                     <p>This composability is the key insight: <strong>agents and skills are primitives, workflows are compositions</strong>.</p>
@@ -1466,6 +1550,16 @@
                 </div>
             </div>
         </div>
+
+        <hr>
+
+        <h2>Design principles</h2>
+        <p>These principles emerged from the evolution:</p>
+        <p><strong>Source authority</strong>: Collect only primary sources. Anchor parameters to legal documents—statutes, regulations, state plans—and use forms and benefit calculators as supporting references.</p>
+        <p><strong>Isolation</strong>: Certain agents operate in isolation to prevent confirmation bias. When agents cannot see each other's output, mismatches between implementation and tests reveal actual bugs rather than shared misconceptions.</p>
+        <p><strong>Skills as knowledge base</strong>: Domain expertise lives in reusable modules shared by agents throughout the workflow.</p>
+        <p><strong>Orchestrator pattern</strong>: The orchestrator coordinates without implementing. It invokes specialized agents, checks quality gates, and manages workflow state—but never writes code itself.</p>
+        <p><strong>Composability</strong>: Agents and skills are primitives that can be combined into different workflows. A validator agent works in encode-policy, review-pr, and fix-pr alike.</p>
 
         <hr>
 
@@ -1596,213 +1690,6 @@
                 </div>
             </div>
         </div>
-
-        <h3>Agent flow</h3>
-        <p class="diagram-hint">The diagram shows how agents connect. The ellipse represents the iteration loop—agents cycle until tests pass.</p>
-        <div class="agent-flow-container">
-            <svg class="agent-flow-svg" id="agentFlowSvg" viewBox="0 0 1130 580" width="1130" height="580">
-                <!-- Icon definitions -->
-                <defs>
-                    <!-- Clipboard icon -->
-                    <g id="icon-clipboard">
-                        <rect x="-12" y="-16" width="24" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <rect x="-6" y="-20" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-7" y1="-4" x2="7" y2="-4" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-7" y1="3" x2="7" y2="3" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-7" y1="10" x2="4" y2="10" stroke="currentColor" stroke-width="2"/>
-                    </g>
-                    <!-- Books/documents icon -->
-                    <g id="icon-books">
-                        <rect x="-14" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-10)"/>
-                        <rect x="-4" y="-10" width="8" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <rect x="6" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(10)"/>
-                    </g>
-                    <!-- Gear icon -->
-                    <g id="icon-gear">
-                        <circle cx="0" cy="0" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <path d="M0,-16 L3,-12 L3,-10 L-3,-10 L-3,-12 Z" fill="currentColor"/>
-                        <path d="M0,16 L3,12 L3,10 L-3,10 L-3,12 Z" fill="currentColor"/>
-                        <path d="M-16,0 L-12,3 L-10,3 L-10,-3 L-12,-3 Z" fill="currentColor"/>
-                        <path d="M16,0 L12,3 L10,3 L10,-3 L12,-3 Z" fill="currentColor"/>
-                        <path d="M-11,-11 L-9,-8 L-7,-9 L-9,-12 Z" fill="currentColor" transform="rotate(0)"/>
-                        <path d="M11,-11 L9,-8 L7,-9 L9,-12 Z" fill="currentColor"/>
-                        <path d="M-11,11 L-9,8 L-7,9 L-9,12 Z" fill="currentColor"/>
-                        <path d="M11,11 L9,8 L7,9 L9,12 Z" fill="currentColor"/>
-                    </g>
-                    <!-- Flask/beaker icon -->
-                    <g id="icon-flask">
-                        <path d="M-5,-16 L-5,-4 L-14,14 L14,14 L5,-4 L5,-16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        <line x1="-7" y1="-16" x2="7" y2="-16" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-9" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/>
-                    </g>
-                    <!-- Lambda icon -->
-                    <g id="icon-lambda">
-                        <text x="0" y="8" font-family="Georgia, serif" font-size="40" font-weight="400" fill="currentColor" text-anchor="middle">λ</text>
-                    </g>
-                    <!-- Lightning bolt icon -->
-                    <g id="icon-lightning">
-                        <polygon points="2,-16 -8,2 -1,2 -4,16 8,-2 1,-2" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
-                    </g>
-                    <!-- Magnifying glass icon -->
-                    <g id="icon-search">
-                        <circle cx="-3" cy="-3" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                        <line x1="6" y1="6" x2="16" y2="16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                    </g>
-                    <!-- Chain link icon -->
-                    <g id="icon-link">
-                        <ellipse cx="-6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
-                        <ellipse cx="6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
-                    </g>
-                    <!-- Wrench icon -->
-                    <g id="icon-wrench">
-                        <path d="M-6,-16 C-12,-10 -12,-2 -6,4 L8,18 L14,12 L0,-2 C6,-8 6,-14 0,-16 L-2,-10 L-6,-10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    </g>
-                    <!-- Upload arrow icon -->
-                    <g id="icon-upload">
-                        <line x1="0" y1="12" x2="0" y2="-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                        <polyline points="-8,-2 0,-12 8,-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        <line x1="-12" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </g>
-                    <!-- Open book icon -->
-                    <g id="icon-book">
-                        <path d="M0,-12 L0,14" stroke="currentColor" stroke-width="2"/>
-                        <path d="M0,-12 C-6,-14 -12,-12 -16,-8 L-16,12 C-12,8 -6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <path d="M0,-12 C6,-14 12,-12 16,-8 L16,12 C12,8 6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-12" y1="-4" x2="-4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
-                        <line x1="-12" y1="2" x2="-4" y2="4" stroke="currentColor" stroke-width="1.5"/>
-                        <line x1="12" y1="-4" x2="4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
-                        <line x1="12" y1="2" x2="4" y2="4" stroke="currentColor" stroke-width="1.5"/>
-                    </g>
-                    <!-- Document icon -->
-                    <g id="icon-document">
-                        <path d="M-10,-16 L6,-16 L14,-8 L14,16 L-10,16 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        <path d="M6,-16 L6,-8 L14,-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        <line x1="-5" y1="0" x2="9" y2="0" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-5" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2"/>
-                        <line x1="-5" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="2"/>
-                    </g>
-                </defs>
-
-                <!-- Loop indicator - ellipse around development/validation agents -->
-                <ellipse class="loop-indicator" cx="520" cy="290" rx="300" ry="250" />
-                <text class="loop-label" x="520" y="555">iterate until tests pass</text>
-
-                <!-- CONNECTIONS -->
-
-                <!-- Entry flow: issue-manager to document-collector -->
-                <line class="network-line" x1="100" y1="290" x2="118" y2="290" />
-
-                <!-- document-collector feeds into the development loop -->
-                <line class="network-line thick" x1="222" y1="260" x2="295" y2="140" />
-                <line class="network-line thick" x1="222" y1="290" x2="288" y2="290" />
-                <line class="network-line thick" x1="222" y1="320" x2="295" y2="440" />
-
-                <!-- Development to edge-case-gen (after parallel work completes) -->
-                <line class="network-line thick" x1="392" y1="310" x2="490" y2="360" />
-                <line class="network-line thick" x1="381" y1="448" x2="490" y2="360" />
-
-                <!-- Connections from test-creator to validators -->
-                <line class="network-line thick" x1="392" y1="290" x2="640" y2="100" />
-                <line class="network-line thick" x1="392" y1="290" x2="760" y2="290" />
-
-                
-                <!-- parameter-architect to impl-validator -->
-                <line class="network-line thick" x1="392" y1="100" x2="640" y2="100" />
-
-                <!-- parameter-architect to ci-fixer -->
-                <line class="network-line thick" x1="387" y1="121" x2="760" y2="290" />
-
-                <!-- rules-engineer to ci-fixer -->
-                <line class="network-line thick" x1="392" y1="480" x2="790" y2="340" />
-
-                <!-- parameter-architect to reference-validator -->
-                <line class="network-line thick" x1="376" y1="138" x2="700" y2="475" />
-
-                <!-- rules-engineer to reference-validator -->
-                <line class="network-line thick" x1="392" y1="480" x2="700" y2="475" />
-
-                <!-- impl-validator to ci-fixer -->
-                <line class="network-line thick" x1="740" y1="140" x2="790" y2="240" />
-
-                <!-- reference-validator to ci-fixer -->
-                <line class="network-line thick" x1="700" y1="475" x2="790" y2="340" />
-
-                <!-- edge-case-gen to ci-fixer -->
-                <line class="network-line thick" x1="534" y1="360" x2="760" y2="290" />
-
-                <!-- Main flow through ci-fixer to exit -->
-                <line class="network-line" x1="880" y1="290" x2="888" y2="290" />
-                <line class="network-line" x1="952" y1="290" x2="968" y2="290" />
-                <line class="network-line" x1="1032" y1="290" x2="1048" y2="290" />
-
-                <!-- NODES -->
-
-                <!-- Entry (left) -->
-                <circle class="network-node" cx="55" cy="290" r="45" />
-                <g transform="translate(55,290) scale(1.4)"><use href="#icon-clipboard" class="svg-icon"/></g>
-                <text class="network-label" x="55" y="355">issue-manager</text>
-
-                <circle class="network-node" cx="170" cy="290" r="52" />
-                <g transform="translate(170,282) scale(1.6)"><use href="#icon-books" class="svg-icon"/></g>
-                <text class="network-label" x="170" y="362">document-</text>
-                <text class="network-label" x="170" y="378">collector</text>
-
-                <!-- Development (left side of circle) -->
-                <circle class="network-node specialist" cx="340" cy="100" r="52" />
-                <g transform="translate(340,100) scale(1.6)"><use href="#icon-gear" class="svg-icon"/></g>
-                <text class="network-label" x="340" y="35">parameter-architect</text>
-
-                <circle class="network-node specialist" cx="340" cy="290" r="52" />
-                <g transform="translate(340,290) scale(1.6)"><use href="#icon-flask" class="svg-icon"/></g>
-                <text class="network-label" x="340" y="362">test-creator</text>
-
-                <circle class="network-node specialist" cx="340" cy="480" r="52" />
-                <g transform="translate(340,488) scale(1.6)"><use href="#icon-lambda" class="svg-icon"/></g>
-                <text class="network-label" x="340" y="552">rules-engineer</text>
-
-                <circle class="network-node" cx="490" cy="360" r="44" />
-                <g transform="translate(490,360) scale(1.4)"><use href="#icon-lightning" class="svg-icon"/></g>
-                <text class="network-label" x="490" y="422">edge-case-gen</text>
-
-                <!-- Validation (center-right of circle) -->
-                <circle class="network-node" cx="700" cy="100" r="60" />
-                <g transform="translate(700,100) scale(1.8)"><use href="#icon-search" class="svg-icon"/></g>
-                <text class="network-label" x="700" y="35">impl-validator</text>
-
-                <circle class="network-node" cx="670" cy="507" r="44" />
-                <g transform="translate(670,507) scale(1.4)"><use href="#icon-link" class="svg-icon"/></g>
-                <text class="network-label" x="670" y="569">reference-validator</text>
-
-                <circle class="network-node" cx="820" cy="290" r="60" />
-                <g transform="translate(820,290) scale(1.8)"><use href="#icon-wrench" class="svg-icon"/></g>
-                <text class="network-label" x="820" y="370">ci-fixer</text>
-
-                <!-- Exit (right) - smaller nodes to emphasize the ellipse -->
-                <circle class="network-node" cx="920" cy="290" r="32" />
-                <g transform="translate(920,290) scale(1.0)"><use href="#icon-upload" class="svg-icon"/></g>
-                <text class="network-label" x="920" y="338">pr-pusher</text>
-
-                <circle class="network-node" cx="1000" cy="290" r="32" />
-                <g transform="translate(1000,290) scale(1.0)"><use href="#icon-book" class="svg-icon"/></g>
-                <text class="network-label" x="1000" y="338">program-</text>
-                <text class="network-label" x="1000" y="352">reviewer</text>
-
-                <circle class="network-node output" cx="1080" cy="290" r="32" />
-                <g transform="translate(1080,290) scale(1.0)"><use href="#icon-document" class="svg-icon"/></g>
-                <text class="network-label" x="1080" y="338">Draft PR</text>
-
-            </svg>
-        </div>
-
-        <hr>
-
-        <h2>Design principles</h2>
-        <p>These principles emerged from the evolution:</p>
-        <p><strong>Source authority</strong>: Collect only primary sources. Anchor parameters to legal documents—statutes, regulations, state plans—and use forms and benefit calculators as supporting references.</p>
-        <p><strong>Isolation</strong>: Certain agents operate in isolation to prevent confirmation bias. When agents cannot see each other's output, mismatches between implementation and tests reveal actual bugs rather than shared misconceptions.</p>
-        <p><strong>Skills as knowledge base</strong>: Domain expertise lives in reusable modules shared by agents throughout the workflow.</p>
-        <p><strong>Orchestrator pattern</strong>: The orchestrator coordinates without implementing. It invokes specialized agents, checks quality gates, and manages workflow state—but never writes code itself.</p>
-        <p><strong>Composability</strong>: Agents and skills are primitives that can be combined into different workflows. A validator agent works in encode-policy, review-pr, and fix-pr alike.</p>
 
         <hr>
 
