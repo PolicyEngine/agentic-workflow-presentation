@@ -570,21 +570,21 @@
            ══════════════════════════════════════════════════════════════ */
 
         .iteration-container {
-            margin: 40px 0;
+            margin: 30px 0;
         }
 
         .iteration-cards {
             display: flex;
-            gap: 16px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .iteration-card {
             flex: 1;
             background: var(--bg-card);
             border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 24px 20px;
+            border-radius: 10px;
+            padding: 16px 14px;
             text-align: center;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -594,14 +594,14 @@
         .iteration-card::after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%) scaleY(0);
             width: 0;
             height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 12px solid var(--accent);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--accent);
             transition: transform 0.2s ease;
             transform-origin: top;
         }
@@ -627,15 +627,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             background: var(--accent);
             color: white;
             border-radius: 50%;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin: 0 auto 14px;
+            margin: 0 auto 10px;
         }
 
         .iteration-card.active .iteration-num {
@@ -645,10 +645,10 @@
 
         .iteration-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .iteration-card.active .iteration-title {
@@ -657,9 +657,9 @@
 
         .iteration-subtitle {
             font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .iteration-card.active .iteration-subtitle {
@@ -670,9 +670,9 @@
             display: flex;
             align-items: center;
             color: var(--text-light);
-            font-size: 1.5rem;
-            padding: 0 4px;
-            margin-top: 30px;
+            font-size: 1.2rem;
+            padding: 0 2px;
+            margin-top: 20px;
         }
 
         .iteration-panel {
@@ -680,7 +680,7 @@
             background: var(--bg-diagram);
             border: 2px solid var(--accent);
             border-radius: 12px;
-            padding: 40px 50px;
+            padding: 24px 32px;
             animation: fadeSlideUp 0.3s ease;
         }
 
@@ -702,24 +702,25 @@
         .iteration-panel h4 {
             color: var(--text-dark);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin: 0 0 24px 0;
-            padding-bottom: 18px;
+            margin: 0 0 14px 0;
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--accent-mid);
         }
 
         .iteration-panel p {
-            margin: 18px 0;
-            line-height: 1.8;
+            margin: 10px 0;
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
         .iteration-hint {
             text-align: center;
             color: var(--text-light);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 12px;
         }
 
         /* ══════════════════════════════════════════════════════════════
@@ -1575,18 +1576,27 @@
             to { stroke-dashoffset: -108; }
         }
 
-        /* Stage diagrams - PRESENTATION SIZE - wider and taller */
+        /* Stage diagrams - COMPACT for iterations */
         .stage-diagram {
-            padding: 50px 40px 40px;
-            margin: 40px auto;
+            padding: 35px 30px 25px;
+            margin: 20px auto;
             max-width: 100%;
             overflow-x: auto;
         }
 
         .stage-diagram::before {
             content: 'AGENT FLOW';
-            top: 16px;
-            left: 24px;
+            top: 12px;
+            left: 20px;
+            font-size: 0.55rem;
+        }
+
+        .skills-diagram::before {
+            content: 'AGENTS & SKILLS';
+        }
+
+        .composable-diagram::before {
+            content: 'COMPOSABLE PRIMITIVES';
         }
 
         .stage-diagram svg {
@@ -1594,7 +1604,7 @@
             margin: 0 auto;
             width: 100%;
             height: auto;
-            min-height: 240px;
+            max-height: 280px;
         }
 
         .stage-diagram .flow-arrow {
@@ -1691,6 +1701,13 @@
                     <line x1="-5" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2"/>
                     <line x1="-5" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="2"/>
                 </g>
+                <!-- Chat bubble icon -->
+                <g id="icon-chat">
+                    <path d="M-14,-10 L14,-10 C16,-10 16,-10 16,-8 L16,6 C16,8 16,8 14,8 L4,8 L-2,16 L-2,8 L-14,8 C-16,8 -16,8 -16,6 L-16,-8 C-16,-10 -16,-10 -14,-10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="-7" cy="-1" r="2" fill="currentColor"/>
+                    <circle cx="0" cy="-1" r="2" fill="currentColor"/>
+                    <circle cx="7" cy="-1" r="2" fill="currentColor"/>
+                </g>
             </defs>
         </svg>
 
@@ -1743,13 +1760,13 @@
 
             <!-- Iteration 1 Panel -->
             <div class="iteration-panel" id="iteration-iter1">
-                    <p>We started with a single prompt asking Claude to implement a TANF program end-to-end. The results fell short—error rates exceeded 70%, parameters lacked citations, tests passed despite incorrect formulas, and variables hard-coded values. Too many concerns for one context to handle well.</p>
-                    <p>The failure revealed the core challenge: policy implementation isn't one task, it's many interdependent tasks requiring different expertise.</p>
+                    <p>The goal: a single <strong>command</strong> that a user invokes to produce a complete, working program. Type <code>/encode-policy</code>, get production-ready code with tests and citations. We started with a single prompt behind this command, asking Claude to implement a TANF program end-to-end.</p>
+                    <p>The results fell short—error rates exceeded 70%, parameters lacked citations, tests passed despite incorrect formulas, and variables hard-coded values. Too many concerns for one context to handle well.</p>
 
-                    <div class="agent-flow-container stage-diagram" style="margin-top: 30px;">
-                        <svg class="agent-flow-svg" viewBox="0 0 600 260">
+                    <div class="agent-flow-container stage-diagram" style="margin-top: 15px;">
+                        <svg class="agent-flow-svg" viewBox="0 0 600 220" style="max-height: 160px;">
                             <circle class="network-node" cx="150" cy="130" r="70" />
-                            <text class="node-icon" x="150" y="140" style="font-size: 40px;">💬</text>
+                            <g transform="translate(150,130) scale(2)"><use href="#icon-chat" class="svg-icon"/></g>
                             <text class="network-label" x="150" y="220">Single Prompt</text>
                             <line class="network-line" x1="220" y1="130" x2="330" y2="130" />
                             <polygon class="flow-arrow" points="330,124 344,130 330,136" />
@@ -1765,282 +1782,213 @@
 
             <!-- Iteration 2 Panel -->
             <div class="iteration-panel" id="iteration-iter2">
-                    <p>If one prompt couldn't handle everything, we needed to divide the work. Breaking down the workflow to mirror knowledge gathering, implementation patterns, and review steps reduced error rates. A research agent, a parameter agent, a test agent, a variable agent—each focused on one concern.</p>
-                    <p>But without a mechanism to share knowledge, prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently. Agents are specialized AI assistants that focus on a single task with tools tailored to that job. See the <a href="https://code.claude.com/docs/en/sub-agents">Claude Code documentation</a> for more on agents.</p>
+                    <p>If one prompt couldn't handle everything, we needed to divide the work. We introduced <strong><a href="https://code.claude.com/docs/en/sub-agents">agents</a></strong>—specialized AI workers that each focus on a single concern. A document-collector gathers sources, a parameter-architect structures data, a rules-engineer implements logic, a test-creator writes validations. Each agent has its own prompt, tools, and narrow responsibility.</p>
+                    <p>But without a mechanism to share knowledge, prompts were long and redundant. The same patterns—naming conventions, file structure, code style—appeared in every agent's instructions, often inconsistently.</p>
 
-                    <div class="agent-flow-container stage-diagram" style="margin-top: 30px;">
-                        <svg class="agent-flow-svg" viewBox="0 0 900 260">
-                            <circle class="network-node" cx="100" cy="130" r="52" />
-                            <g transform="translate(100,120) scale(1.5)"><use href="#icon-books" class="svg-icon"/></g>
-                            <text class="network-label" x="100" y="202">research</text>
-                            <line class="network-line" x1="152" y1="130" x2="198" y2="130" />
-                            <polygon class="flow-arrow" points="198,124 212,130 198,136" />
-                            <circle class="network-node" cx="260" cy="130" r="52" />
-                            <g transform="translate(260,130) scale(1.5)"><use href="#icon-gear" class="svg-icon"/></g>
-                            <text class="network-label" x="260" y="202">parameters</text>
-                            <line class="network-line" x1="312" y1="130" x2="358" y2="130" />
-                            <polygon class="flow-arrow" points="358,124 372,130 358,136" />
-                            <circle class="network-node" cx="420" cy="130" r="52" />
-                            <g transform="translate(420,138) scale(1.5)"><use href="#icon-lambda" class="svg-icon"/></g>
-                            <text class="network-label" x="420" y="202">variables</text>
-                            <line class="network-line" x1="472" y1="130" x2="518" y2="130" />
-                            <polygon class="flow-arrow" points="518,124 532,130 518,136" />
-                            <circle class="network-node" cx="580" cy="130" r="52" />
-                            <g transform="translate(580,130) scale(1.5)"><use href="#icon-flask" class="svg-icon"/></g>
-                            <text class="network-label" x="580" y="202">tests</text>
-                            <line class="network-line" x1="632" y1="130" x2="678" y2="130" />
-                            <polygon class="flow-arrow" points="678,124 692,130 678,136" />
-                            <circle class="network-node" cx="740" cy="130" r="52" />
-                            <g transform="translate(740,130) scale(1.5)"><use href="#icon-document" class="svg-icon"/></g>
-                            <text class="network-label" x="740" y="202">output</text>
-                            <text x="450" y="40" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="var(--warning)" font-style="italic">each agent has redundant instructions</text>
+                    <div class="agent-flow-container stage-diagram" style="margin-top: 15px;">
+                        <svg class="agent-flow-svg" viewBox="0 0 900 280" style="max-height: 220px;">
+                            <circle class="network-node" cx="100" cy="150" r="52" />
+                            <g transform="translate(100,140) scale(1.5)"><use href="#icon-books" class="svg-icon"/></g>
+                            <text class="network-label" x="100" y="222">doc-collector</text>
+                            <line class="network-line" x1="152" y1="150" x2="198" y2="150" />
+                            <polygon class="flow-arrow" points="198,144 212,150 198,156" />
+                            <circle class="network-node" cx="260" cy="150" r="52" />
+                            <g transform="translate(260,150) scale(1.5)"><use href="#icon-gear" class="svg-icon"/></g>
+                            <text class="network-label" x="260" y="222">param-architect</text>
+                            <line class="network-line" x1="312" y1="150" x2="358" y2="150" />
+                            <polygon class="flow-arrow" points="358,144 372,150 358,156" />
+                            <circle class="network-node" cx="420" cy="150" r="52" />
+                            <g transform="translate(420,158) scale(1.5)"><use href="#icon-lambda" class="svg-icon"/></g>
+                            <text class="network-label" x="420" y="222">rules-engineer</text>
+                            <line class="network-line" x1="472" y1="150" x2="518" y2="150" />
+                            <polygon class="flow-arrow" points="518,144 532,150 518,156" />
+                            <circle class="network-node" cx="580" cy="150" r="52" />
+                            <g transform="translate(580,150) scale(1.5)"><use href="#icon-flask" class="svg-icon"/></g>
+                            <text class="network-label" x="580" y="222">test-creator</text>
+                            <line class="network-line" x1="632" y1="150" x2="678" y2="150" />
+                            <polygon class="flow-arrow" points="678,144 692,150 678,156" />
+                            <circle class="network-node" cx="740" cy="150" r="52" />
+                            <g transform="translate(740,150) scale(1.5)"><use href="#icon-document" class="svg-icon"/></g>
+                            <text class="network-label" x="740" y="222">output</text>
+                            <text x="450" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="600" fill="var(--warning)" font-style="italic">each agent has redundant instructions</text>
                         </svg>
                     </div>
             </div>
 
             <!-- Iteration 3 Panel -->
             <div class="iteration-panel" id="iteration-iter3">
-                    <p>Specialization helped with error rates, but a deeper problem emerged: <strong>tests designed to pass, not to verify</strong>. When a test agent sees implementation code and writes tests afterward, the tests validate what was built rather than what the regulation requires. A bug in the formula and a matching bug in the test cancel out—everything passes, nothing is correct.</p>
-                    <p>The solution: run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies between what the code does and what the regulation requires. This principle of <strong>agent isolation</strong> became central to the workflow's reliability. Error rates dropped to 40%.</p>
+                    <p>Specialization helped with error rates, but a deeper problem emerged: <strong>tests designed to pass, not to verify</strong>. When test-creator sees rules-engineer's code and writes tests afterward, the tests validate what was built rather than what the regulation requires.</p>
+                    <p>We follow test-driven principles: tests should represent real-world scenarios—a family of four in Texas with $2,000 monthly income should receive exactly $X in benefits. These expected values come from regulations and official calculators, not from implementation code. Tests derived from code just mirror the code's assumptions. Tests derived independently from source documents represent ground truth.</p>
+                    <p>So we run test-creator and rules-engineer in parallel. Both read the same documentation, neither sees the other's output. When tests fail, it reveals actual discrepancies between what the code does and what the regulation requires. This principle of <strong>agent isolation</strong> became central to the workflow's reliability. Error rates dropped to 40%.</p>
 
-                    <div class="agent-flow-container stage-diagram" style="margin-top: 30px;">
-                        <svg class="agent-flow-svg" viewBox="0 0 850 520">
+                    <div class="agent-flow-container stage-diagram" style="margin-top: 15px;">
+                        <svg class="agent-flow-svg" viewBox="0 0 950 520" style="max-height: 340px;">
                             <!-- document-collector -->
-                            <circle class="network-node" cx="120" cy="260" r="65" />
-                            <g transform="translate(120,248) scale(1.8)"><use href="#icon-books" class="svg-icon"/></g>
-                            <text class="network-label" x="120" y="348">research</text>
+                            <circle class="network-node" cx="100" cy="260" r="62" />
+                            <g transform="translate(100,248) scale(1.7)"><use href="#icon-books" class="svg-icon"/></g>
+                            <text class="network-label" x="100" y="345">doc-collector</text>
 
                             <!-- Lines to parallel agents -->
-                            <line class="network-line" x1="185" y1="210" x2="325" y2="100" />
-                            <line class="network-line" x1="185" y1="260" x2="325" y2="260" />
-                            <line class="network-line" x1="185" y1="310" x2="325" y2="420" />
+                            <line class="network-line" x1="162" y1="210" x2="280" y2="100" />
+                            <line class="network-line" x1="162" y1="260" x2="280" y2="260" />
+                            <line class="network-line" x1="162" y1="310" x2="280" y2="420" />
 
                             <!-- parameter-architect (top) -->
-                            <circle class="network-node" cx="390" cy="100" r="62" />
-                            <g transform="translate(390,100) scale(1.7)"><use href="#icon-gear" class="svg-icon"/></g>
-                            <text class="network-label" x="390" y="185">parameter-architect</text>
+                            <circle class="network-node" cx="340" cy="100" r="58" />
+                            <g transform="translate(340,100) scale(1.6)"><use href="#icon-gear" class="svg-icon"/></g>
+                            <text class="network-label" x="340" y="180">param-architect</text>
 
                             <!-- test-creator (middle) -->
-                            <circle class="network-node" cx="390" cy="260" r="62" />
-                            <g transform="translate(390,260) scale(1.7)"><use href="#icon-flask" class="svg-icon"/></g>
-                            <text class="network-label" x="390" y="345">test-creator</text>
+                            <circle class="network-node" cx="340" cy="260" r="58" />
+                            <g transform="translate(340,260) scale(1.6)"><use href="#icon-flask" class="svg-icon"/></g>
+                            <text class="network-label" x="340" y="340">test-creator</text>
 
                             <!-- rules-engineer (bottom) -->
-                            <circle class="network-node" cx="390" cy="420" r="62" />
-                            <g transform="translate(390,428) scale(1.7)"><use href="#icon-lambda" class="svg-icon"/></g>
-                            <text class="network-label" x="390" y="505">rules-engineer</text>
+                            <circle class="network-node" cx="340" cy="420" r="58" />
+                            <g transform="translate(340,428) scale(1.6)"><use href="#icon-lambda" class="svg-icon"/></g>
+                            <text class="network-label" x="340" y="500">rules-engineer</text>
 
-                            <!-- Lines to output -->
-                            <line class="network-line" x1="452" y1="100" x2="640" y2="220" />
-                            <line class="network-line" x1="452" y1="260" x2="640" y2="260" />
-                            <line class="network-line" x1="452" y1="420" x2="640" y2="300" />
+                            <!-- Lines to impl-validator -->
+                            <line class="network-line" x1="398" y1="100" x2="520" y2="220" />
+                            <line class="network-line" x1="398" y1="260" x2="520" y2="260" />
+                            <line class="network-line" x1="398" y1="420" x2="520" y2="300" />
+
+                            <!-- impl-validator -->
+                            <circle class="network-node" cx="580" cy="260" r="58" />
+                            <g transform="translate(580,260) scale(1.6)"><use href="#icon-search" class="svg-icon"/></g>
+                            <text class="network-label" x="580" y="340">impl-validator</text>
+
+                            <!-- Line to output -->
+                            <line class="network-line" x1="638" y1="260" x2="720" y2="260" />
+                            <polygon class="flow-arrow" points="720,254 734,260 720,266" />
 
                             <!-- output -->
-                            <circle class="network-node" cx="710" cy="260" r="65" />
-                            <g transform="translate(710,260) scale(1.8)"><use href="#icon-document" class="svg-icon"/></g>
-                            <text class="network-label" x="710" y="348">output</text>
+                            <circle class="network-node" cx="800" cy="260" r="62" />
+                            <g transform="translate(800,260) scale(1.7)"><use href="#icon-document" class="svg-icon"/></g>
+                            <text class="network-label" x="800" y="345">output</text>
                         </svg>
                     </div>
             </div>
 
             <!-- Iteration 4 Panel -->
             <div class="iteration-panel" id="iteration-iter4">
-                    <p>Even with isolation, consistency issues persisted. Formatting and code style varied across agents. The likely cause: prompts had grown so long that agents "forgot" rules buried in pages of instructions. Important patterns got lost in the noise.</p>
-                    <p>Then Claude Code released the skills feature. Skills let us extract domain knowledge into reusable modules that agents load on demand. Instead of one agent prompt containing everything about parameters, variables, testing, aggregation, vectorization, and code style, we created focused skills for each concern.</p>
-                    <p>The <a href="https://github.com/PolicyEngine/policyengine-claude/tree/master/skills/technical-patterns/policyengine-variable-patterns-skill">policyengine-variable-patterns-skill</a> contains rules about avoiding hard-coded values, entity levels, and aggregation patterns. Six agents load this skill, ensuring consistent code across the workflow. Agents load only what they need. The rules-engineer loads <code>policyengine-variable-patterns-skill</code> and <code>policyengine-code-style-skill</code>. The test-creator loads <code>policyengine-testing-patterns-skill</code>. No redundancy, no forgetting.</p>
-                    <p>We added an edge-case-generator that creates boundary tests—zero income, maximum benefits, cliff edges—based on real-world scenarios. The implementation-validator checks code against skill patterns, while the reference-validator verifies citations match source documents. The ci-fixer runs tests locally and iterates until they pass, loading the same skills to ensure fixes follow consistent patterns.</p>
-                    <p>We re-engineered every agent and workflow around skills. Error rates dropped from 40% to 15%.</p>
+                    <p>Even with isolation, consistency issues persisted. Prompts had grown so long that agents "forgot" rules buried in pages of instructions. The same patterns—naming conventions, code style, testing rules—appeared in multiple agent prompts, often inconsistently.</p>
+                    <p>We introduced <strong><a href="https://code.claude.com/docs/en/skills">skills</a></strong>—reusable knowledge modules that agents load on demand. Instead of repeating the same instructions in every agent prompt, we extracted shared knowledge into focused documents. One skill, many agents—consistent patterns everywhere.</p>
+                    <p>This made scaling practical. We added edge-case-generator for boundary tests, validators for code and citations, ci-fixer for local test iteration. We re-engineered every agent around skills. Error rates dropped from 40% to 15%.</p>
 
-                    <div class="agent-flow-container stage-diagram" style="margin-top: 30px;">
-                        <svg class="agent-flow-svg" viewBox="0 0 1300 680">
-                            <!-- Loop indicator - ellipse around development/validation agents -->
-                            <ellipse class="loop-indicator" cx="600" cy="340" rx="350" ry="290" />
-                            <text class="loop-label" x="600" y="650">iterate until tests pass</text>
+                    <div class="agent-flow-container stage-diagram skills-diagram" style="margin-top: 15px;">
+                        <svg class="agent-flow-svg" viewBox="0 0 800 340" style="max-height: 280px;">
+                            <!-- Row labels on left -->
+                            <text x="80" y="80" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Agents</text>
+                            <text x="80" y="220" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Skills</text>
 
-                            <!-- CONNECTIONS -->
-                            <line class="network-line" x1="115" y1="340" x2="138" y2="340" />
-                            <line class="network-line thick" x1="262" y1="300" x2="345" y2="165" />
-                            <line class="network-line thick" x1="262" y1="340" x2="338" y2="340" />
-                            <line class="network-line thick" x1="262" y1="380" x2="345" y2="515" />
-                            <line class="network-line thick" x1="462" y1="365" x2="570" y2="425" />
-                            <line class="network-line thick" x1="449" y1="525" x2="570" y2="425" />
-                            <line class="network-line thick" x1="462" y1="340" x2="735" y2="120" />
-                            <line class="network-line thick" x1="462" y1="340" x2="880" y2="340" />
-                            <line class="network-line thick" x1="462" y1="120" x2="735" y2="120" />
-                            <line class="network-line thick" x1="455" y1="145" x2="880" y2="340" />
-                            <line class="network-line thick" x1="462" y1="560" x2="915" y2="400" />
-                            <line class="network-line thick" x1="444" y1="165" x2="805" y2="560" />
-                            <line class="network-line thick" x1="462" y1="560" x2="805" y2="560" />
-                            <line class="network-line thick" x1="855" y1="165" x2="915" y2="285" />
-                            <line class="network-line thick" x1="805" y1="560" x2="915" y2="400" />
-                            <line class="network-line thick" x1="614" y1="425" x2="880" y2="340" />
-                            <line class="network-line" x1="1015" y1="340" x2="1028" y2="340" />
-                            <line class="network-line" x1="1102" y1="340" x2="1118" y2="340" />
-                            <line class="network-line" x1="1192" y1="340" x2="1208" y2="340" />
+                            <!-- Agents row -->
+                            <circle class="network-node" cx="200" cy="75" r="38" />
+                            <g transform="translate(200,75) scale(1.1)"><use href="#icon-gear" class="svg-icon"/></g>
 
-                            <!-- NODES -->
-                            <circle class="network-node" cx="65" cy="340" r="55" />
-                            <g transform="translate(65,340) scale(1.6)"><use href="#icon-clipboard" class="svg-icon"/></g>
-                            <text class="network-label" x="65" y="418">issue-manager</text>
+                            <circle class="network-node" cx="330" cy="75" r="38" />
+                            <g transform="translate(330,75) scale(1.1)"><use href="#icon-flask" class="svg-icon"/></g>
 
-                            <circle class="network-node" cx="200" cy="340" r="62" />
-                            <g transform="translate(200,330) scale(1.8)"><use href="#icon-books" class="svg-icon"/></g>
-                            <text class="network-label" x="200" y="425">document-</text>
-                            <text class="network-label" x="200" y="445">collector</text>
+                            <circle class="network-node" cx="460" cy="75" r="38" />
+                            <g transform="translate(460,82) scale(1.1)"><use href="#icon-lambda" class="svg-icon"/></g>
 
-                            <circle class="network-node specialist" cx="400" cy="120" r="62" />
-                            <g transform="translate(400,120) scale(1.8)"><use href="#icon-gear" class="svg-icon"/></g>
-                            <text class="network-label" x="400" y="42">parameter-architect</text>
+                            <circle class="network-node" cx="590" cy="75" r="38" />
+                            <g transform="translate(590,75) scale(1.1)"><use href="#icon-search" class="svg-icon"/></g>
 
-                            <circle class="network-node specialist" cx="400" cy="340" r="62" />
-                            <g transform="translate(400,340) scale(1.8)"><use href="#icon-flask" class="svg-icon"/></g>
-                            <text class="network-label" x="400" y="425">test-creator</text>
+                            <text x="680" y="82" text-anchor="middle" font-family="JetBrains Mono" font-size="22" fill="var(--text-mid)">...</text>
 
-                            <circle class="network-node specialist" cx="400" cy="560" r="62" />
-                            <g transform="translate(400,568) scale(1.8)"><use href="#icon-lambda" class="svg-icon"/></g>
-                            <text class="network-label" x="400" y="645">rules-engineer</text>
+                            <!-- Lines from agents to skills -->
+                            <line x1="200" y1="113" x2="165" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="200" y1="113" x2="270" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="330" y1="113" x2="270" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="330" y1="113" x2="375" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="460" y1="113" x2="375" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="460" y1="113" x2="480" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="460" y1="113" x2="585" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="590" y1="113" x2="270" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="590" y1="113" x2="375" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2"/>
 
-                            <circle class="network-node" cx="570" cy="425" r="55" />
-                            <g transform="translate(570,425) scale(1.6)"><use href="#icon-lightning" class="svg-icon"/></g>
-                            <text class="network-label" x="570" y="503">edge-case-gen</text>
+                            <!-- Skills row -->
+                            <rect x="120" y="195" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="165" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">variable</text>
 
-                            <circle class="network-node" cx="805" cy="120" r="72" />
-                            <g transform="translate(805,120) scale(2.0)"><use href="#icon-search" class="svg-icon"/></g>
-                            <text class="network-label" x="805" y="42">impl-validator</text>
+                            <rect x="225" y="195" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="270" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">testing</text>
 
-                            <circle class="network-node" cx="770" cy="600" r="55" />
-                            <g transform="translate(770,600) scale(1.6)"><use href="#icon-link" class="svg-icon"/></g>
-                            <text class="network-label" x="770" y="678">reference-validator</text>
+                            <rect x="330" y="195" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="375" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">code-style</text>
 
-                            <circle class="network-node" cx="950" cy="340" r="72" />
-                            <g transform="translate(950,340) scale(2.0)"><use href="#icon-wrench" class="svg-icon"/></g>
-                            <text class="network-label" x="950" y="435">ci-fixer</text>
+                            <rect x="435" y="195" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="480" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">parameter</text>
 
-                            <circle class="network-node" cx="1065" cy="340" r="40" />
-                            <g transform="translate(1065,340) scale(1.2)"><use href="#icon-upload" class="svg-icon"/></g>
-                            <text class="network-label" x="1065" y="398">pr-pusher</text>
+                            <rect x="540" y="195" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="585" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">vectorize</text>
 
-                            <circle class="network-node" cx="1155" cy="340" r="40" />
-                            <g transform="translate(1155,340) scale(1.2)"><use href="#icon-book" class="svg-icon"/></g>
-                            <text class="network-label" x="1155" y="398">program-</text>
-                            <text class="network-label" x="1155" y="416">reviewer</text>
+                            <text x="665" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="var(--accent)">...</text>
 
-                            <circle class="network-node output" cx="1245" cy="340" r="40" />
-                            <g transform="translate(1245,340) scale(1.2)"><use href="#icon-document" class="svg-icon"/></g>
-                            <text class="network-label" x="1245" y="398">Draft PR</text>
+                            <!-- Key insight -->
+                            <text x="400" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="500" fill="var(--text-mid)" font-style="italic">Multiple agents load the same skills → consistent patterns</text>
                         </svg>
                     </div>
             </div>
 
             <!-- Iteration 5 Panel -->
             <div class="iteration-panel" id="iteration-iter5">
-                    <p>With skills in place, the architecture stabilized—and users started asking for more. Colleagues using the workflow provided feedback that shaped new capabilities. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline.</p>
-                    <p>This led to <code>/review-pr</code> and <code>/fix-pr</code>—commands that reuse the same agents (validators, specialists, ci-fixer) to review any PR, not just those created by <code>/encode-policy</code>. The components became building blocks, not just steps in a sequence.</p>
-                    <p>Skills work the same way. The <code>policyengine-testing-patterns-skill</code> can be loaded by any agent or user session to get consistent test formatting rules. Skills are context you can inject into any conversation—not tied to specific commands or workflows.</p>
-                    <p>This composability is the key insight: <strong>agents and skills are primitives, workflows are compositions</strong>.</p>
+                    <p>With skills in place, the architecture stabilized—and users started asking for more. They wanted to review PRs created outside the workflow. They wanted to fix issues without re-running the entire pipeline.</p>
+                    <p>We realized the agents and skills we'd built for <code>/encode-policy</code> could be recomposed into new commands. <code>/review-pr</code> reuses the validators to review any PR. <code>/fix-pr</code> reuses the ci-fixer to iterate on failing tests. Same primitives, different workflows.</p>
+                    <p>This composability is the key insight: <strong>agents and skills are primitives, commands compose them into workflows</strong>.</p>
 
-                    <p><strong>Commands</strong> (like <code>/encode-policy</code>) are user-invoked workflows. <strong>Agents</strong> (like <code>rules-engineer</code> or <code>ci-fixer</code>) are autonomous LLM workers that handle specific tasks. <strong>Skills</strong> are reusable knowledge modules—domain expertise that agents load as needed. The hierarchy flows from commands invoking agents, which load skills.</p>
-
-                    <div class="agent-flow-container stage-diagram" style="margin-top: 30px;">
-                        <svg class="agent-flow-svg" viewBox="-100 0 920 620">
+                    <div class="agent-flow-container stage-diagram composable-diagram" style="margin-top: 15px;">
+                        <svg class="agent-flow-svg" viewBox="0 0 750 330" style="max-height: 260px;">
                             <!-- Row labels on left -->
-                            <text x="-15" y="62" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Commands</text>
-                            <text x="-15" y="290" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Agents</text>
-                            <text x="-15" y="470" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Skills</text>
+                            <text x="80" y="38" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Commands</text>
+                            <text x="80" y="130" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Agents</text>
+                            <text x="80" y="235" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="var(--text-mid)" font-weight="600">Skills</text>
 
-                            <!-- Three Commands at top -->
-                            <rect x="80" y="25" width="175" height="65" rx="10" fill="var(--accent)" />
-                            <text x="167" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="white" font-weight="600">/encode-policy</text>
+                            <!-- Row 1: 3 Commands -->
+                            <rect x="245" y="15" width="115" height="44" rx="6" fill="var(--accent)" />
+                            <text x="302" y="43" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="white" font-weight="600">/encode-policy</text>
 
-                            <rect x="320" y="25" width="175" height="65" rx="10" fill="var(--accent)" />
-                            <text x="407" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="white" font-weight="600">/review-pr</text>
+                            <rect x="375" y="15" width="105" height="44" rx="6" fill="var(--accent)" />
+                            <text x="427" y="43" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="white" font-weight="600">/review-pr</text>
 
-                            <rect x="560" y="25" width="175" height="65" rx="10" fill="var(--accent)" />
-                            <text x="647" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="white" font-weight="600">/fix-pr</text>
+                            <rect x="495" y="15" width="90" height="44" rx="6" fill="var(--accent)" />
+                            <text x="540" y="43" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="white" font-weight="600">/fix-pr</text>
 
-                            <!-- Lines from commands converging to agents -->
-                            <!-- From /encode-policy -->
-                            <line x1="167" y1="90" x2="140" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
-                            <line x1="167" y1="90" x2="270" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
-                            <line x1="167" y1="90" x2="400" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
+                            <!-- Row 2: 4 Agents -->
+                            <circle class="network-node" cx="240" cy="125" r="36" />
+                            <g transform="translate(240,118) scale(1.0)"><use href="#icon-books" class="svg-icon"/></g>
 
-                            <!-- From /review-pr -->
-                            <line x1="407" y1="90" x2="400" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
-                            <line x1="407" y1="90" x2="530" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
+                            <circle class="network-node" cx="360" cy="125" r="36" />
+                            <g transform="translate(360,125) scale(1.0)"><use href="#icon-flask" class="svg-icon"/></g>
 
-                            <!-- From /fix-pr -->
-                            <line x1="647" y1="90" x2="530" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
-                            <line x1="647" y1="90" x2="660" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
-                            <line x1="647" y1="90" x2="400" y2="240" stroke="var(--accent)" stroke-width="2.5"/>
+                            <circle class="network-node" cx="480" cy="125" r="36" />
+                            <g transform="translate(480,132) scale(1.0)"><use href="#icon-lambda" class="svg-icon"/></g>
 
-                            <!-- Agents (shared pool) -->
-                            <circle class="network-node" cx="140" cy="290" r="48" />
-                            <g transform="translate(140,280) scale(1.3)"><use href="#icon-books" class="svg-icon"/></g>
-                            <text class="network-label" x="140" y="358">research</text>
+                            <circle class="network-node" cx="600" cy="125" r="36" />
+                            <g transform="translate(600,125) scale(1.0)"><use href="#icon-wrench" class="svg-icon"/></g>
+                            <text x="680" y="132" text-anchor="middle" font-family="JetBrains Mono" font-size="22" fill="var(--text-mid)">...</text>
 
-                            <circle class="network-node" cx="270" cy="290" r="48" />
-                            <g transform="translate(270,290) scale(1.3)"><use href="#icon-flask" class="svg-icon"/></g>
-                            <text class="network-label" x="270" y="358">test-creator</text>
+                            <!-- Row 3: 5 Skills -->
+                            <rect x="135" y="208" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="180" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">variable</text>
 
-                            <circle class="network-node" cx="400" cy="290" r="48" />
-                            <g transform="translate(400,298) scale(1.3)"><use href="#icon-lambda" class="svg-icon"/></g>
-                            <text class="network-label" x="400" y="358">rules-engineer</text>
+                            <rect x="255" y="208" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="300" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">testing</text>
 
-                            <circle class="network-node" cx="530" cy="290" r="48" />
-                            <g transform="translate(530,290) scale(1.3)"><use href="#icon-search" class="svg-icon"/></g>
-                            <text class="network-label" x="530" y="358">validator</text>
+                            <rect x="375" y="208" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="420" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">code-style</text>
 
-                            <circle class="network-node" cx="660" cy="290" r="48" />
-                            <g transform="translate(660,290) scale(1.3)"><use href="#icon-wrench" class="svg-icon"/></g>
-                            <text class="network-label" x="660" y="358">ci-fixer</text>
+                            <rect x="495" y="208" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="540" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">parameter</text>
 
-                            <!-- More agents indicator -->
-                            <text x="755" y="300" font-family="JetBrains Mono" font-size="30" fill="var(--text-light)">...</text>
-
-                            <!-- Root lines from agents to skills -->
-                            <line x1="270" y1="338" x2="90" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="270" y1="338" x2="180" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="270" y1="338" x2="270" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="400" y1="338" x2="180" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="400" y1="338" x2="360" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="400" y1="338" x2="450" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="530" y1="338" x2="360" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="530" y1="338" x2="540" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="660" y1="338" x2="450" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="660" y1="338" x2="630" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-                            <line x1="660" y1="338" x2="720" y2="445" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
-
-                            <!-- Skills (roots) - smallest, many -->
-                            <rect x="55" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="90" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">variable</text>
-
-                            <rect x="145" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="180" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">aggregation</text>
-
-                            <rect x="235" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="270" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">testing</text>
-
-                            <rect x="325" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="360" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">code-style</text>
-
-                            <rect x="415" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="450" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">vectorize</text>
-
-                            <rect x="505" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="540" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">period</text>
-
-                            <rect x="595" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="630" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">parameter</text>
-
-                            <rect x="685" y="445" width="70" height="42" rx="5" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="2"/>
-                            <text x="720" y="472" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6366f1">review</text>
-
-                            <!-- More skills indicator -->
-                            <text x="775" y="475" font-family="JetBrains Mono" font-size="22" fill="#6366f1">...</text>
+                            <rect x="615" y="208" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="1.5"/>
+                            <text x="660" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="var(--accent)">vectorize</text>
+                            <text x="740" y="235" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="var(--accent)">...</text>
 
                             <!-- Labels -->
-                            <text x="400" y="525" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="var(--text-light)">COMMANDS → AGENTS → SKILLS</text>
-                            <text x="400" y="550" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="var(--text-mid)" font-style="italic">primitives compose into workflows</text>
+                            <text x="420" y="280" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="var(--text-light)">COMMANDS → AGENTS → SKILLS</text>
+                            <text x="420" y="302" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="500" fill="var(--text-mid)" font-style="italic">primitives compose into workflows</text>
                         </svg>
                     </div>
             </div>
@@ -2088,7 +2036,7 @@
                         <line x1="8" y1="11" x2="14" y2="11"></line>
                     </svg>
                 </div>
-                <div class="principle-title">Skills as knowledge base</div>
+                <div class="principle-title">Shared knowledge</div>
                 <p class="principle-desc">Domain expertise lives in reusable modules shared by agents throughout the workflow. No redundancy, no forgetting.</p>
             </div>
         </div>
@@ -2216,6 +2164,89 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <h3>Full agent flow</h3>
+        <p>Here's the complete <code>/encode-policy</code> workflow showing all agents and the validation loop:</p>
+
+        <div class="agent-flow-container" style="margin: 40px 0;">
+            <svg class="agent-flow-svg" viewBox="0 0 1300 680">
+                <!-- Loop indicator - ellipse around development/validation agents -->
+                <ellipse class="loop-indicator" cx="600" cy="340" rx="350" ry="290" />
+                <text class="loop-label" x="600" y="650">iterate until tests pass</text>
+
+                <!-- CONNECTIONS -->
+                <line class="network-line" x1="115" y1="340" x2="138" y2="340" />
+                <line class="network-line thick" x1="262" y1="300" x2="345" y2="165" />
+                <line class="network-line thick" x1="262" y1="340" x2="338" y2="340" />
+                <line class="network-line thick" x1="262" y1="380" x2="345" y2="515" />
+                <line class="network-line thick" x1="462" y1="365" x2="570" y2="425" />
+                <line class="network-line thick" x1="449" y1="525" x2="570" y2="425" />
+                <line class="network-line thick" x1="462" y1="340" x2="735" y2="120" />
+                <line class="network-line thick" x1="462" y1="340" x2="880" y2="340" />
+                <line class="network-line thick" x1="462" y1="120" x2="735" y2="120" />
+                <line class="network-line thick" x1="455" y1="145" x2="880" y2="340" />
+                <line class="network-line thick" x1="462" y1="560" x2="915" y2="400" />
+                <line class="network-line thick" x1="444" y1="165" x2="805" y2="560" />
+                <line class="network-line thick" x1="462" y1="560" x2="805" y2="560" />
+                <line class="network-line thick" x1="855" y1="165" x2="915" y2="285" />
+                <line class="network-line thick" x1="805" y1="560" x2="915" y2="400" />
+                <line class="network-line thick" x1="614" y1="425" x2="880" y2="340" />
+                <line class="network-line" x1="1015" y1="340" x2="1028" y2="340" />
+                <line class="network-line" x1="1102" y1="340" x2="1118" y2="340" />
+                <line class="network-line" x1="1192" y1="340" x2="1208" y2="340" />
+
+                <!-- NODES -->
+                <circle class="network-node" cx="65" cy="340" r="55" />
+                <g transform="translate(65,340) scale(1.6)"><use href="#icon-clipboard" class="svg-icon"/></g>
+                <text class="network-label" x="65" y="418">issue-manager</text>
+
+                <circle class="network-node" cx="200" cy="340" r="62" />
+                <g transform="translate(200,330) scale(1.8)"><use href="#icon-books" class="svg-icon"/></g>
+                <text class="network-label" x="200" y="425">document-</text>
+                <text class="network-label" x="200" y="445">collector</text>
+
+                <circle class="network-node specialist" cx="400" cy="120" r="62" />
+                <g transform="translate(400,120) scale(1.8)"><use href="#icon-gear" class="svg-icon"/></g>
+                <text class="network-label" x="400" y="42">parameter-architect</text>
+
+                <circle class="network-node specialist" cx="400" cy="340" r="62" />
+                <g transform="translate(400,340) scale(1.8)"><use href="#icon-flask" class="svg-icon"/></g>
+                <text class="network-label" x="400" y="425">test-creator</text>
+
+                <circle class="network-node specialist" cx="400" cy="560" r="62" />
+                <g transform="translate(400,568) scale(1.8)"><use href="#icon-lambda" class="svg-icon"/></g>
+                <text class="network-label" x="400" y="645">rules-engineer</text>
+
+                <circle class="network-node" cx="570" cy="425" r="55" />
+                <g transform="translate(570,425) scale(1.6)"><use href="#icon-lightning" class="svg-icon"/></g>
+                <text class="network-label" x="570" y="503">edge-case-gen</text>
+
+                <circle class="network-node" cx="805" cy="120" r="72" />
+                <g transform="translate(805,120) scale(2.0)"><use href="#icon-search" class="svg-icon"/></g>
+                <text class="network-label" x="805" y="42">impl-validator</text>
+
+                <circle class="network-node" cx="770" cy="600" r="55" />
+                <g transform="translate(770,600) scale(1.6)"><use href="#icon-link" class="svg-icon"/></g>
+                <text class="network-label" x="770" y="678">reference-validator</text>
+
+                <circle class="network-node" cx="950" cy="340" r="72" />
+                <g transform="translate(950,340) scale(2.0)"><use href="#icon-wrench" class="svg-icon"/></g>
+                <text class="network-label" x="950" y="435">ci-fixer</text>
+
+                <circle class="network-node" cx="1065" cy="340" r="40" />
+                <g transform="translate(1065,340) scale(1.2)"><use href="#icon-upload" class="svg-icon"/></g>
+                <text class="network-label" x="1065" y="398">pr-pusher</text>
+
+                <circle class="network-node" cx="1155" cy="340" r="40" />
+                <g transform="translate(1155,340) scale(1.2)"><use href="#icon-book" class="svg-icon"/></g>
+                <text class="network-label" x="1155" y="398">program-</text>
+                <text class="network-label" x="1155" y="416">reviewer</text>
+
+                <circle class="network-node output" cx="1245" cy="340" r="40" />
+                <g transform="translate(1245,340) scale(1.2)"><use href="#icon-document" class="svg-icon"/></g>
+                <text class="network-label" x="1245" y="398">Draft PR</text>
+            </svg>
         </div>
 
         <hr>
