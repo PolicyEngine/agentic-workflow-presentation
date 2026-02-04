@@ -15,7 +15,7 @@ export const EvolutionSection = () => {
   return (
     <AnimatedSection>
       <h2>The evolution: from prompt to workflow</h2>
-      <p>Getting to 90 minutes with a single command took five iterations. Each solved problems revealed by the previous—and created new ones. Let's walk through each step with a concrete example: implementing Colorado TANF.</p>
+      <p>Getting to 90 minutes with a single command took many iterations. Each solved problems revealed by the previous—and created new ones. Here are the six major milestones, illustrated with a concrete example: implementing New Hampshire's Temporary Assistance for Needy Families (TANF) program.</p>
 
       <div className="scrollytelling-container">
         <div className="scrolly-narrative">

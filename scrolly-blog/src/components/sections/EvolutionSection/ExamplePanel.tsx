@@ -11,18 +11,17 @@ type TabType = 'parameters' | 'variables' | 'tests';
 const parameterSteps = [
   // Step 1: Single prompt - hard-coded, no metadata
   {
-    title: "grant_standard.yaml",
+    title: "parameter.yaml",
     status: "error",
     statusLabel: "no metadata",
-    code: `# Generated without structure
-grant_amount: 710
-
-# No reference provided
-# No effective dates
-# Just a magic number`,
+    code: `grant_amount: 1333
+age_threshold: 18
+older_age_threshold: 19
+resource_limit: 1000`,
     issues: [
-      { type: 'error', text: '$710 hard-coded, no dates' },
+      { type: 'error', text: '$1333 hard-coded, no dates' },
       { type: 'error', text: 'No official reference' },
+      { type: 'error', text: 'All parameters in one file' },
       { type: 'warning', text: 'Will break when rates change' },
     ]
   },
@@ -31,17 +30,17 @@ grant_amount: 710
     title: "grant_standard.yaml",
     status: "warning",
     statusLabel: "partial",
-    code: `description: CO TANF grant standard
+    code: `description: NH TANF grant standard
+
 1:
-  1:
-    2022-03-01: 440
+  2025-07-01: 773
+
 metadata:
-  unit: currency-USD
-  period: month
-  # reference: ???`,
+  unit: currency-USD`,
     issues: [
       { type: 'success', text: 'Has date-based values' },
       { type: 'warning', text: 'Reference missing' },
+      { type: 'warning', text: 'description does not meet PolicyEngine standard' },
       { type: 'error', text: 'Only 1 family size' },
     ]
   },
@@ -50,88 +49,88 @@ metadata:
     title: "grant_standard.yaml",
     status: "warning",
     statusLabel: "verified",
-    code: `description: CO TANF grant standard
+    code: `description: NH TANF grant standard
 1:
-  1:
-    2022-03-01: 440
-    2024-07-01: 466  # ← Added!
+  2025-07-01: 773
+2:
+  2025-07-01: 1058
+# ... all sizes covered
 metadata:
   unit: currency-USD
+  period: month
   reference:
-    - title: 9 CCR 2503-6
-      href: https://...#page=52`,
+    - title: RSA 167:77
+      href: https://gc.nh.gov/...`,
     issues: [
       { type: 'success', text: 'Reference added from docs' },
-      { type: 'success', text: '2024 rate found' },
-      { type: 'warning', text: 'Still incomplete sizes' },
+      { type: 'success', text: 'period added' },
+      { type: 'warning', text: 'Missing label' },
     ]
   },
   // Step 4: Validation loop - expanded
   {
-    title: "grant_standard.yaml",
+    title: "rate.yaml",
     status: "success",
     statusLabel: "expanded",
-    code: `0:  # Child-only cases
-  1:
-    2022-03-01: 156
-    2024-07-01: 165
-  2:
-    2022-03-01: 326
-    2024-07-01: 345
-1:  # 1 caretaker
-  1:
-    2022-03-01: 440
-    2024-07-01: 466
-  # ... all sizes covered`,
+    code: `description: NH TANF payment
+  standard FPL rate
+values:
+  2017-07-01: 0.6
+metadata:
+  unit: /1
+  period: month
+  label: NH TANF payment standard
+  reference:
+    - title: RSA 167:77-g
+      href: https://gc.nh.gov/...`,
     issues: [
-      { type: 'success', text: 'All family sizes 0-10' },
-      { type: 'success', text: 'All caretaker counts' },
-      { type: 'success', text: 'Both 2022 and 2024 rates' },
+      { type: 'success', text: 'correct metadata section' },
+      { type: 'success', text: 'dates align with legal reference date' },
+      { type: 'success', text: 'using FPL rate instead of hardcoding' },
     ]
   },
   // Step 5: Modular skills - consistent patterns
   {
-    title: "grant_standard/main.yaml",
+    title: "child_care_deduction.yaml",
     status: "success",
     statusLabel: "structured",
-    code: `description: Colorado TANF grant
-  standard by number of caretakers
-  and children.
-0:
-  0:
-    2022-03-01: 0
-    2024-07-01: 0
-  1:
-    2022-03-01: 156
-    2024-07-01: 165`,
+    code: `brackets:
+  - threshold:
+      2012-07-01: 0
+    amount:
+      2012-07-01: 200
+  - threshold:
+      2022-07-01: 6
+    amount:
+      2012-07-01: 175`,
     issues: [
-      { type: 'success', text: 'Follows naming convention' },
+      { type: 'success', text: 'Proper bracket structure' },
       { type: 'success', text: 'parameter-patterns skill' },
       { type: 'success', text: 'Proper folder structure' },
     ]
   },
   // Step 6: Full workflow - production ready
   {
-    title: "grant_standard/main.yaml",
+    title: "nh/dhhs/tanf/",
     status: "success",
     statusLabel: "complete",
-    code: `description: Colorado TANF grant
-  standard by number of caretakers
-  and children.
-# 33 value combinations
-# 2 time periods
-metadata:
-  unit: currency-USD
-  period: month
-  breakdown:
-    - range(0, 3)
-    - range(0, 11)
-  reference:
-    - title: 9 CCR 2503-6
-      href: https://...#page=52`,
+    code: `nh/dhhs/tanf/
+├─ income/
+│  ├─ child_care_deduction/
+│  │  ├─ full_time_threshold.yaml
+│  │  ├─ full_time.yaml
+│  │  └─ part_time.yaml
+│  └─ earned_income_disregard/
+│     ├─ applicant_rate.yaml
+│     └─ recipient_rate.yaml
+├─ payment_standard/
+│  └─ fpg_rate.yaml
+└─ resources/
+   ├─ applicant_limit.yaml
+   └─ recipient_limit.yaml`,
     issues: [
-      { type: 'success', text: '66 values validated' },
-      { type: 'success', text: 'Official reference linked' },
+      { type: 'success', text: '11 parameter files' },
+      { type: 'success', text: 'All references linked' },
       { type: 'success', text: 'Ready for production' },
     ]
   },
@@ -141,49 +140,51 @@ metadata:
 const variableSteps = [
   // Step 1: Single prompt - naive implementation
   {
-    title: "co_tanf_eligible.py",
+    title: "nh_tanf_eligible.py",
     status: "error",
     statusLabel: "wrong",
     code: `def formula(person, period):
     income = person("income", period)
-    return income < 700
+    return income < 783
     # Hard-coded! Wrong threshold!
     # Wrong entity (person vs unit)`,
     issues: [
-      { type: 'error', text: '$700 ≠ actual threshold' },
+      { type: 'error', text: '$783 ≠ actual threshold' },
       { type: 'error', text: 'Wrong entity type' },
       { type: 'error', text: 'No reference attribute' },
     ]
   },
   // Step 2: Core pipeline - better structure
   {
-    title: "co_tanf_eligible.py",
+    title: "nh_income_eligible.py",
     status: "warning",
     statusLabel: "partial",
-    code: `class co_tanf_eligible(Variable):
+    code: `class nh_tanf_eligible(Variable):
     value_type = bool
     entity = SPMUnit
     definition_period = YEAR
 
-    def formula(spm_unit, period, p):
+    def formula(spm_unit, period, params):
+        p = params(period).gov.states
+            .nh.dhhs.tanf
         return spm_unit("income", period)
-               < 1000  # Still hard-coded`,
+               < p.grant_standard`,
     issues: [
       { type: 'success', text: 'Proper Variable class' },
       { type: 'success', text: 'Correct entity type' },
-      { type: 'error', text: 'Threshold still hard-coded' },
+      { type: 'error', text: 'definition period matters' },
     ]
   },
   // Step 3: Parallel - test reveals issues
   {
-    title: "co_tanf_eligible.py",
+    title: "nh_tanf_eligible.py",
     status: "warning",
     statusLabel: "flagged",
-    code: `class co_tanf_eligible(Variable):
+    code: `class nh_tanf_eligible(Variable):
     value_type = bool
     entity = SPMUnit
     definition_period = YEAR
-    defined_for = StateCode.CO
+    defined_for = StateCode.NH
 
     def formula(spm_unit, period, p):
         # Test says this is wrong!
@@ -196,21 +197,21 @@ const variableSteps = [
   },
   // Step 4: Validation loop - fixed
   {
-    title: "co_tanf_eligible.py",
+    title: "nh_tanf_eligible.py",
     status: "success",
     statusLabel: "fixed",
-    code: `class co_tanf_eligible(Variable):
+    code: `class nh_tanf_eligible(Variable):
     value_type = bool
     entity = SPMUnit
     definition_period = YEAR
-    defined_for = StateCode.CO
+    defined_for = StateCode.NH
 
     def formula(spm_unit, period, p):
         demographic = spm_unit(
             "is_demographic_tanf_eligible",
             period)
         income = spm_unit(
-            "co_tanf_income_eligible",
+            "nh_tanf_income_eligible",
             period)
         return demographic & income`,
     issues: [
@@ -221,16 +222,16 @@ const variableSteps = [
   },
   // Step 5: Modular skills - with docs
   {
-    title: "co_tanf_eligible.py",
+    title: "nh_tanf_eligible.py",
     status: "success",
     statusLabel: "documented",
-    code: `class co_tanf_eligible(Variable):
+    code: `class nh_tanf_eligible(Variable):
     value_type = bool
     entity = SPMUnit
-    label = "Colorado TANF eligible"
+    label = "New Hampshire TANF eligible"
     definition_period = YEAR
-    defined_for = StateCode.CO
-    reference = "9 CCR 2503-6"
+    defined_for = StateCode.NH
+    reference = "https://gc.nh.gov/rsa/html...
 
     def formula(spm_unit, period, p):
         # Properly documented...`,
@@ -242,28 +243,22 @@ const variableSteps = [
   },
   // Step 6: Full workflow - production
   {
-    title: "co_tanf_eligible.py",
+    title: "nh/dhhs/tanf/",
     status: "success",
     statusLabel: "complete",
-    code: `from policyengine_us.model_api import *
-
-class co_tanf_eligible(Variable):
-    value_type = bool
-    entity = SPMUnit
-    label = "Colorado TANF eligible"
-    definition_period = YEAR
-    defined_for = StateCode.CO
-
-    def formula(spm_unit, period, p):
-        demographic = spm_unit(
-            "is_demographic_tanf_eligible",
-            period)
-        income = spm_unit(
-            "co_tanf_income_eligible",
-            period)
-        return demographic & income`,
+    code: `nh/dhhs/tanf/
+├─ eligibility/
+│  ├─ nh_tanf_eligible.py
+│  ├─ nh_tanf_income_eligible.py
+│  └─ nh_tanf_resources_eligible.py
+└─ income/
+   ├─ nh_tanf_child_care_deduction.py
+   ├─ nh_tanf_countable_earned_income.py
+   ├─ nh_tanf_countable_income.py
+   └─ nh_tanf_payment_standard.py
+nh_tanf.py`,
     issues: [
-      { type: 'success', text: 'Validated against regs' },
+      { type: 'success', text: '8 variable files' },
       { type: 'success', text: 'All edge cases tested' },
       { type: 'success', text: 'PR ready for review' },
     ]
@@ -274,13 +269,13 @@ class co_tanf_eligible(Variable):
 const testSteps = [
   // Step 1: Single prompt - no tests
   {
-    title: "test_co_tanf.yaml",
+    title: "test_nh_tanf.yaml",
     status: "error",
     statusLabel: "missing",
     code: `# No tests generated
 #
 # "Tests? What tests?"
-#   - Single prompt, 2024`,
+#   - Single prompt, 2025`,
     issues: [
       { type: 'error', text: 'No tests at all' },
       { type: 'error', text: 'Can\'t verify correctness' },
@@ -289,16 +284,16 @@ const testSteps = [
   },
   // Step 2: Core pipeline - tests match impl
   {
-    title: "test_co_tanf.yaml",
+    title: "test_nh_tanf.yaml",
     status: "warning",
     statusLabel: "circular",
     code: `- name: Basic eligibility
-  period: 2023
+  period: 2025
   input:
-    income: 600
+    income: 700
   output:
-    co_tanf_eligible: true
-    # Matches the buggy $700 check!`,
+    nh_tanf_eligible: true
+    # Matches the buggy $773 check!`,
     issues: [
       { type: 'warning', text: 'Test derived from impl' },
       { type: 'error', text: 'Confirms bug, not regs' },
@@ -307,18 +302,18 @@ const testSteps = [
   },
   // Step 3: Parallel - tests from docs
   {
-    title: "test_co_tanf.yaml",
+    title: "test_nh_tanf.yaml",
     status: "success",
     statusLabel: "independent",
     code: `- name: Per 9 CCR 2503-6
   period: 2023
   input:
-    state_code: CO
+    state_code: NH
     # From regulations table
     is_demographic_tanf_eligible: true
-    co_tanf_income_eligible: true
+    nh_tanf_income_eligible: true
   output:
-    co_tanf_eligible: true`,
+    nh_tanf_eligible: true`,
     issues: [
       { type: 'success', text: 'Based on regulations' },
       { type: 'success', text: 'Independent of impl' },
@@ -327,16 +322,16 @@ const testSteps = [
   },
   // Step 4: Validation loop - edge cases
   {
-    title: "test_co_tanf.yaml",
+    title: "test_nh_tanf.yaml",
     status: "success",
     statusLabel: "expanded",
     code: `- name: Demographic but not income
   period: 2023
   input:
     is_demographic_tanf_eligible: true
-    co_tanf_income_eligible: false
+    nh_tanf_income_eligible: false
   output:
-    co_tanf_eligible: false
+    nh_tanf_eligible: false
 
 - name: Income but not demographic
   # ... more edge cases`,
@@ -348,13 +343,13 @@ const testSteps = [
   },
   // Step 5: Modular skills - integration
   {
-    title: "test_co_tanf_integration.yaml",
+    title: "test_nh_tanf_integration.yaml",
     status: "success",
     statusLabel: "integration",
     code: `- name: Full benefit calculation
   period: 2023
   input:
-    state_code: CO
+    state_code: NH
     people:
       parent:
         age: 30
@@ -364,7 +359,7 @@ const testSteps = [
       unit:
         members: [parent, child]
   output:
-    co_tanf: 440  # From table`,
+    nh_tanf: 1_058  # From working-reference.md`,
     issues: [
       { type: 'success', text: 'End-to-end test' },
       { type: 'success', text: 'Realistic household' },
@@ -373,20 +368,20 @@ const testSteps = [
   },
   // Step 6: Full workflow - comprehensive
   {
-    title: "test_co_tanf*.yaml",
+    title: "dhhs/tanf/",
     status: "success",
     statusLabel: "complete",
-    code: `# 9 test files generated:
-# - co_tanf.yaml
-# - co_tanf_eligible.yaml
-# - co_tanf_grant_standard.yaml
-# - co_tanf_income_eligible.yaml
-# - co_tanf_integration.yaml
-# ... and 4 more
-
-# 27 test cases total`,
+    code: `dhhs/tanf/
+├─ integration.yaml
+├─ nh_tanf_child_care_deduction.yaml
+├─ nh_tanf_countable_earned_income.yaml
+├─ nh_tanf_eligible.yaml
+├─ nh_tanf_income_eligible.yaml
+├─ nh_tanf_payment_standard.yaml
+├─ nh_tanf_resources_eligible.yaml
+└─ nh_tanf.yaml`,
     issues: [
-      { type: 'success', text: '27 test cases' },
+      { type: 'success', text: '8 test files with 65 test cases' },
       { type: 'success', text: 'All edge cases covered' },
       { type: 'success', text: 'CI passing' },
     ]
@@ -417,8 +412,8 @@ export const ExamplePanel = ({ step }: ExamplePanelProps) => {
   return (
     <div className="example-panel">
       <div className="example-header">
-        <span className="example-title">Colorado TANF</span>
-        <span className="example-badge">Step {step + 1}</span>
+        <span className="example-title">New Hampshire TANF</span>
+        <span className="example-badge">Iteration {step + 1}</span>
       </div>
 
       {/* Tab navigation */}
