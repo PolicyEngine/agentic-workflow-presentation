@@ -202,8 +202,8 @@ const FlowDiagram4 = () => (
   <svg className="full-width-flow-svg" viewBox="0 0 1100 680">
     <IconDefs />
 
-    {/* Loop indicator - ellipse around development/validation agents */}
-    <ellipse className="network-line" cx="500" cy="340" rx="350" ry="290" fill="none" strokeWidth="2.5" strokeDasharray="12 6" opacity="0.7" />
+    {/* Loop indicator - ellipse around development/validation agents (animated) */}
+    <ellipse className="loop-indicator" cx="500" cy="340" rx="350" ry="290" />
     <text x="500" y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontStyle="italic">iterate until tests pass</text>
 
     {/* CONNECTIONS */}
