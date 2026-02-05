@@ -250,7 +250,7 @@ export const StagesDiagram = () => {
               x2={a2.x}
               y2={a2.y}
               style={{
-                opacity: hoveredStage === null ? 0.7 : isInHoveredStage ? 1 : 0.2,
+                opacity: hoveredStage === null ? 0.5 : isInHoveredStage ? 0.8 : 0.08,
                 transition: 'opacity 0.2s ease',
               }}
             />
