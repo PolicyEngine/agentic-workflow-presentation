@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FlowDiagram5 } from './FlowDiagram5';
 
 export interface NarrativeStep {
   id: string;
@@ -264,80 +265,7 @@ const FlowDiagram4 = () => (
   </svg>
 );
 
-// Step 5: Add skills layer
-const FlowDiagram5 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 800 340">
-    <IconDefs />
-    {/* Row labels */}
-    <text x="65" y="75" textAnchor="end" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontWeight="600">Agents</text>
-    <text x="65" y="220" textAnchor="end" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontWeight="600">Skills</text>
-
-    {/* Agents row */}
-    <circle className="network-node" cx="140" cy="70" r="38" />
-    <g transform="translate(140,62) scale(1.0)" className="svg-icon"><use href="#icon-books" /></g>
-
-    <circle className="network-node" cx="230" cy="70" r="38" />
-    <g transform="translate(230,70) scale(1.0)" className="svg-icon"><use href="#icon-gear" /></g>
-
-    <circle className="network-node" cx="320" cy="70" r="38" />
-    <g transform="translate(320,70) scale(1.0)" className="svg-icon"><use href="#icon-flask" /></g>
-
-    <circle className="network-node" cx="410" cy="70" r="38" />
-    <g transform="translate(410,78) scale(1.0)" className="svg-icon"><use href="#icon-lambda" /></g>
-
-    <circle className="network-node" cx="500" cy="70" r="38" />
-    <g transform="translate(500,70) scale(1.0)" className="svg-icon"><use href="#icon-lightning" /></g>
-
-    <circle className="network-node" cx="590" cy="70" r="38" />
-    <g transform="translate(590,70) scale(1.0)" className="svg-icon"><use href="#icon-search" /></g>
-
-    <circle className="network-node" cx="680" cy="70" r="38" />
-    <g transform="translate(680,70) scale(1.0)" className="svg-icon"><use href="#icon-wrench" /></g>
-
-    <text x="750" y="77" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="20" fill="var(--text-mid)">...</text>
-
-    {/* Lines from agents to skills */}
-    <line x1="140" y1="108" x2="120" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="230" y1="108" x2="120" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="230" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="320" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="320" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="410" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="410" y1="108" x2="450" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="500" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="500" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="590" y1="108" x2="450" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="590" y1="108" x2="560" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="680" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="680" y1="108" x2="560" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-
-    {/* Skills row */}
-    <rect x="75" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="120" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">variable</text>
-
-    <rect x="185" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="230" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">testing</text>
-
-    <rect x="295" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="340" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">code-style</text>
-
-    <rect x="405" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="450" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">parameter</text>
-
-    <rect x="515" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="560" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">vectorize</text>
-
-    <text x="640" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="18" fill="var(--accent)">...</text>
-
-    {/* Key insight */}
-    <text x="400" y="280" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fontWeight="500" fill="var(--text-mid)" fontStyle="italic">Multiple agents load the same skills → consistent patterns</text>
-
-    {/* Error rate */}
-    <circle cx="720" cy="280" r="28" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" strokeWidth="2"/>
-    <text x="720" y="277" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="15" fontWeight="700" fill="#22c55e">15%</text>
-    <text x="720" y="293" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#22c55e">errors</text>
-  </svg>
-);
+// Step 5: Interactive skills diagram - imported from FlowDiagram5.tsx
 
 // Step 6: Full workflow (all agents) - exact copy of FullAgentFlow layout
 const FlowDiagram6 = () => (
