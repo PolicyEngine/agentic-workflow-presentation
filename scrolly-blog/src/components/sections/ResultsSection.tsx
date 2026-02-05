@@ -14,7 +14,7 @@ export const ResultsSection = () => (
         <div className="stat-card">
           <div className="stat-number">45+</div>
           <div className="stat-label">Programs in production</div>
-          <div className="stat-detail">TANF, CCDF & more across states</div>
+          <div className="stat-detail">TANF across states & Illinois programs</div>
         </div>
         <div className="stat-card">
           <div className="stat-number">60K+</div>
