@@ -9,11 +9,11 @@ type TabType = 'parameters' | 'variables' | 'tests';
 
 // Parameter examples for each step (showing evolution)
 const parameterSteps = [
-  // Step 1: Single prompt - hard-coded, no metadata
+  // Step 1: Single prompt - hard-coded, wrong metadata
   {
     title: "parameter.yaml",
     status: "error",
-    statusLabel: "no metadata",
+    statusLabel: "wrong metadata",
     code: `grant_amount: 1333
 age_threshold: 18
 older_age_threshold: 19
@@ -48,7 +48,7 @@ metadata:
   {
     title: "grant_standard.yaml",
     status: "warning",
-    statusLabel: "verified",
+    statusLabel: "partial",
     code: `description: NH TANF grant standard
 1:
   2025-07-01: 773
@@ -86,7 +86,7 @@ metadata:
     issues: [
       { type: 'success', text: 'correct metadata section' },
       { type: 'success', text: 'dates align with legal reference date' },
-      { type: 'success', text: 'using FPL rate instead of hardcoding' },
+      { type: 'success', text: 'Correct dependencies on pre-existing code' },
     ]
   },
   // Step 5: Modular skills - consistent patterns
@@ -219,7 +219,7 @@ const variableSteps = [
     issues: [
       { type: 'success', text: 'Uses existing variables' },
       { type: 'success', text: 'Both eligibility checks' },
-      { type: 'success', text: 'All tests pass' },
+      { type: 'error', text: 'Inconsistent formatting' },
     ]
   },
   // Step 5: Modular skills - with docs
@@ -236,7 +236,13 @@ const variableSteps = [
     reference = "https://gc.nh.gov/rsa/html...
 
     def formula(spm_unit, period, p):
-        # Properly documented...`,
+        demographic = spm_unit(
+            "is_demographic_tanf_eligible",
+            period)
+        income = spm_unit(
+            "nh_tanf_income_eligible",
+            period)
+        return demographic & income`,
     issues: [
       { type: 'success', text: 'Has label attribute' },
       { type: 'success', text: 'Has reference attribute' },
@@ -319,7 +325,7 @@ const testSteps = [
     issues: [
       { type: 'success', text: 'Based on regulations' },
       { type: 'success', text: 'Independent of impl' },
-      { type: 'success', text: 'Can catch real bugs' },
+      { type: 'error', text: 'Missing edge case testing' },
     ]
   },
   // Step 4: Validation loop - edge cases

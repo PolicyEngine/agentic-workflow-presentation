@@ -416,6 +416,15 @@ a:hover {
   pointer-events: none;
 }
 
+.full-width-flow-svg .loop-indicator {
+  fill: rgba(13, 115, 119, 0.03);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 12 6;
+  opacity: 0.7;
+  animation: rotateLoop 6s linear infinite;
+}
+
 .step-content {
   padding-left: 0;
 }
@@ -1536,6 +1545,59 @@ a:hover {
   height: auto;
 }
 
+/* Stages Diagram */
+.stages-diagram-container {
+  background: var(--bg-diagram);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 30px 0;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.stages-diagram-svg {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  min-height: 400px;
+}
+
+.stages-diagram-svg .network-node {
+  fill: var(--bg-card);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.stages-diagram-svg .network-line {
+  stroke: var(--text-mid);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+  fill: none;
+}
+
+.stages-diagram-svg .network-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  fill: var(--text-mid);
+  text-anchor: middle;
+}
+
+.stages-diagram-svg .svg-icon {
+  color: var(--text-mid);
+  pointer-events: none;
+}
+
+.stages-diagram-svg .loop-indicator {
+  fill: rgba(13, 115, 119, 0.03);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 12 6;
+  opacity: 0.6;
+  animation: rotateLoop 6s linear infinite;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .article-wrapper {
@@ -1583,5 +1645,130 @@ a:hover {
   }
   .next-cards {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DIAGRAM MODAL / LIGHTBOX
+   ══════════════════════════════════════════════════════════════ */
+
+.step-diagram.clickable {
+  cursor: zoom-in;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.step-diagram.clickable:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(13, 115, 119, 0.15);
+}
+
+.step-diagram.clickable:hover .expand-hint {
+  opacity: 1;
+}
+
+.expand-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  background: var(--accent);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.diagram-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 40px;
+  cursor: zoom-out;
+}
+
+.diagram-modal-content {
+  background: var(--bg-diagram);
+  background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-radius: 16px;
+  padding: 32px 40px 40px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  cursor: default;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--accent);
+}
+
+.diagram-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.diagram-modal-close:hover {
+  background: #0a5d60;
+  transform: scale(1.1);
+}
+
+.diagram-modal-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  padding-right: 50px;
+}
+
+.diagram-modal-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 800px;
+}
+
+.diagram-modal-diagram svg {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+}
+
+@media (max-width: 900px) {
+  .diagram-modal-overlay {
+    padding: 20px;
+  }
+
+  .diagram-modal-content {
+    padding: 24px;
+  }
+
+  .diagram-modal-diagram {
+    min-width: auto;
   }
 }

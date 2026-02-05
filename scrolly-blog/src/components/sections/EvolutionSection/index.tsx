@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Scrollama, Step } from 'react-scrollama';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '../../common/AnimatedSection';
@@ -7,15 +7,69 @@ import { narrativeSteps } from './narrativeData';
 
 export const EvolutionSection = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [expandedDiagram, setExpandedDiagram] = useState<number | null>(null);
 
   const onStepEnter = ({ data }: { data: number }) => {
     setCurrentStep(data);
   };
 
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setExpandedDiagram(null);
+      }
+    };
+    if (expandedDiagram !== null) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [expandedDiagram]);
+
   return (
     <AnimatedSection>
       <h2>The evolution: from prompt to workflow</h2>
-      <p>Getting to 90 minutes with a single command took many iterations. Each solved problems revealed by the previous—and created new ones. Here are the six major milestones, illustrated with a concrete example: implementing New Hampshire's Temporary Assistance for Needy Families (TANF) program.</p>
+      <p>Getting to a completed, tested and functioning pull request with a single command took many iterations. Each version addressed previous limitations while surfacing new challenges. Here's how the system evolved, illustrated through six key stages based on a concrete example: implementing New Hampshire's Temporary Assistance for Needy Families (TANF) program.</p>
+
+      {/* Expanded diagram modal */}
+      <AnimatePresence>
+        {expandedDiagram !== null && (
+          <motion.div
+            className="diagram-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setExpandedDiagram(null)}
+          >
+            <motion.div
+              className="diagram-modal-content"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="diagram-modal-close"
+                onClick={() => setExpandedDiagram(null)}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <div className="diagram-modal-title">
+                Step {narrativeSteps[expandedDiagram].num}: {narrativeSteps[expandedDiagram].title}
+              </div>
+              <div className="diagram-modal-diagram">
+                {narrativeSteps[expandedDiagram].diagram}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="scrollytelling-container">
         <div className="scrolly-narrative">
@@ -29,8 +83,12 @@ export const EvolutionSection = () => {
                     <div className="step-subtitle">— {step.subtitle}</div>
                   </div>
 
-                  {/* Full-width diagram */}
-                  <div className="step-diagram">
+                  {/* Full-width diagram - clickable */}
+                  <div
+                    className="step-diagram clickable"
+                    onClick={() => setExpandedDiagram(index)}
+                    title="Click to expand"
+                  >
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={step.id}
@@ -43,6 +101,7 @@ export const EvolutionSection = () => {
                         {step.diagram}
                       </motion.div>
                     </AnimatePresence>
+                    <div className="expand-hint">Click to expand</div>
                   </div>
 
                   {/* Text content */}

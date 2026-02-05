@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { FlowDiagram5 } from './FlowDiagram5';
+import { FlowDiagram6 } from './FlowDiagram6';
 
 export interface NarrativeStep {
   id: string;
@@ -197,315 +199,76 @@ const FlowDiagram3 = () => (
 );
 
 // Step 4: Add edge-case-generator + ci-fixer with loop (8 agents)
+// Same layout as FullAgentFlow but without issue-manager, pr-pusher, program-reviewer
 const FlowDiagram4 = () => (
-  <svg className="full-width-flow-svg" viewBox="60 0 980 620">
+  <svg className="full-width-flow-svg" viewBox="0 0 1100 680">
     <IconDefs />
 
-    {/* Loop indicator - ellipse around validation agents */}
-    <ellipse cx="550" cy="280" rx="320" ry="210" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35" />
+    {/* Loop indicator - ellipse around development/validation agents (animated) */}
+    <ellipse className="loop-indicator" cx="500" cy="340" rx="350" ry="290" />
+    <text x="500" y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontStyle="italic">iterate until tests pass</text>
 
-    {/* === CONNECTIONS === */}
+    {/* CONNECTIONS */}
+    <line className="network-line" x1="162" y1="300" x2="245" y2="165" />
+    <line className="network-line" x1="162" y1="340" x2="238" y2="340" />
+    <line className="network-line" x1="162" y1="380" x2="245" y2="515" />
+    <line className="network-line" x1="362" y1="365" x2="470" y2="425" />
+    <line className="network-line" x1="349" y1="525" x2="470" y2="425" />
+    <line className="network-line" x1="362" y1="340" x2="635" y2="120" />
+    <line className="network-line" x1="362" y1="340" x2="780" y2="340" />
+    <line className="network-line" x1="362" y1="120" x2="635" y2="120" />
+    <line className="network-line" x1="355" y1="145" x2="780" y2="340" />
+    <line className="network-line" x1="362" y1="560" x2="815" y2="400" />
+    <line className="network-line" x1="344" y1="165" x2="705" y2="560" />
+    <line className="network-line" x1="362" y1="560" x2="705" y2="560" />
+    <line className="network-line" x1="755" y1="165" x2="815" y2="285" />
+    <line className="network-line" x1="705" y1="560" x2="815" y2="400" />
+    <line className="network-line" x1="514" y1="425" x2="780" y2="340" />
+    <line className="network-line" x1="915" y1="340" x2="980" y2="340" />
 
-    {/* doc-collector → parameter-architect */}
-    <line className="network-line thick" x1="183" y1="280" x2="360" y2="100" />
-    {/* doc-collector → rules-engineer */}
-    <line className="network-line thick" x1="183" y1="280" x2="720" y2="138" />
-    {/* doc-collector → test-creator */}
-    <line className="network-line thick" x1="183" y1="280" x2="498" y2="280" />
+    {/* NODES */}
+    <circle className="network-node" cx="100" cy="340" r="62" />
+    <g transform="translate(100,330) scale(1.8)" className="svg-icon"><use href="#icon-books" /></g>
+    <text className="network-label" x="100" y="425">document-</text>
+    <text className="network-label" x="100" y="445">collector</text>
 
-    {/* parameter-architect → rules-engineer */}
-    <line className="network-line thick" x1="360" y1="100" x2="740" y2="104" />
+    <circle className="network-node" cx="300" cy="120" r="62" />
+    <g transform="translate(300,120) scale(1.8)" className="svg-icon"><use href="#icon-gear" /></g>
+    <text className="network-label" x="300" y="42">parameter-architect</text>
 
-    {/* parameter-architect → reference-validator */}
-    <line className="network-line thick" x1="360" y1="142" x2="310" y2="365" />
-    {/* rules-engineer → reference-validator (via param connection points) */}
-    <line className="network-line thick" x1="688" y1="100" x2="310" y2="365" />
+    <circle className="network-node" cx="300" cy="340" r="62" />
+    <g transform="translate(300,340) scale(1.8)" className="svg-icon"><use href="#icon-flask" /></g>
+    <text className="network-label" x="300" y="425">test-creator</text>
 
-    {/* rules-engineer → edge-case-gen */}
-    <line className="network-line thick" x1="720" y1="142" x2="720" y2="322" />
-    {/* test-creator → edge-case-gen */}
-    <line className="network-line thick" x1="587" y1="317" x2="720" y2="322" />
+    <circle className="network-node" cx="300" cy="560" r="62" />
+    <g transform="translate(300,568) scale(1.8)" className="svg-icon"><use href="#icon-lambda" /></g>
+    <text className="network-label" x="300" y="645">rules-engineer</text>
 
-    {/* parameter-architect → impl-validator */}
-    <line className="network-line thick" x1="360" y1="142" x2="520" y2="450" />
-    {/* rules-engineer → impl-validator */}
-    <line className="network-line thick" x1="720" y1="138" x2="590" y2="460" />
-    {/* test-creator → impl-validator */}
-    <line className="network-line thick" x1="550" y1="326" x2="550" y2="435" />
+    <circle className="network-node" cx="470" cy="425" r="55" />
+    <g transform="translate(470,425) scale(1.6)" className="svg-icon"><use href="#icon-lightning" /></g>
+    <text className="network-label" x="470" y="503">edge-case-gen</text>
 
-    {/* parameter-architect → ci-fixer */}
-    <line className="network-line thick" x1="360" y1="142" x2="870" y2="280" />
-    {/* rules-engineer → ci-fixer */}
-    <line className="network-line thick" x1="740" y1="104" x2="870" y2="280" />
-    {/* test-creator → ci-fixer */}
-    <line className="network-line thick" x1="602" y1="280" x2="870" y2="280" />
-    {/* reference-validator → ci-fixer */}
-    <line className="network-line thick" x1="338" y1="400" x2="870" y2="280" />
-    {/* edge-case-gen → ci-fixer */}
-    <line className="network-line thick" x1="758" y1="360" x2="870" y2="280" />
-    {/* impl-validator → ci-fixer */}
-    <line className="network-line thick" x1="606" y1="487" x2="860" y2="330" />
+    <circle className="network-node" cx="705" cy="120" r="72" />
+    <g transform="translate(705,120) scale(2.0)" className="svg-icon"><use href="#icon-search" /></g>
+    <text className="network-label" x="705" y="42">impl-validator</text>
 
-    {/* === NODES === */}
+    <circle className="network-node" cx="670" cy="600" r="55" />
+    <g transform="translate(670,600) scale(1.6)" className="svg-icon"><use href="#icon-link" /></g>
+    <text className="network-label" x="670" y="678">reference-validator</text>
 
-    {/* document-collector */}
-    <circle className="network-node" cx="130" cy="280" r="52" />
-    <g transform="translate(130,270) scale(1.5)"><use href="#icon-books" className="svg-icon"/></g>
-    <text className="network-label" x="130" y="352">document-</text>
-    <text className="network-label" x="130" y="370">collector</text>
+    <circle className="network-node" cx="850" cy="340" r="72" />
+    <g transform="translate(850,340) scale(2.0)" className="svg-icon"><use href="#icon-wrench" /></g>
+    <text className="network-label" x="850" y="435">ci-fixer</text>
 
-    {/* parameter-architect - TOP LEFT on ellipse */}
-    <circle className="network-node" cx="360" cy="100" r="46" />
-    <g transform="translate(360,100) scale(1.3)"><use href="#icon-gear" className="svg-icon"/></g>
-    <text className="network-label" x="360" y="35">parameter-architect</text>
-
-    {/* rules-engineer - TOP RIGHT on ellipse */}
-    <circle className="network-node" cx="740" cy="100" r="46" />
-    <g transform="translate(740,100) scale(1.3)"><use href="#icon-lambda" className="svg-icon"/></g>
-    <text className="network-label" x="740" y="35">rules-engineer</text>
-
-    {/* reference-validator - LEFT inside */}
-    <circle className="network-node" cx="310" cy="400" r="34" />
-    <g transform="translate(310,400) scale(1.0)"><use href="#icon-link" className="svg-icon"/></g>
-    <text className="network-label" x="235" y="420">reference-</text>
-    <text className="network-label" x="235" y="438">validator</text>
-
-    {/* edge-case-gen - RIGHT inside */}
-    <circle className="network-node" cx="720" cy="360" r="34" />
-    <g transform="translate(720,360) scale(1.0)"><use href="#icon-lightning" className="svg-icon"/></g>
-    <text className="network-label" x="720" y="410">edge-case-gen</text>
-
-    {/* test-creator - CENTER inside */}
-    <circle className="network-node" cx="550" cy="280" r="46" />
-    <g transform="translate(550,280) scale(1.3)"><use href="#icon-flask" className="svg-icon"/></g>
-    <text className="network-label" x="550" y="220">test-creator</text>
-
-    {/* impl-validator - BOTTOM center ON ellipse */}
-    <circle className="network-node" cx="550" cy="490" r="55" />
-    <g transform="translate(550,490) scale(1.6)"><use href="#icon-search" className="svg-icon"/></g>
-    <text className="network-label" x="550" y="565">impl-validator</text>
-
-    {/* ci-fixer - RIGHT side ON ellipse */}
-    <circle className="network-node" cx="870" cy="280" r="52" />
-    <g transform="translate(870,280) scale(1.5)"><use href="#icon-wrench" className="svg-icon"/></g>
-    <text className="network-label" x="870" y="352">ci-fixer</text>
-
-    {/* output */}
-    <line className="network-line" x1="870" y1="280" x2="940" y2="280" />
-    <polygon className="flow-arrow" points="940,274 954,280 940,286" />
-    <circle className="network-node" cx="990" cy="280" r="38" />
-    <g transform="translate(990,280) scale(1.0)"><use href="#icon-document" className="svg-icon"/></g>
-    <text className="network-label" x="990" y="335">output</text>
-
-    {/* Loop label */}
-    <text className="loop-label" x="550" y="585" textAnchor="middle">iterate until tests pass</text>
+    <circle className="network-node" cx="1020" cy="340" r="45" />
+    <g transform="translate(1020,340) scale(1.3)" className="svg-icon"><use href="#icon-document" /></g>
+    <text className="network-label" x="1020" y="405">output</text>
   </svg>
 );
 
-// Step 5: Add skills layer
-const FlowDiagram5 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 800 340">
-    <IconDefs />
-    {/* Row labels */}
-    <text x="65" y="75" textAnchor="end" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontWeight="600">Agents</text>
-    <text x="65" y="220" textAnchor="end" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontWeight="600">Skills</text>
+// Step 5: Interactive skills diagram - imported from FlowDiagram5.tsx
 
-    {/* Agents row */}
-    <circle className="network-node" cx="140" cy="70" r="38" />
-    <g transform="translate(140,62) scale(1.0)" className="svg-icon"><use href="#icon-books" /></g>
-
-    <circle className="network-node" cx="230" cy="70" r="38" />
-    <g transform="translate(230,70) scale(1.0)" className="svg-icon"><use href="#icon-gear" /></g>
-
-    <circle className="network-node" cx="320" cy="70" r="38" />
-    <g transform="translate(320,70) scale(1.0)" className="svg-icon"><use href="#icon-flask" /></g>
-
-    <circle className="network-node" cx="410" cy="70" r="38" />
-    <g transform="translate(410,78) scale(1.0)" className="svg-icon"><use href="#icon-lambda" /></g>
-
-    <circle className="network-node" cx="500" cy="70" r="38" />
-    <g transform="translate(500,70) scale(1.0)" className="svg-icon"><use href="#icon-lightning" /></g>
-
-    <circle className="network-node" cx="590" cy="70" r="38" />
-    <g transform="translate(590,70) scale(1.0)" className="svg-icon"><use href="#icon-search" /></g>
-
-    <circle className="network-node" cx="680" cy="70" r="38" />
-    <g transform="translate(680,70) scale(1.0)" className="svg-icon"><use href="#icon-wrench" /></g>
-
-    <text x="750" y="77" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="20" fill="var(--text-mid)">...</text>
-
-    {/* Lines from agents to skills */}
-    <line x1="140" y1="108" x2="120" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="230" y1="108" x2="120" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="230" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="320" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="320" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="410" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="410" y1="108" x2="450" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="500" y1="108" x2="230" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="500" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="590" y1="108" x2="450" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="590" y1="108" x2="560" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="680" y1="108" x2="340" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-    <line x1="680" y1="108" x2="560" y2="180" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 2"/>
-
-    {/* Skills row */}
-    <rect x="75" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="120" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">variable</text>
-
-    <rect x="185" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="230" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">testing</text>
-
-    <rect x="295" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="340" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">code-style</text>
-
-    <rect x="405" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="450" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">parameter</text>
-
-    <rect x="515" y="190" width="90" height="42" rx="5" fill="var(--accent-light)" stroke="var(--accent)" strokeWidth="1.5"/>
-    <text x="560" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--accent)">vectorize</text>
-
-    <text x="640" y="217" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="18" fill="var(--accent)">...</text>
-
-    {/* Key insight */}
-    <text x="400" y="280" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fontWeight="500" fill="var(--text-mid)" fontStyle="italic">Multiple agents load the same skills → consistent patterns</text>
-
-    {/* Error rate */}
-    <circle cx="720" cy="280" r="28" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" strokeWidth="2"/>
-    <text x="720" y="277" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="15" fontWeight="700" fill="#22c55e">15%</text>
-    <text x="720" y="293" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#22c55e">errors</text>
-  </svg>
-);
-
-// Step 6: Full workflow (all agents)
-const FlowDiagram6 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 1400 660">
-    <IconDefs />
-
-    {/* Loop indicator - ellipse around development/validation agents */}
-    <ellipse cx="650" cy="300" rx="380" ry="240" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35" />
-
-    {/* === CONNECTIONS === */}
-
-    {/* issue-manager → doc-collector */}
-    <line className="network-line" x1="115" y1="300" x2="147" y2="300" />
-
-    {/* doc-collector → parameter-architect */}
-    <line className="network-line thick" x1="263" y1="300" x2="440" y2="100" />
-    {/* doc-collector → rules-engineer */}
-    <line className="network-line thick" x1="263" y1="300" x2="850" y2="148" />
-    {/* doc-collector → test-creator */}
-    <line className="network-line thick" x1="263" y1="300" x2="598" y2="300" />
-
-    {/* parameter-architect → rules-engineer */}
-    <line className="network-line thick" x1="440" y1="100" x2="870" y2="104" />
-
-    {/* parameter-architect → reference-validator */}
-    <line className="network-line thick" x1="440" y1="152" x2="380" y2="385" />
-    {/* rules-engineer → reference-validator (via param connection points) */}
-    <line className="network-line thick" x1="818" y1="100" x2="380" y2="385" />
-
-    {/* rules-engineer → edge-case-gen */}
-    <line className="network-line thick" x1="850" y1="152" x2="850" y2="342" />
-    {/* test-creator → edge-case-gen */}
-    <line className="network-line thick" x1="687" y1="337" x2="850" y2="342" />
-
-    {/* parameter-architect → impl-validator */}
-    <line className="network-line thick" x1="440" y1="152" x2="620" y2="480" />
-    {/* rules-engineer → impl-validator */}
-    <line className="network-line thick" x1="850" y1="148" x2="690" y2="490" />
-    {/* test-creator → impl-validator */}
-    <line className="network-line thick" x1="650" y1="352" x2="650" y2="475" />
-
-    {/* parameter-architect → ci-fixer */}
-    <line className="network-line thick" x1="440" y1="152" x2="1030" y2="300" />
-    {/* rules-engineer → ci-fixer */}
-    <line className="network-line thick" x1="870" y1="104" x2="1030" y2="300" />
-    {/* test-creator → ci-fixer */}
-    <line className="network-line thick" x1="702" y1="300" x2="1030" y2="300" />
-    {/* reference-validator → ci-fixer */}
-    <line className="network-line thick" x1="408" y1="420" x2="1030" y2="300" />
-    {/* edge-case-gen → ci-fixer */}
-    <line className="network-line thick" x1="888" y1="380" x2="1030" y2="300" />
-    {/* impl-validator → ci-fixer */}
-    <line className="network-line thick" x1="715" y1="537" x2="1020" y2="358" />
-
-    {/* ci-fixer → pr-pusher */}
-    <line className="network-line" x1="1030" y1="300" x2="1110" y2="300" />
-    {/* pr-pusher → program-reviewer */}
-    <line className="network-line" x1="1190" y1="300" x2="1210" y2="300" />
-    {/* program-reviewer → Draft PR */}
-    <line className="network-line" x1="1290" y1="300" x2="1310" y2="300" />
-
-    {/* === NODES === */}
-
-    {/* Outside left - issue-manager */}
-    <circle className="network-node" cx="65" cy="300" r="50" />
-    <g transform="translate(65,300) scale(1.5)" className="svg-icon"><use href="#icon-clipboard" /></g>
-    <text className="network-label" x="65" y="370">issue-manager</text>
-
-    {/* document-collector */}
-    <circle className="network-node" cx="205" cy="300" r="58" />
-    <g transform="translate(205,290) scale(1.7)" className="svg-icon"><use href="#icon-books" /></g>
-    <text className="network-label" x="205" y="378">document-</text>
-    <text className="network-label" x="205" y="396">collector</text>
-
-    {/* parameter-architect - TOP LEFT on ellipse */}
-    <circle className="network-node" cx="440" cy="100" r="52" />
-    <g transform="translate(440,100) scale(1.5)" className="svg-icon"><use href="#icon-gear" /></g>
-    <text className="network-label" x="440" y="30">parameter-architect</text>
-
-    {/* rules-engineer - TOP RIGHT on ellipse */}
-    <circle className="network-node" cx="870" cy="100" r="52" />
-    <g transform="translate(870,100) scale(1.5)" className="svg-icon"><use href="#icon-lambda" /></g>
-    <text className="network-label" x="870" y="30">rules-engineer</text>
-
-    {/* reference-validator - LEFT inside */}
-    <circle className="network-node" cx="370" cy="420" r="38" />
-    <g transform="translate(370,420) scale(1.1)" className="svg-icon"><use href="#icon-link" /></g>
-    <text className="network-label" x="290" y="440">reference-</text>
-    <text className="network-label" x="290" y="458">validator</text>
-
-    {/* edge-case-gen - RIGHT inside */}
-    <circle className="network-node" cx="850" cy="380" r="38" />
-    <g transform="translate(850,380) scale(1.1)" className="svg-icon"><use href="#icon-lightning" /></g>
-    <text className="network-label" x="850" y="432">edge-case-gen</text>
-
-    {/* test-creator - CENTER inside */}
-    <circle className="network-node" cx="650" cy="300" r="52" />
-    <g transform="translate(650,300) scale(1.5)" className="svg-icon"><use href="#icon-flask" /></g>
-    <text className="network-label" x="650" y="240">test-creator</text>
-
-    {/* impl-validator - BOTTOM center ON ellipse */}
-    <circle className="network-node" cx="650" cy="540" r="65" />
-    <g transform="translate(650,540) scale(1.9)" className="svg-icon"><use href="#icon-search" /></g>
-    <text className="network-label" x="650" y="625">impl-validator</text>
-
-    {/* ci-fixer - RIGHT side ON ellipse */}
-    <circle className="network-node" cx="1030" cy="300" r="60" />
-    <g transform="translate(1030,300) scale(1.8)" className="svg-icon"><use href="#icon-wrench" /></g>
-    <text className="network-label" x="1030" y="380">ci-fixer</text>
-
-    {/* pr-pusher */}
-    <circle className="network-node" cx="1150" cy="300" r="40" />
-    <g transform="translate(1150,300) scale(1.2)" className="svg-icon"><use href="#icon-upload" /></g>
-    <text className="network-label" x="1150" y="358">pr-pusher</text>
-
-    {/* program-reviewer */}
-    <circle className="network-node" cx="1250" cy="300" r="40" />
-    <g transform="translate(1250,300) scale(1.2)" className="svg-icon"><use href="#icon-book" /></g>
-    <text className="network-label" x="1250" y="358">program-</text>
-    <text className="network-label" x="1250" y="376">reviewer</text>
-
-    {/* Draft PR */}
-    <circle className="network-node" cx="1350" cy="300" r="40" />
-    <g transform="translate(1350,300) scale(1.2)" className="svg-icon"><use href="#icon-document" /></g>
-    <text className="network-label" x="1350" y="358">Draft PR</text>
-
-    {/* Loop label */}
-    <text className="loop-label" x="650" y="640" textAnchor="middle">iterate until tests pass</text>
-  </svg>
-);
+// Step 6: Interactive full workflow with skills - imported from FlowDiagram6.tsx
 
 export const narrativeSteps: NarrativeStep[] = [
   {
@@ -523,7 +286,7 @@ export const narrativeSteps: NarrativeStep[] = [
         </p>
         <p>
           The prompt included program requirements, coding conventions, file structure rules,
-          and testing standards. Too many concerns for one context to hold.
+          and testing standards. Too much context for one prompt to hold.
         </p>
       </>
     ),
@@ -539,7 +302,7 @@ export const narrativeSteps: NarrativeStep[] = [
       'Tests passed but formulas were wrong',
     ],
     insight:
-      'Too many concerns for one context. The model couldn\'t hold coding standards, legal requirements, and testing patterns all at once.',
+      'Too much context for one prompt. The model couldn\'t hold coding standards, legal requirements, and testing patterns all at once.',
   },
   {
     id: 'iter2',
@@ -551,7 +314,7 @@ export const narrativeSteps: NarrativeStep[] = [
       <>
         <p>
           If one prompt couldn't handle everything, we'd divide the work. We introduced
-          <strong> agents</strong>—specialized AI workers that each focus on a single concern.
+          <strong> <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">agents</a></strong>—specialized AI workers that each focus on a single concern.
         </p>
         <p>
           A <code>document-collector</code> gathers sources. A <code>parameter-architect</code> structures
@@ -568,11 +331,10 @@ export const narrativeSteps: NarrativeStep[] = [
     shortcomings: [
       'Tests run after seeing implementation',
       'Tests confirm bugs instead of catching them',
-      'Sequential execution is slow',
       'No validation step',
     ],
     insight:
-      'Dividing work helped, but agents running sequentially created a new problem: test-creator saw the implementation before writing tests.',
+      'Dividing work helped, but agents running sequentially created a new problem: tests are written based on the variable implementation not based on the references.',
   },
   {
     id: 'iter3',
@@ -651,7 +413,7 @@ export const narrativeSteps: NarrativeStep[] = [
     description: (
       <>
         <p>
-          We introduced <strong>skills</strong>—reusable knowledge modules that agents load on
+          We introduced <strong><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank" rel="noopener noreferrer">skills</a></strong>—reusable knowledge modules that agents load on
           demand. Instead of repeating instructions in every prompt, we extracted shared
           knowledge into focused documents.
         </p>

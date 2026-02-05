@@ -12,9 +12,9 @@ export const ResultsSection = () => (
           <div className="stat-detail">Down from 2-3 weeks</div>
         </div>
         <div className="stat-card">
-          <div className="stat-number">42</div>
-          <div className="stat-label">States with TANF</div>
-          <div className="stat-detail">Plus CCDF & Illinois programs</div>
+          <div className="stat-number">45+</div>
+          <div className="stat-label">Programs in production</div>
+          <div className="stat-detail">TANF across states & Illinois programs</div>
         </div>
         <div className="stat-card">
           <div className="stat-number">60K+</div>
