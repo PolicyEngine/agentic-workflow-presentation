@@ -1589,6 +1589,15 @@ a:hover {
   pointer-events: none;
 }
 
+.stages-diagram-svg .loop-indicator {
+  fill: rgba(13, 115, 119, 0.03);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 12 6;
+  opacity: 0.6;
+  animation: rotateLoop 6s linear infinite;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .article-wrapper {

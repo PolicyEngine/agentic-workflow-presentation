@@ -24,6 +24,20 @@ const stages = [
   { num: 4, title: 'Review', x1: 825, x2: 1060, color: 'rgba(13, 115, 119, 0.05)' },
 ];
 
+// Skills (static, no hover)
+const skills = [
+  { id: 'variable', label: 'variable', x: 180 },
+  { id: 'testing', label: 'testing', x: 310 },
+  { id: 'code-style', label: 'code-style', x: 440 },
+  { id: 'parameter', label: 'parameter', x: 570 },
+  { id: 'vectorize', label: 'vectorize', x: 700 },
+  { id: 'review', label: 'review', x: 830 },
+];
+
+const skillY = 620;
+const skillWidth = 85;
+const skillHeight = 32;
+
 // Icon definitions
 const IconDefs = () => (
   <defs>
@@ -119,7 +133,7 @@ export const StagesDiagram = () => {
 
   return (
     <div className="stages-diagram-container">
-      <svg className="stages-diagram-svg" viewBox="0 -60 1060 660">
+      <svg className="stages-diagram-svg" viewBox="0 -60 1060 740">
         <IconDefs />
 
         {/* Stage background regions */}
@@ -131,7 +145,7 @@ export const StagesDiagram = () => {
                 x={stage.x1}
                 y={-60}
                 width={stage.x2 - stage.x1}
-                height={660}
+                height={740}
                 fill={isHovered ? 'rgba(13, 115, 119, 0.12)' : stage.color}
                 style={{ transition: 'fill 0.2s ease', cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredStage(stage.num)}
@@ -143,7 +157,7 @@ export const StagesDiagram = () => {
                   x1={stage.x2}
                   y1={-60}
                   x2={stage.x2}
-                  y2={600}
+                  y2={680}
                   stroke="var(--accent)"
                   strokeWidth="2"
                   strokeDasharray="8 4"
@@ -194,17 +208,13 @@ export const StagesDiagram = () => {
           );
         })}
 
-        {/* Loop indicator ellipse (only around stages 2-3) */}
+        {/* Loop indicator ellipse (only around stages 2-3) - animated */}
         <ellipse
+          className="loop-indicator"
           cx="465"
           cy="290"
           rx="310"
           ry="235"
-          fill="none"
-          stroke="var(--accent)"
-          strokeWidth="2"
-          strokeDasharray="10 5"
-          opacity="0.5"
         />
         <text x="465" y="545" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="var(--text-mid)" fontStyle="italic">iterate until tests pass</text>
 
@@ -287,6 +297,45 @@ export const StagesDiagram = () => {
             </g>
           );
         })}
+
+        {/* Skills row (static) */}
+        <text
+          x="70"
+          y={skillY + skillHeight / 2 + 4}
+          fontFamily="JetBrains Mono"
+          fontSize="10"
+          fill="var(--text-mid)"
+          fontWeight="600"
+        >
+          Skills
+        </text>
+
+        {skills.map((skill) => (
+          <g key={skill.id}>
+            <rect
+              x={skill.x - skillWidth / 2}
+              y={skillY}
+              width={skillWidth}
+              height={skillHeight}
+              rx="5"
+              fill="var(--accent-light)"
+              stroke="var(--accent)"
+              strokeWidth="1.5"
+            />
+            <text
+              x={skill.x}
+              y={skillY + skillHeight / 2 + 4}
+              textAnchor="middle"
+              fontFamily="JetBrains Mono"
+              fontSize="11"
+              fill="var(--accent)"
+            >
+              {skill.label}
+            </text>
+          </g>
+        ))}
+
+        <text x="940" y={skillY + skillHeight / 2 + 4} textAnchor="middle" fontFamily="JetBrains Mono" fontSize="14" fill="var(--accent)">...</text>
       </svg>
     </div>
   );
