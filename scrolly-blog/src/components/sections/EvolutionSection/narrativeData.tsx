@@ -286,7 +286,7 @@ export const narrativeSteps: NarrativeStep[] = [
         </p>
         <p>
           The prompt included program requirements, coding conventions, file structure rules,
-          and testing standards. Too many concerns for one context to hold.
+          and testing standards. Too much context for one prompt to hold.
         </p>
       </>
     ),
@@ -302,7 +302,7 @@ export const narrativeSteps: NarrativeStep[] = [
       'Tests passed but formulas were wrong',
     ],
     insight:
-      'Too many concerns for one context. The model couldn\'t hold coding standards, legal requirements, and testing patterns all at once.',
+      'Too much context for one prompt. The model couldn\'t hold coding standards, legal requirements, and testing patterns all at once.',
   },
   {
     id: 'iter2',
@@ -314,7 +314,7 @@ export const narrativeSteps: NarrativeStep[] = [
       <>
         <p>
           If one prompt couldn't handle everything, we'd divide the work. We introduced
-          <strong> agents</strong>—specialized AI workers that each focus on a single concern.
+          <strong> <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">agents</a></strong>—specialized AI workers that each focus on a single concern.
         </p>
         <p>
           A <code>document-collector</code> gathers sources. A <code>parameter-architect</code> structures
@@ -331,11 +331,10 @@ export const narrativeSteps: NarrativeStep[] = [
     shortcomings: [
       'Tests run after seeing implementation',
       'Tests confirm bugs instead of catching them',
-      'Sequential execution is slow',
       'No validation step',
     ],
     insight:
-      'Dividing work helped, but agents running sequentially created a new problem: test-creator saw the implementation before writing tests.',
+      'Dividing work helped, but agents running sequentially created a new problem: tests are written based on the variable implementation not based on the references.',
   },
   {
     id: 'iter3',
@@ -414,7 +413,7 @@ export const narrativeSteps: NarrativeStep[] = [
     description: (
       <>
         <p>
-          We introduced <strong>skills</strong>—reusable knowledge modules that agents load on
+          We introduced <strong><a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank" rel="noopener noreferrer">skills</a></strong>—reusable knowledge modules that agents load on
           demand. Instead of repeating instructions in every prompt, we extracted shared
           knowledge into focused documents.
         </p>

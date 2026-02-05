@@ -16,12 +16,48 @@ const agents = {
   'draft-pr': { x: 1020, y: 290, r: 32, icon: '#icon-document', label: 'Draft PR', labelY: 338, stage: 4 },
 };
 
-// Stage definitions
+// Stage definitions with details
 const stages = [
-  { num: 1, title: 'Setup', x1: 0, x2: 115, color: 'rgba(13, 115, 119, 0.08)' },
-  { num: 2, title: 'Development', x1: 115, x2: 555, color: 'rgba(13, 115, 119, 0.05)' },
-  { num: 3, title: 'Validation', x1: 555, x2: 825, color: 'rgba(13, 115, 119, 0.08)' },
-  { num: 4, title: 'Review', x1: 825, x2: 1060, color: 'rgba(13, 115, 119, 0.05)' },
+  {
+    num: 1,
+    title: 'Setup',
+    x1: 0,
+    x2: 115,
+    color: 'rgba(13, 115, 119, 0.08)',
+    agents: ['issue-manager'],
+    description: 'Establish coordination points for the workflow.',
+    steps: ['Search for existing issues', 'Create branch & draft PR', 'Set up status tracking'],
+  },
+  {
+    num: 2,
+    title: 'Development',
+    x1: 115,
+    x2: 555,
+    color: 'rgba(13, 115, 119, 0.05)',
+    agents: ['document-collector', 'parameter-architect', 'test-creator', 'rules-engineer', 'edge-case-gen'],
+    description: 'Research official sources, then build in parallel tracks.',
+    steps: ['Collect legal citations', 'Create YAML parameters', 'Write tests & variables'],
+  },
+  {
+    num: 3,
+    title: 'Validation',
+    x1: 555,
+    x2: 825,
+    color: 'rgba(13, 115, 119, 0.08)',
+    agents: ['impl-validator', 'ref-validator', 'ci-fixer'],
+    description: 'Validate code patterns, then fix until tests pass.',
+    steps: ['Check naming & structure', 'Verify citations', 'Run tests locally', 'Delegate fixes'],
+  },
+  {
+    num: 4,
+    title: 'Review',
+    x1: 825,
+    x2: 1060,
+    color: 'rgba(13, 115, 119, 0.05)',
+    agents: ['program-reviewer', 'pr-pusher'],
+    description: 'Review against regulations, then document the PR.',
+    steps: ['Compare to source docs', 'Update PR description', 'Human makes merge decision'],
+  },
 ];
 
 // Skills (static, no hover) with agent connections
@@ -216,7 +252,7 @@ export const StagesDiagram = () => {
           rx="310"
           ry="235"
           style={{
-            opacity: hoveredStage === null ? 0.6 : (hoveredStage === 2 || hoveredStage === 3) ? 1 : 0.15,
+            opacity: hoveredStage === null ? 0.6 : hoveredStage === 3 ? 1 : 0.15,
             transition: 'opacity 0.2s ease',
           }}
         />
@@ -229,7 +265,7 @@ export const StagesDiagram = () => {
           fill="var(--text-mid)"
           fontStyle="italic"
           style={{
-            opacity: hoveredStage === null ? 1 : (hoveredStage === 2 || hoveredStage === 3) ? 1 : 0.3,
+            opacity: hoveredStage === null ? 1 : hoveredStage === 3 ? 1 : 0.3,
             transition: 'opacity 0.2s ease',
           }}
         >
@@ -374,6 +410,85 @@ export const StagesDiagram = () => {
         ))}
 
         <text x="940" y={skillY + skillHeight / 2 + 4} textAnchor="middle" fontFamily="JetBrains Mono" fontSize="14" fill="var(--accent)">...</text>
+
+        {/* Stage details popup */}
+        {hoveredStage !== null && (() => {
+          const stage = stages.find(s => s.num === hoveredStage);
+          if (!stage) return null;
+
+          // Position popup on the side of the stage
+          const popupWidth = 200;
+          const popupHeight = 180;
+
+          // For stages 1-2, popup appears to the right; for stages 3-4, to the left
+          const popupX = hoveredStage <= 2
+            ? stage.x2 + 10
+            : stage.x1 - popupWidth - 10;
+          const popupY = 60;
+
+          return (
+            <foreignObject
+              x={popupX}
+              y={popupY}
+              width={popupWidth}
+              height={popupHeight}
+              style={{ pointerEvents: 'none', overflow: 'visible' }}
+            >
+              <div
+                style={{
+                  background: 'var(--bg-card)',
+                  border: '2px solid var(--border)',
+                  borderRadius: '8px',
+                  padding: '10px 12px',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                  fontFamily: 'JetBrains Mono, monospace',
+                }}
+              >
+                {/* Agent tags */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '4px',
+                  marginBottom: '8px',
+                }}>
+                  {stage.agents.map((agent) => (
+                    <span
+                      key={agent}
+                      style={{
+                        background: 'var(--accent-light)',
+                        color: 'var(--accent)',
+                        padding: '2px 6px',
+                        borderRadius: '3px',
+                        fontSize: '9px',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {agent}
+                    </span>
+                  ))}
+                </div>
+                {/* Description */}
+                <div style={{
+                  fontSize: '10px',
+                  color: 'var(--text-mid)',
+                  lineHeight: '1.5',
+                  marginBottom: '8px',
+                }}>
+                  {stage.description}
+                </div>
+                {/* Steps with arrow markers */}
+                <div style={{ fontSize: '9px', color: 'var(--text-mid)' }}>
+                  {stage.steps.map((step, i) => (
+                    <div key={i} style={{ padding: '2px 0', display: 'flex', gap: '6px' }}>
+                      <span style={{ color: 'var(--accent)' }}>→</span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </foreignObject>
+          );
+        })()}
       </svg>
     </div>
   );
