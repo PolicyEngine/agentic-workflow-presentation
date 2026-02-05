@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { FlowDiagram5 } from './FlowDiagram5';
+import { FlowDiagram6 } from './FlowDiagram6';
 
 export interface NarrativeStep {
   id: string;
@@ -267,88 +268,7 @@ const FlowDiagram4 = () => (
 
 // Step 5: Interactive skills diagram - imported from FlowDiagram5.tsx
 
-// Step 6: Full workflow (all agents) - exact copy of FullAgentFlow layout
-const FlowDiagram6 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 1300 680">
-    <IconDefs />
-
-    {/* Loop indicator - ellipse around development/validation agents (animated) */}
-    <ellipse className="loop-indicator" cx="600" cy="340" rx="350" ry="290" />
-    <text x="600" y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="13" fill="var(--text-mid)" fontStyle="italic">iterate until tests pass</text>
-
-    {/* CONNECTIONS */}
-    <line className="network-line" x1="115" y1="340" x2="138" y2="340" />
-    <line className="network-line" x1="262" y1="300" x2="345" y2="165" />
-    <line className="network-line" x1="262" y1="340" x2="338" y2="340" />
-    <line className="network-line" x1="262" y1="380" x2="345" y2="515" />
-    <line className="network-line" x1="462" y1="365" x2="570" y2="425" />
-    <line className="network-line" x1="449" y1="525" x2="570" y2="425" />
-    <line className="network-line" x1="462" y1="340" x2="735" y2="120" />
-    <line className="network-line" x1="462" y1="340" x2="880" y2="340" />
-    <line className="network-line" x1="462" y1="120" x2="735" y2="120" />
-    <line className="network-line" x1="455" y1="145" x2="880" y2="340" />
-    <line className="network-line" x1="462" y1="560" x2="915" y2="400" />
-    <line className="network-line" x1="444" y1="165" x2="805" y2="560" />
-    <line className="network-line" x1="462" y1="560" x2="805" y2="560" />
-    <line className="network-line" x1="855" y1="165" x2="915" y2="285" />
-    <line className="network-line" x1="805" y1="560" x2="915" y2="400" />
-    <line className="network-line" x1="614" y1="425" x2="880" y2="340" />
-    <line className="network-line" x1="1015" y1="340" x2="1028" y2="340" />
-    <line className="network-line" x1="1102" y1="340" x2="1118" y2="340" />
-    <line className="network-line" x1="1192" y1="340" x2="1208" y2="340" />
-
-    {/* NODES */}
-    <circle className="network-node" cx="65" cy="340" r="55" />
-    <g transform="translate(65,340) scale(1.6)" className="svg-icon"><use href="#icon-clipboard" /></g>
-    <text className="network-label" x="65" y="418">issue-manager</text>
-
-    <circle className="network-node" cx="200" cy="340" r="62" />
-    <g transform="translate(200,330) scale(1.8)" className="svg-icon"><use href="#icon-books" /></g>
-    <text className="network-label" x="200" y="425">document-</text>
-    <text className="network-label" x="200" y="445">collector</text>
-
-    <circle className="network-node" cx="400" cy="120" r="62" />
-    <g transform="translate(400,120) scale(1.8)" className="svg-icon"><use href="#icon-gear" /></g>
-    <text className="network-label" x="400" y="42">parameter-architect</text>
-
-    <circle className="network-node" cx="400" cy="340" r="62" />
-    <g transform="translate(400,340) scale(1.8)" className="svg-icon"><use href="#icon-flask" /></g>
-    <text className="network-label" x="400" y="425">test-creator</text>
-
-    <circle className="network-node" cx="400" cy="560" r="62" />
-    <g transform="translate(400,568) scale(1.8)" className="svg-icon"><use href="#icon-lambda" /></g>
-    <text className="network-label" x="400" y="645">rules-engineer</text>
-
-    <circle className="network-node" cx="570" cy="425" r="55" />
-    <g transform="translate(570,425) scale(1.6)" className="svg-icon"><use href="#icon-lightning" /></g>
-    <text className="network-label" x="570" y="503">edge-case-gen</text>
-
-    <circle className="network-node" cx="805" cy="120" r="72" />
-    <g transform="translate(805,120) scale(2.0)" className="svg-icon"><use href="#icon-search" /></g>
-    <text className="network-label" x="805" y="42">impl-validator</text>
-
-    <circle className="network-node" cx="770" cy="600" r="55" />
-    <g transform="translate(770,600) scale(1.6)" className="svg-icon"><use href="#icon-link" /></g>
-    <text className="network-label" x="770" y="678">reference-validator</text>
-
-    <circle className="network-node" cx="950" cy="340" r="72" />
-    <g transform="translate(950,340) scale(2.0)" className="svg-icon"><use href="#icon-wrench" /></g>
-    <text className="network-label" x="950" y="435">ci-fixer</text>
-
-    <circle className="network-node" cx="1065" cy="340" r="40" />
-    <g transform="translate(1065,340) scale(1.2)" className="svg-icon"><use href="#icon-upload" /></g>
-    <text className="network-label" x="1065" y="398">pr-pusher</text>
-
-    <circle className="network-node" cx="1155" cy="340" r="40" />
-    <g transform="translate(1155,340) scale(1.2)" className="svg-icon"><use href="#icon-book" /></g>
-    <text className="network-label" x="1155" y="398">program-</text>
-    <text className="network-label" x="1155" y="416">reviewer</text>
-
-    <circle className="network-node" cx="1245" cy="340" r="40" />
-    <g transform="translate(1245,340) scale(1.2)" className="svg-icon"><use href="#icon-document" /></g>
-    <text className="network-label" x="1245" y="398">Draft PR</text>
-  </svg>
-);
+// Step 6: Interactive full workflow with skills - imported from FlowDiagram6.tsx
 
 export const narrativeSteps: NarrativeStep[] = [
   {
