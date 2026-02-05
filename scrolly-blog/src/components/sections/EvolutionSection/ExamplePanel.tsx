@@ -186,9 +186,11 @@ const variableSteps = [
     definition_period = YEAR
     defined_for = StateCode.NH
 
-    def formula(spm_unit, period, p):
-        # Test says this is wrong!
-        return income_eligible`,
+    def formula(spm_unit, period):
+        income_eligible = spm_unit(
+            "nh_tanf_income_eligible", period)
+        return income_eligible
+        # Test says this is wrong!`,
     issues: [
       { type: 'success', text: 'Added defined_for' },
       { type: 'warning', text: 'Test mismatch detected' },
@@ -305,15 +307,15 @@ const testSteps = [
     title: "test_nh_tanf.yaml",
     status: "success",
     statusLabel: "independent",
-    code: `- name: Per 9 CCR 2503-6
-  period: 2023
+    code: `- name: Income eligible but resource
+    ineligible, ineligible for TANF.
+  period: 2025
   input:
     state_code: NH
-    # From regulations table
-    is_demographic_tanf_eligible: true
     nh_tanf_income_eligible: true
+    nh_tanf_resource_eligible: false
   output:
-    nh_tanf_eligible: true`,
+    nh_tanf_eligible: false`,
     issues: [
       { type: 'success', text: 'Based on regulations' },
       { type: 'success', text: 'Independent of impl' },

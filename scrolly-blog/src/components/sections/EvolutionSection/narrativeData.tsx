@@ -148,117 +148,157 @@ const FlowDiagram2 = () => (
 
 // Step 3: Parallel Execution (5 agents)
 const FlowDiagram3 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 750 380">
+  <svg className="full-width-flow-svg" viewBox="0 0 750 420">
     <IconDefs />
     {/* document-collector */}
-    <circle className="network-node" cx="80" cy="190" r="55" />
-    <g transform="translate(80,180) scale(1.6)" className="svg-icon"><use href="#icon-books" /></g>
-    <text className="network-label" x="80" y="265">doc-collector</text>
+    <circle className="network-node" cx="80" cy="210" r="55" />
+    <g transform="translate(80,200) scale(1.6)" className="svg-icon"><use href="#icon-books" /></g>
+    <text className="network-label" x="80" y="285">doc-collector</text>
 
     {/* Lines to parallel agents */}
-    <line className="network-line" x1="135" y1="150" x2="210" y2="80" />
-    <line className="network-line" x1="135" y1="190" x2="210" y2="190" />
-    <line className="network-line" x1="135" y1="230" x2="210" y2="300" />
+    <line className="network-line" x1="135" y1="175" x2="230" y2="70" />
+    <line className="network-line" x1="135" y1="210" x2="230" y2="210" />
+    <line className="network-line" x1="135" y1="245" x2="230" y2="350" />
 
     {/* parameter-architect (top) */}
-    <circle className="network-node" cx="280" cy="80" r="50" />
-    <g transform="translate(280,80) scale(1.4)" className="svg-icon"><use href="#icon-gear" /></g>
-    <text className="network-label" x="280" y="150">param-architect</text>
+    <circle className="network-node" cx="280" cy="70" r="50" />
+    <g transform="translate(280,70) scale(1.4)" className="svg-icon"><use href="#icon-gear" /></g>
+    <text className="network-label" x="280" y="140">param-architect</text>
 
     {/* test-creator (middle) */}
-    <circle className="network-node" cx="280" cy="190" r="50" />
-    <g transform="translate(280,190) scale(1.4)" className="svg-icon"><use href="#icon-flask" /></g>
-    <text className="network-label" x="280" y="260">test-creator</text>
+    <circle className="network-node" cx="280" cy="210" r="50" />
+    <g transform="translate(280,210) scale(1.4)" className="svg-icon"><use href="#icon-flask" /></g>
+    <text className="network-label" x="280" y="280">test-creator</text>
 
     {/* rules-engineer (bottom) */}
-    <circle className="network-node" cx="280" cy="300" r="50" />
-    <g transform="translate(280,308) scale(1.4)" className="svg-icon"><use href="#icon-lambda" /></g>
-    <text className="network-label" x="280" y="370">rules-engineer</text>
+    <circle className="network-node" cx="280" cy="350" r="50" />
+    <g transform="translate(280,358) scale(1.4)" className="svg-icon"><use href="#icon-lambda" /></g>
+    <text className="network-label" x="280" y="420">rules-engineer</text>
 
     {/* Lines to impl-validator */}
-    <line className="network-line" x1="330" y1="80" x2="420" y2="160" />
-    <line className="network-line" x1="330" y1="190" x2="420" y2="190" />
-    <line className="network-line" x1="330" y1="300" x2="420" y2="220" />
+    <line className="network-line" x1="330" y1="70" x2="450" y2="165" />
+    <line className="network-line" x1="330" y1="210" x2="435" y2="210" />
+    <line className="network-line" x1="330" y1="350" x2="450" y2="255" />
 
     {/* impl-validator */}
-    <circle className="network-node" cx="490" cy="190" r="55" />
-    <g transform="translate(490,190) scale(1.6)" className="svg-icon"><use href="#icon-search" /></g>
-    <text className="network-label" x="490" y="265">impl-validator</text>
+    <circle className="network-node" cx="490" cy="210" r="55" />
+    <g transform="translate(490,210) scale(1.6)" className="svg-icon"><use href="#icon-search" /></g>
+    <text className="network-label" x="490" y="285">impl-validator</text>
 
     {/* Line to output */}
-    <line className="network-line" x1="545" y1="190" x2="600" y2="190" />
-    <polygon className="flow-arrow" points="600,184 614,190 600,196" />
+    <line className="network-line" x1="545" y1="210" x2="615" y2="210" />
+    <polygon className="flow-arrow" points="615,204 629,210 615,216" />
 
     {/* output */}
-    <circle className="network-node" cx="670" cy="190" r="50" />
-    <g transform="translate(670,190) scale(1.4)" className="svg-icon"><use href="#icon-document" /></g>
-    <text className="network-label" x="670" y="260">output</text>
-
-    {/* Parallel indicator */}
-    <rect x="200" y="45" width="160" height="290" rx="10" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.5"/>
-    <text x="280" y="30" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="12" fill="var(--accent)" fontWeight="600">PARALLEL</text>
+    <circle className="network-node" cx="670" cy="210" r="50" />
+    <g transform="translate(670,210) scale(1.4)" className="svg-icon"><use href="#icon-document" /></g>
+    <text className="network-label" x="670" y="280">output</text>
   </svg>
 );
 
 // Step 4: Add edge-case-generator + ci-fixer with loop (8 agents)
 const FlowDiagram4 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 920 450">
+  <svg className="full-width-flow-svg" viewBox="60 0 980 620">
     <IconDefs />
 
-    {/* Loop indicator - refined ellipse */}
-    <ellipse cx="475" cy="225" rx="260" ry="175" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35"/>
+    {/* Loop indicator - ellipse around validation agents */}
+    <ellipse cx="550" cy="280" rx="320" ry="210" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35" />
+
+    {/* === CONNECTIONS === */}
+
+    {/* doc-collector → parameter-architect */}
+    <line className="network-line thick" x1="183" y1="280" x2="360" y2="100" />
+    {/* doc-collector → rules-engineer */}
+    <line className="network-line thick" x1="183" y1="280" x2="720" y2="138" />
+    {/* doc-collector → test-creator */}
+    <line className="network-line thick" x1="183" y1="280" x2="498" y2="280" />
+
+    {/* parameter-architect → rules-engineer */}
+    <line className="network-line thick" x1="360" y1="100" x2="740" y2="104" />
+
+    {/* parameter-architect → reference-validator */}
+    <line className="network-line thick" x1="360" y1="142" x2="310" y2="365" />
+    {/* rules-engineer → reference-validator (via param connection points) */}
+    <line className="network-line thick" x1="688" y1="100" x2="310" y2="365" />
+
+    {/* rules-engineer → edge-case-gen */}
+    <line className="network-line thick" x1="720" y1="142" x2="720" y2="322" />
+    {/* test-creator → edge-case-gen */}
+    <line className="network-line thick" x1="587" y1="317" x2="720" y2="322" />
+
+    {/* parameter-architect → impl-validator */}
+    <line className="network-line thick" x1="360" y1="142" x2="520" y2="450" />
+    {/* rules-engineer → impl-validator */}
+    <line className="network-line thick" x1="720" y1="138" x2="590" y2="460" />
+    {/* test-creator → impl-validator */}
+    <line className="network-line thick" x1="550" y1="326" x2="550" y2="435" />
+
+    {/* parameter-architect → ci-fixer */}
+    <line className="network-line thick" x1="360" y1="142" x2="870" y2="280" />
+    {/* rules-engineer → ci-fixer */}
+    <line className="network-line thick" x1="740" y1="104" x2="870" y2="280" />
+    {/* test-creator → ci-fixer */}
+    <line className="network-line thick" x1="602" y1="280" x2="870" y2="280" />
+    {/* reference-validator → ci-fixer */}
+    <line className="network-line thick" x1="338" y1="400" x2="870" y2="280" />
+    {/* edge-case-gen → ci-fixer */}
+    <line className="network-line thick" x1="758" y1="360" x2="870" y2="280" />
+    {/* impl-validator → ci-fixer */}
+    <line className="network-line thick" x1="606" y1="487" x2="860" y2="330" />
+
+    {/* === NODES === */}
 
     {/* document-collector */}
-    <circle className="network-node" cx="65" cy="225" r="48" />
-    <g transform="translate(65,215) scale(1.3)" className="svg-icon"><use href="#icon-books" /></g>
-    <text className="network-label" x="65" y="290">doc-collector</text>
+    <circle className="network-node" cx="130" cy="280" r="52" />
+    <g transform="translate(130,270) scale(1.5)"><use href="#icon-books" className="svg-icon"/></g>
+    <text className="network-label" x="130" y="352">document-</text>
+    <text className="network-label" x="130" y="370">collector</text>
 
-    {/* Lines to parallel agents */}
-    <line className="network-line" x1="113" y1="190" x2="275" y2="90" />
-    <line className="network-line" x1="113" y1="225" x2="275" y2="225" />
-    <line className="network-line" x1="113" y1="260" x2="275" y2="360" />
+    {/* parameter-architect - TOP LEFT on ellipse */}
+    <circle className="network-node" cx="360" cy="100" r="46" />
+    <g transform="translate(360,100) scale(1.3)"><use href="#icon-gear" className="svg-icon"/></g>
+    <text className="network-label" x="360" y="35">parameter-architect</text>
 
-    {/* parameter-architect - top left */}
-    <circle className="network-node" cx="330" cy="90" r="44" />
-    <g transform="translate(330,90) scale(1.2)" className="svg-icon"><use href="#icon-gear" /></g>
-    <text className="network-label" x="330" y="30">param-architect</text>
+    {/* rules-engineer - TOP RIGHT on ellipse */}
+    <circle className="network-node" cx="740" cy="100" r="46" />
+    <g transform="translate(740,100) scale(1.3)"><use href="#icon-lambda" className="svg-icon"/></g>
+    <text className="network-label" x="740" y="35">rules-engineer</text>
 
-    {/* impl-validator - top right */}
-    <circle className="network-node" cx="580" cy="90" r="48" />
-    <g transform="translate(580,90) scale(1.3)" className="svg-icon"><use href="#icon-search" /></g>
-    <text className="network-label" x="580" y="30">impl-validator</text>
+    {/* reference-validator - LEFT inside */}
+    <circle className="network-node" cx="310" cy="400" r="34" />
+    <g transform="translate(310,400) scale(1.0)"><use href="#icon-link" className="svg-icon"/></g>
+    <text className="network-label" x="235" y="420">reference-</text>
+    <text className="network-label" x="235" y="438">validator</text>
 
-    {/* test-creator - middle left */}
-    <circle className="network-node" cx="330" cy="225" r="44" />
-    <g transform="translate(330,225) scale(1.2)" className="svg-icon"><use href="#icon-flask" /></g>
-    <text className="network-label" x="330" y="285">test-creator</text>
+    {/* edge-case-gen - RIGHT inside */}
+    <circle className="network-node" cx="720" cy="360" r="34" />
+    <g transform="translate(720,360) scale(1.0)"><use href="#icon-lightning" className="svg-icon"/></g>
+    <text className="network-label" x="720" y="410">edge-case-gen</text>
 
-    {/* edge-case-gen - center */}
-    <circle className="network-node" cx="455" cy="290" r="40" />
-    <g transform="translate(455,290) scale(1.1)" className="svg-icon"><use href="#icon-lightning" /></g>
-    <text className="network-label" x="455" y="346">edge-case-gen</text>
+    {/* test-creator - CENTER inside */}
+    <circle className="network-node" cx="550" cy="280" r="46" />
+    <g transform="translate(550,280) scale(1.3)"><use href="#icon-flask" className="svg-icon"/></g>
+    <text className="network-label" x="550" y="220">test-creator</text>
 
-    {/* rules-engineer - bottom left */}
-    <circle className="network-node" cx="330" cy="360" r="44" />
-    <g transform="translate(330,368) scale(1.2)" className="svg-icon"><use href="#icon-lambda" /></g>
-    <text className="network-label" x="330" y="420">rules-engineer</text>
+    {/* impl-validator - BOTTOM center ON ellipse */}
+    <circle className="network-node" cx="550" cy="490" r="55" />
+    <g transform="translate(550,490) scale(1.6)"><use href="#icon-search" className="svg-icon"/></g>
+    <text className="network-label" x="550" y="565">impl-validator</text>
 
-    {/* reference-validator - bottom right */}
-    <circle className="network-node" cx="580" cy="360" r="40" />
-    <g transform="translate(580,360) scale(1.1)" className="svg-icon"><use href="#icon-link" /></g>
-    <text className="network-label" x="580" y="416">ref-validator</text>
-
-    {/* ci-fixer */}
-    <circle className="network-node" cx="755" cy="225" r="48" />
-    <g transform="translate(755,225) scale(1.3)" className="svg-icon"><use href="#icon-wrench" /></g>
-    <text className="network-label" x="755" y="290">ci-fixer</text>
+    {/* ci-fixer - RIGHT side ON ellipse */}
+    <circle className="network-node" cx="870" cy="280" r="52" />
+    <g transform="translate(870,280) scale(1.5)"><use href="#icon-wrench" className="svg-icon"/></g>
+    <text className="network-label" x="870" y="352">ci-fixer</text>
 
     {/* output */}
-    <line className="network-line" x1="803" y1="225" x2="830" y2="225" />
-    <polygon className="flow-arrow" points="830,219 844,225 830,231" />
-    <circle className="network-node" cx="875" cy="225" r="38" />
-    <g transform="translate(875,225) scale(1.0)" className="svg-icon"><use href="#icon-document" /></g>
-    <text className="network-label" x="875" y="278">output</text>
+    <line className="network-line" x1="870" y1="280" x2="940" y2="280" />
+    <polygon className="flow-arrow" points="940,274 954,280 940,286" />
+    <circle className="network-node" cx="990" cy="280" r="38" />
+    <g transform="translate(990,280) scale(1.0)"><use href="#icon-document" className="svg-icon"/></g>
+    <text className="network-label" x="990" y="335">output</text>
+
+    {/* Loop label */}
+    <text className="loop-label" x="550" y="585" textAnchor="middle">iterate until tests pass</text>
   </svg>
 );
 
@@ -339,75 +379,131 @@ const FlowDiagram5 = () => (
 
 // Step 6: Full workflow (all agents)
 const FlowDiagram6 = () => (
-  <svg className="full-width-flow-svg" viewBox="0 0 1080 450">
+  <svg className="full-width-flow-svg" viewBox="0 0 1400 660">
     <IconDefs />
 
-    {/* Loop indicator - matching FlowDiagram4 style */}
-    <ellipse cx="540" cy="225" rx="260" ry="175" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35"/>
+    {/* Loop indicator - ellipse around development/validation agents */}
+    <ellipse cx="650" cy="300" rx="380" ry="240" fill="none" stroke="var(--accent)" strokeWidth="2" strokeDasharray="8 4" opacity="0.35" />
 
-    {/* issue-manager */}
-    <circle className="network-node" cx="50" cy="225" r="42" />
-    <g transform="translate(50,225) scale(1.1)" className="svg-icon"><use href="#icon-clipboard" /></g>
-    <text className="network-label" x="50" y="282">issue-manager</text>
+    {/* === CONNECTIONS === */}
 
-    <line className="network-line" x1="92" y1="225" x2="108" y2="225" />
+    {/* issue-manager → doc-collector */}
+    <line className="network-line" x1="115" y1="300" x2="147" y2="300" />
+
+    {/* doc-collector → parameter-architect */}
+    <line className="network-line thick" x1="263" y1="300" x2="440" y2="100" />
+    {/* doc-collector → rules-engineer */}
+    <line className="network-line thick" x1="263" y1="300" x2="850" y2="148" />
+    {/* doc-collector → test-creator */}
+    <line className="network-line thick" x1="263" y1="300" x2="598" y2="300" />
+
+    {/* parameter-architect → rules-engineer */}
+    <line className="network-line thick" x1="440" y1="100" x2="870" y2="104" />
+
+    {/* parameter-architect → reference-validator */}
+    <line className="network-line thick" x1="440" y1="152" x2="380" y2="385" />
+    {/* rules-engineer → reference-validator (via param connection points) */}
+    <line className="network-line thick" x1="818" y1="100" x2="380" y2="385" />
+
+    {/* rules-engineer → edge-case-gen */}
+    <line className="network-line thick" x1="850" y1="152" x2="850" y2="342" />
+    {/* test-creator → edge-case-gen */}
+    <line className="network-line thick" x1="687" y1="337" x2="850" y2="342" />
+
+    {/* parameter-architect → impl-validator */}
+    <line className="network-line thick" x1="440" y1="152" x2="620" y2="480" />
+    {/* rules-engineer → impl-validator */}
+    <line className="network-line thick" x1="850" y1="148" x2="690" y2="490" />
+    {/* test-creator → impl-validator */}
+    <line className="network-line thick" x1="650" y1="352" x2="650" y2="475" />
+
+    {/* parameter-architect → ci-fixer */}
+    <line className="network-line thick" x1="440" y1="152" x2="1030" y2="300" />
+    {/* rules-engineer → ci-fixer */}
+    <line className="network-line thick" x1="870" y1="104" x2="1030" y2="300" />
+    {/* test-creator → ci-fixer */}
+    <line className="network-line thick" x1="702" y1="300" x2="1030" y2="300" />
+    {/* reference-validator → ci-fixer */}
+    <line className="network-line thick" x1="408" y1="420" x2="1030" y2="300" />
+    {/* edge-case-gen → ci-fixer */}
+    <line className="network-line thick" x1="888" y1="380" x2="1030" y2="300" />
+    {/* impl-validator → ci-fixer */}
+    <line className="network-line thick" x1="715" y1="537" x2="1020" y2="358" />
+
+    {/* ci-fixer → pr-pusher */}
+    <line className="network-line" x1="1030" y1="300" x2="1110" y2="300" />
+    {/* pr-pusher → program-reviewer */}
+    <line className="network-line" x1="1190" y1="300" x2="1210" y2="300" />
+    {/* program-reviewer → Draft PR */}
+    <line className="network-line" x1="1290" y1="300" x2="1310" y2="300" />
+
+    {/* === NODES === */}
+
+    {/* Outside left - issue-manager */}
+    <circle className="network-node" cx="65" cy="300" r="50" />
+    <g transform="translate(65,300) scale(1.5)" className="svg-icon"><use href="#icon-clipboard" /></g>
+    <text className="network-label" x="65" y="370">issue-manager</text>
 
     {/* document-collector */}
-    <circle className="network-node" cx="150" cy="225" r="48" />
-    <g transform="translate(150,215) scale(1.3)" className="svg-icon"><use href="#icon-books" /></g>
-    <text className="network-label" x="150" y="290">doc-collector</text>
+    <circle className="network-node" cx="205" cy="300" r="58" />
+    <g transform="translate(205,290) scale(1.7)" className="svg-icon"><use href="#icon-books" /></g>
+    <text className="network-label" x="205" y="378">document-</text>
+    <text className="network-label" x="205" y="396">collector</text>
 
-    {/* Lines to parallel agents */}
-    <line className="network-line" x1="198" y1="190" x2="350" y2="90" />
-    <line className="network-line" x1="198" y1="225" x2="350" y2="225" />
-    <line className="network-line" x1="198" y1="260" x2="350" y2="360" />
+    {/* parameter-architect - TOP LEFT on ellipse */}
+    <circle className="network-node" cx="440" cy="100" r="52" />
+    <g transform="translate(440,100) scale(1.5)" className="svg-icon"><use href="#icon-gear" /></g>
+    <text className="network-label" x="440" y="30">parameter-architect</text>
 
-    {/* parameter-architect - top left */}
-    <circle className="network-node" cx="400" cy="90" r="44" />
-    <g transform="translate(400,90) scale(1.2)" className="svg-icon"><use href="#icon-gear" /></g>
-    <text className="network-label" x="400" y="30">param-architect</text>
+    {/* rules-engineer - TOP RIGHT on ellipse */}
+    <circle className="network-node" cx="870" cy="100" r="52" />
+    <g transform="translate(870,100) scale(1.5)" className="svg-icon"><use href="#icon-lambda" /></g>
+    <text className="network-label" x="870" y="30">rules-engineer</text>
 
-    {/* impl-validator - top right */}
-    <circle className="network-node" cx="650" cy="90" r="48" />
-    <g transform="translate(650,90) scale(1.3)" className="svg-icon"><use href="#icon-search" /></g>
-    <text className="network-label" x="650" y="30">impl-validator</text>
+    {/* reference-validator - LEFT inside */}
+    <circle className="network-node" cx="370" cy="420" r="38" />
+    <g transform="translate(370,420) scale(1.1)" className="svg-icon"><use href="#icon-link" /></g>
+    <text className="network-label" x="290" y="440">reference-</text>
+    <text className="network-label" x="290" y="458">validator</text>
 
-    {/* test-creator - middle left */}
-    <circle className="network-node" cx="400" cy="225" r="44" />
-    <g transform="translate(400,225) scale(1.2)" className="svg-icon"><use href="#icon-flask" /></g>
-    <text className="network-label" x="400" y="285">test-creator</text>
+    {/* edge-case-gen - RIGHT inside */}
+    <circle className="network-node" cx="850" cy="380" r="38" />
+    <g transform="translate(850,380) scale(1.1)" className="svg-icon"><use href="#icon-lightning" /></g>
+    <text className="network-label" x="850" y="432">edge-case-gen</text>
 
-    {/* edge-case-gen - center */}
-    <circle className="network-node" cx="525" cy="290" r="40" />
-    <g transform="translate(525,290) scale(1.1)" className="svg-icon"><use href="#icon-lightning" /></g>
-    <text className="network-label" x="525" y="346">edge-case-gen</text>
+    {/* test-creator - CENTER inside */}
+    <circle className="network-node" cx="650" cy="300" r="52" />
+    <g transform="translate(650,300) scale(1.5)" className="svg-icon"><use href="#icon-flask" /></g>
+    <text className="network-label" x="650" y="240">test-creator</text>
 
-    {/* rules-engineer - bottom left */}
-    <circle className="network-node" cx="400" cy="360" r="44" />
-    <g transform="translate(400,368) scale(1.2)" className="svg-icon"><use href="#icon-lambda" /></g>
-    <text className="network-label" x="400" y="420">rules-engineer</text>
+    {/* impl-validator - BOTTOM center ON ellipse */}
+    <circle className="network-node" cx="650" cy="540" r="65" />
+    <g transform="translate(650,540) scale(1.9)" className="svg-icon"><use href="#icon-search" /></g>
+    <text className="network-label" x="650" y="625">impl-validator</text>
 
-    {/* reference-validator - bottom right */}
-    <circle className="network-node" cx="650" cy="360" r="40" />
-    <g transform="translate(650,360) scale(1.1)" className="svg-icon"><use href="#icon-link" /></g>
-    <text className="network-label" x="650" y="416">ref-validator</text>
-
-    {/* ci-fixer */}
-    <circle className="network-node" cx="825" cy="225" r="48" />
-    <g transform="translate(825,225) scale(1.3)" className="svg-icon"><use href="#icon-wrench" /></g>
-    <text className="network-label" x="825" y="290">ci-fixer</text>
+    {/* ci-fixer - RIGHT side ON ellipse */}
+    <circle className="network-node" cx="1030" cy="300" r="60" />
+    <g transform="translate(1030,300) scale(1.8)" className="svg-icon"><use href="#icon-wrench" /></g>
+    <text className="network-label" x="1030" y="380">ci-fixer</text>
 
     {/* pr-pusher */}
-    <line className="network-line" x1="873" y1="225" x2="900" y2="225" />
-    <circle className="network-node" cx="940" cy="225" r="36" />
-    <g transform="translate(940,225) scale(0.95)" className="svg-icon"><use href="#icon-upload" /></g>
-    <text className="network-label" x="940" y="276">pr-pusher</text>
+    <circle className="network-node" cx="1150" cy="300" r="40" />
+    <g transform="translate(1150,300) scale(1.2)" className="svg-icon"><use href="#icon-upload" /></g>
+    <text className="network-label" x="1150" y="358">pr-pusher</text>
 
     {/* program-reviewer */}
-    <line className="network-line" x1="976" y1="225" x2="1000" y2="225" />
-    <circle className="network-node" cx="1035" cy="225" r="34" />
-    <g transform="translate(1035,225) scale(0.9)" className="svg-icon"><use href="#icon-book" /></g>
-    <text className="network-label" x="1035" y="274">reviewer</text>
+    <circle className="network-node" cx="1250" cy="300" r="40" />
+    <g transform="translate(1250,300) scale(1.2)" className="svg-icon"><use href="#icon-book" /></g>
+    <text className="network-label" x="1250" y="358">program-</text>
+    <text className="network-label" x="1250" y="376">reviewer</text>
+
+    {/* Draft PR */}
+    <circle className="network-node" cx="1350" cy="300" r="40" />
+    <g transform="translate(1350,300) scale(1.2)" className="svg-icon"><use href="#icon-document" /></g>
+    <text className="network-label" x="1350" y="358">Draft PR</text>
+
+    {/* Loop label */}
+    <text className="loop-label" x="650" y="640" textAnchor="middle">iterate until tests pass</text>
   </svg>
 );
 
@@ -504,10 +600,10 @@ export const narrativeSteps: NarrativeStep[] = [
       'Added impl-validator for quality checks',
     ],
     shortcomings: [
-      'No edge case coverage',
+      'Parameters and variables don\'t match each other',
       'Manual iteration on failures',
       'Missing reference validation',
-      'Hard to scale more agents',
+      'No edge case coverage',
     ],
     insight:
       'Agent isolation prevents confirmation bias. When tests fail, it reveals actual discrepancies between implementation and requirements.',
