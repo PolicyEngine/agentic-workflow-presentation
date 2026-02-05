@@ -24,14 +24,14 @@ const stages = [
   { num: 4, title: 'Review', x1: 825, x2: 1060, color: 'rgba(13, 115, 119, 0.05)' },
 ];
 
-// Skills (static, no hover)
+// Skills (static, no hover) with agent connections
 const skills = [
-  { id: 'variable', label: 'variable', x: 180 },
-  { id: 'testing', label: 'testing', x: 310 },
-  { id: 'code-style', label: 'code-style', x: 440 },
-  { id: 'parameter', label: 'parameter', x: 570 },
-  { id: 'vectorize', label: 'vectorize', x: 700 },
-  { id: 'review', label: 'review', x: 830 },
+  { id: 'variable', label: 'variable', x: 180, agents: ['doc-collector', 'param-architect', 'rules-engineer'] },
+  { id: 'testing', label: 'testing', x: 310, agents: ['test-creator', 'edge-case-gen', 'impl-validator'] },
+  { id: 'code-style', label: 'code-style', x: 440, agents: ['param-architect', 'rules-engineer', 'ci-fixer'] },
+  { id: 'parameter', label: 'parameter', x: 570, agents: ['param-architect', 'ref-validator'] },
+  { id: 'vectorize', label: 'vectorize', x: 700, agents: ['impl-validator', 'ci-fixer'] },
+  { id: 'review', label: 'review', x: 830, agents: ['program-reviewer', 'ci-fixer'] },
 ];
 
 const skillY = 620;
@@ -297,6 +297,26 @@ export const StagesDiagram = () => {
             </g>
           );
         })}
+
+        {/* Skill-to-agent connection lines (static) */}
+        {skills.map((skill) =>
+          skill.agents.map((agentId) => {
+            const agent = agents[agentId as keyof typeof agents];
+            return (
+              <line
+                key={`${skill.id}-${agentId}`}
+                x1={skill.x}
+                y1={skillY}
+                x2={agent.x}
+                y2={agent.y + agent.r}
+                stroke="var(--accent)"
+                strokeWidth="1"
+                strokeDasharray="4 3"
+                opacity="0.35"
+              />
+            );
+          })
+        )}
 
         {/* Skills row (static) */}
         <text
