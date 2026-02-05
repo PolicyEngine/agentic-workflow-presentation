@@ -215,8 +215,26 @@ export const StagesDiagram = () => {
           cy="290"
           rx="310"
           ry="235"
+          style={{
+            opacity: hoveredStage === null ? 0.6 : (hoveredStage === 2 || hoveredStage === 3) ? 1 : 0.15,
+            transition: 'opacity 0.2s ease',
+          }}
         />
-        <text x="465" y="545" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="var(--text-mid)" fontStyle="italic">iterate until tests pass</text>
+        <text
+          x="465"
+          y="545"
+          textAnchor="middle"
+          fontFamily="JetBrains Mono"
+          fontSize="11"
+          fill="var(--text-mid)"
+          fontStyle="italic"
+          style={{
+            opacity: hoveredStage === null ? 1 : (hoveredStage === 2 || hoveredStage === 3) ? 1 : 0.3,
+            transition: 'opacity 0.2s ease',
+          }}
+        >
+          iterate until tests pass
+        </text>
 
         {/* Agent-to-agent connections */}
         {agentConnections.map(([from, to], i) => {
