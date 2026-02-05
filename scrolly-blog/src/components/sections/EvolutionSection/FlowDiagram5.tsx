@@ -116,6 +116,10 @@ export const FlowDiagram5 = () => {
             y1={a1.y}
             x2={a2.x}
             y2={a2.y}
+            style={{
+              opacity: hoveredSkill === null ? 1 : 0.15,
+              transition: 'opacity 0.2s ease',
+            }}
           />
         );
       })}
