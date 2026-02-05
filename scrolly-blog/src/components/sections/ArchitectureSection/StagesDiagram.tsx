@@ -169,7 +169,7 @@ export const StagesDiagram = () => {
 
   return (
     <div className="stages-diagram-container">
-      <svg className="stages-diagram-svg" viewBox="0 -60 1060 740">
+      <svg className="stages-diagram-svg" viewBox="0 -75 1060 755">
         <IconDefs />
 
         {/* Stage background regions */}
@@ -179,28 +179,15 @@ export const StagesDiagram = () => {
             <g key={stage.num}>
               <rect
                 x={stage.x1}
-                y={-60}
+                y={-75}
                 width={stage.x2 - stage.x1}
-                height={740}
+                height={755}
                 fill={isHovered ? 'rgba(13, 115, 119, 0.12)' : stage.color}
                 style={{ transition: 'fill 0.2s ease', cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredStage(stage.num)}
                 onMouseLeave={() => setHoveredStage(null)}
               />
-              {/* Vertical divider line */}
-              {stage.num < 4 && (
-                <line
-                  x1={stage.x2}
-                  y1={-60}
-                  x2={stage.x2}
-                  y2={680}
-                  stroke="var(--accent)"
-                  strokeWidth="2"
-                  strokeDasharray="8 4"
-                  opacity={0.4}
-                />
-              )}
-              {/* Stage number and title - positioned above the diagram */}
+              {/* Stage title in circle - positioned above the diagram */}
               <g
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredStage(stage.num)}
@@ -209,7 +196,7 @@ export const StagesDiagram = () => {
                 <circle
                   cx={(stage.x1 + stage.x2) / 2}
                   cy={-30}
-                  r={18}
+                  r={32}
                   fill={isHovered ? 'var(--accent)' : 'var(--bg-card)'}
                   stroke="var(--accent)"
                   strokeWidth="2"
@@ -217,24 +204,12 @@ export const StagesDiagram = () => {
                 />
                 <text
                   x={(stage.x1 + stage.x2) / 2}
-                  y={-24}
+                  y={-26}
                   textAnchor="middle"
                   fontFamily="JetBrains Mono"
-                  fontSize="14"
-                  fontWeight="700"
-                  fill={isHovered ? 'white' : 'var(--accent)'}
-                  style={{ transition: 'fill 0.2s ease' }}
-                >
-                  {stage.num}
-                </text>
-                <text
-                  x={(stage.x1 + stage.x2) / 2}
-                  y={-2}
-                  textAnchor="middle"
-                  fontFamily="JetBrains Mono"
-                  fontSize="11"
+                  fontSize="8"
                   fontWeight="600"
-                  fill={isHovered ? 'var(--accent)' : 'var(--text-mid)'}
+                  fill={isHovered ? 'white' : 'var(--accent)'}
                   style={{ transition: 'fill 0.2s ease' }}
                 >
                   {stage.title}
