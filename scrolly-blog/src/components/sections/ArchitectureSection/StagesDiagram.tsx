@@ -119,7 +119,7 @@ export const StagesDiagram = () => {
 
   return (
     <div className="stages-diagram-container">
-      <svg className="stages-diagram-svg" viewBox="0 0 1060 600">
+      <svg className="stages-diagram-svg" viewBox="0 -60 1060 660">
         <IconDefs />
 
         {/* Stage background regions */}
@@ -129,9 +129,9 @@ export const StagesDiagram = () => {
             <g key={stage.num}>
               <rect
                 x={stage.x1}
-                y={0}
+                y={-60}
                 width={stage.x2 - stage.x1}
-                height={600}
+                height={660}
                 fill={isHovered ? 'rgba(13, 115, 119, 0.12)' : stage.color}
                 style={{ transition: 'fill 0.2s ease', cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredStage(stage.num)}
@@ -141,7 +141,7 @@ export const StagesDiagram = () => {
               {stage.num < 4 && (
                 <line
                   x1={stage.x2}
-                  y1={0}
+                  y1={-60}
                   x2={stage.x2}
                   y2={600}
                   stroke="var(--accent)"
@@ -150,7 +150,7 @@ export const StagesDiagram = () => {
                   opacity={0.4}
                 />
               )}
-              {/* Stage number and title */}
+              {/* Stage number and title - positioned above the diagram */}
               <g
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setHoveredStage(stage.num)}
@@ -158,7 +158,7 @@ export const StagesDiagram = () => {
               >
                 <circle
                   cx={(stage.x1 + stage.x2) / 2}
-                  cy={30}
+                  cy={-30}
                   r={18}
                   fill={isHovered ? 'var(--accent)' : 'var(--bg-card)'}
                   stroke="var(--accent)"
@@ -167,7 +167,7 @@ export const StagesDiagram = () => {
                 />
                 <text
                   x={(stage.x1 + stage.x2) / 2}
-                  y={36}
+                  y={-24}
                   textAnchor="middle"
                   fontFamily="JetBrains Mono"
                   fontSize="14"
@@ -179,7 +179,7 @@ export const StagesDiagram = () => {
                 </text>
                 <text
                   x={(stage.x1 + stage.x2) / 2}
-                  y={58}
+                  y={-2}
                   textAnchor="middle"
                   fontFamily="JetBrains Mono"
                   fontSize="11"
