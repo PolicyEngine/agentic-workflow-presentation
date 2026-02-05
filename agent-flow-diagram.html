@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Flow Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-diagram: #f9f8f6;
+      --bg-card: #ffffff;
+      --grid-color: rgba(13, 115, 119, 0.08);
+      --accent: #0d7377;
+      --accent-light: rgba(13, 115, 119, 0.1);
+      --text-dark: #1e3a3a;
+      --text-mid: #4a6363;
+      --text-light: #7a9494;
+      --border: #d4dede;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #f7f8fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .agent-flow-container {
+      background: var(--bg-diagram);
+      background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+      border-radius: 12px;
+      padding: 60px 40px 50px;
+      position: relative;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.03);
+      overflow-x: auto;
+      max-width: 1500px;
+      width: 100%;
+    }
+
+    .agent-flow-container::before {
+      content: 'AGENT FLOW';
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    .agent-flow-svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .agent-flow-svg .network-node {
+      fill: var(--bg-card);
+      stroke: var(--accent);
+      stroke-width: 2;
+    }
+
+    .agent-flow-svg .network-line {
+      stroke: var(--text-mid);
+      stroke-width: 2;
+      stroke-dasharray: 6 4;
+      fill: none;
+    }
+
+    .agent-flow-svg .network-line.thick {
+      stroke-width: 2.5;
+    }
+
+    .agent-flow-svg .network-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      fill: var(--text-mid);
+      text-anchor: middle;
+    }
+
+    .agent-flow-svg .svg-icon {
+      color: var(--text-mid);
+      pointer-events: none;
+    }
+
+    .agent-flow-svg .loop-indicator {
+      fill: rgba(13, 115, 119, 0.03);
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      stroke-dasharray: 12 6;
+      opacity: 0.7;
+      animation: rotateLoop 6s linear infinite;
+    }
+
+    @keyframes rotateLoop {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -72; }
+    }
+
+    .agent-flow-svg .loop-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      font-style: italic;
+      fill: #1a202c;
+      text-anchor: middle;
+      letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+<body>
+  <!-- SVG Icon Definitions -->
+  <svg style="display: none">
+    <defs>
+      <!-- Clipboard icon -->
+      <g id="icon-clipboard">
+        <rect x="-12" y="-16" width="24" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="-6" y="-20" width="12" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="-7" y1="-4" x2="7" y2="-4" stroke="currentColor" stroke-width="2"/>
+        <line x1="-7" y1="3" x2="7" y2="3" stroke="currentColor" stroke-width="2"/>
+        <line x1="-7" y1="10" x2="4" y2="10" stroke="currentColor" stroke-width="2"/>
+      </g>
+      <!-- Books/documents icon -->
+      <g id="icon-books">
+        <rect x="-14" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-10)"/>
+        <rect x="-4" y="-10" width="8" height="24" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="6" y="-8" width="8" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(10)"/>
+      </g>
+      <!-- Gear icon -->
+      <g id="icon-gear">
+        <circle cx="0" cy="0" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M0,-16 L3,-12 L3,-10 L-3,-10 L-3,-12 Z" fill="currentColor"/>
+        <path d="M0,16 L3,12 L3,10 L-3,10 L-3,12 Z" fill="currentColor"/>
+        <path d="M-16,0 L-12,3 L-10,3 L-10,-3 L-12,-3 Z" fill="currentColor"/>
+        <path d="M16,0 L12,3 L10,3 L10,-3 L12,-3 Z" fill="currentColor"/>
+        <path d="M-11,-11 L-9,-8 L-7,-9 L-9,-12 Z" fill="currentColor" transform="rotate(0)"/>
+        <path d="M11,-11 L9,-8 L7,-9 L9,-12 Z" fill="currentColor"/>
+        <path d="M-11,11 L-9,8 L-7,9 L-9,12 Z" fill="currentColor"/>
+        <path d="M11,11 L9,8 L7,9 L9,12 Z" fill="currentColor"/>
+      </g>
+      <!-- Flask/beaker icon -->
+      <g id="icon-flask">
+        <path d="M-5,-16 L-5,-4 L-14,14 L14,14 L5,-4 L5,-16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="-7" y1="-16" x2="7" y2="-16" stroke="currentColor" stroke-width="2"/>
+        <line x1="-9" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/>
+      </g>
+      <!-- Lambda icon -->
+      <g id="icon-lambda">
+        <text x="0" y="8" font-family="Georgia, serif" font-size="40" font-weight="400" fill="currentColor" text-anchor="middle">λ</text>
+      </g>
+      <!-- Lightning bolt icon -->
+      <g id="icon-lightning">
+        <polygon points="2,-16 -8,2 -1,2 -4,16 8,-2 1,-2" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+      </g>
+      <!-- Magnifying glass icon -->
+      <g id="icon-search">
+        <circle cx="-3" cy="-3" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="6" y1="6" x2="16" y2="16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- Chain link icon -->
+      <g id="icon-link">
+        <ellipse cx="-6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+        <ellipse cx="6" cy="0" rx="8" ry="12" fill="none" stroke="currentColor" stroke-width="2.5" transform="rotate(-45)"/>
+      </g>
+      <!-- Wrench icon -->
+      <g id="icon-wrench">
+        <path d="M-6,-16 C-12,-10 -12,-2 -6,4 L8,18 L14,12 L0,-2 C6,-8 6,-14 0,-16 L-2,-10 L-6,-10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </g>
+      <!-- Upload arrow icon -->
+      <g id="icon-upload">
+        <line x1="0" y1="12" x2="0" y2="-8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <polyline points="-8,-2 0,-12 8,-2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="-12" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- Open book icon -->
+      <g id="icon-book">
+        <path d="M0,-12 L0,14" stroke="currentColor" stroke-width="2"/>
+        <path d="M0,-12 C-6,-14 -12,-12 -16,-8 L-16,12 C-12,8 -6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M0,-12 C6,-14 12,-12 16,-8 L16,12 C12,8 6,10 0,14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="-12" y1="-4" x2="-4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="-12" y1="2" x2="-4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="12" y1="-4" x2="4" y2="-2" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="12" y1="2" x2="4" y2="4" stroke="currentColor" stroke-width="1.5"/>
+      </g>
+      <!-- Document icon -->
+      <g id="icon-document">
+        <path d="M-10,-16 L6,-16 L14,-8 L14,16 L-10,16 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M6,-16 L6,-8 L14,-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="-5" y1="0" x2="9" y2="0" stroke="currentColor" stroke-width="2"/>
+        <line x1="-5" y1="6" x2="9" y2="6" stroke="currentColor" stroke-width="2"/>
+        <line x1="-5" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="2"/>
+      </g>
+    </defs>
+  </svg>
+
+  <div class="agent-flow-container">
+    <svg class="agent-flow-svg" viewBox="0 0 1400 660">
+      <!-- Loop indicator - ellipse around development/validation agents -->
+      <ellipse class="loop-indicator" cx="650" cy="300" rx="380" ry="240" />
+      <text class="loop-label" x="650" y="640">iterate until tests pass</text>
+
+      <!-- === CONNECTIONS === -->
+
+      <!-- issue-manager → doc-collector -->
+      <line class="network-line" x1="115" y1="300" x2="147" y2="300" />
+
+      <!-- doc-collector → parameter-architect -->
+      <line class="network-line thick" x1="263" y1="300" x2="440" y2="100" />
+      <!-- doc-collector → rules-engineer -->
+      <line class="network-line thick" x1="263" y1="300" x2="850" y2="148" />
+      <!-- doc-collector → test-creator -->
+      <line class="network-line thick" x1="263" y1="300" x2="598" y2="300" />
+
+      <!-- parameter-architect → rules-engineer -->
+      <line class="network-line thick" x1="440" y1="100" x2="870" y2="104" />
+
+      <!-- parameter-architect → reference-validator -->
+      <line class="network-line thick" x1="440" y1="152" x2="380" y2="385" />
+      <!-- rules-engineer → reference-validator (via param connection points) -->
+      <line class="network-line thick" x1="818" y1="100" x2="380" y2="385" />
+
+      <!-- rules-engineer → edge-case-gen -->
+      <line class="network-line thick" x1="850" y1="152" x2="850" y2="342" />
+      <!-- test-creator → edge-case-gen -->
+      <line class="network-line thick" x1="687" y1="337" x2="850" y2="342" />
+
+      <!-- parameter-architect → impl-validator -->
+      <line class="network-line thick" x1="440" y1="152" x2="620" y2="480" />
+      <!-- rules-engineer → impl-validator -->
+      <line class="network-line thick" x1="850" y1="148" x2="690" y2="490" />
+      <!-- test-creator → impl-validator -->
+      <line class="network-line thick" x1="650" y1="352" x2="650" y2="475" />
+
+      <!-- parameter-architect → ci-fixer -->
+      <line class="network-line thick" x1="440" y1="152" x2="1030" y2="300" />
+      <!-- rules-engineer → ci-fixer -->
+      <line class="network-line thick" x1="870" y1="104" x2="1030" y2="300" />
+      <!-- test-creator → ci-fixer -->
+      <line class="network-line thick" x1="702" y1="300" x2="1030" y2="300" />
+      <!-- reference-validator → ci-fixer -->
+      <line class="network-line thick" x1="408" y1="420" x2="1030" y2="300" />
+      <!-- edge-case-gen → ci-fixer -->
+      <line class="network-line thick" x1="888" y1="380" x2="1030" y2="300" />
+      <!-- impl-validator → ci-fixer -->
+      <line class="network-line thick" x1="715" y1="537" x2="1020" y2="358" />
+
+      <!-- ci-fixer → pr-pusher -->
+      <line class="network-line" x1="1030" y1="300" x2="1110" y2="300" />
+      <!-- pr-pusher → program-reviewer -->
+      <line class="network-line" x1="1190" y1="300" x2="1210" y2="300" />
+      <!-- program-reviewer → Draft PR -->
+      <line class="network-line" x1="1290" y1="300" x2="1310" y2="300" />
+
+      <!-- === NODES === -->
+
+      <!-- Outside left - issue-manager -->
+      <circle class="network-node" cx="65" cy="300" r="50" />
+      <g transform="translate(65,300) scale(1.5)"><use href="#icon-clipboard" class="svg-icon"/></g>
+      <text class="network-label" x="65" y="370">issue-manager</text>
+
+      <!-- document-collector -->
+      <circle class="network-node" cx="205" cy="300" r="58" />
+      <g transform="translate(205,290) scale(1.7)"><use href="#icon-books" class="svg-icon"/></g>
+      <text class="network-label" x="205" y="378">document-</text>
+      <text class="network-label" x="205" y="396">collector</text>
+
+      <!-- P - parameter-architect - TOP LEFT on ellipse (smaller) -->
+      <circle class="network-node" cx="440" cy="100" r="52" />
+      <g transform="translate(440,100) scale(1.5)"><use href="#icon-gear" class="svg-icon"/></g>
+      <text class="network-label" x="440" y="30">parameter-architect</text>
+
+      <!-- R - rules-engineer - TOP RIGHT on ellipse (smaller) -->
+      <circle class="network-node" cx="870" cy="100" r="52" />
+      <g transform="translate(870,100) scale(1.5)"><use href="#icon-lambda" class="svg-icon"/></g>
+      <text class="network-label" x="870" y="30">rules-engineer</text>
+
+      <!-- Ref - reference-validator - LEFT inside, lower -->
+      <circle class="network-node" cx="370" cy="420" r="38" />
+      <g transform="translate(370,420) scale(1.1)"><use href="#icon-link" class="svg-icon"/></g>
+      <text class="network-label" x="290" y="440">reference-</text>
+      <text class="network-label" x="290" y="458">validator</text>
+
+      <!-- E - edge-case-gen - right side -->
+      <circle class="network-node" cx="850" cy="380" r="38" />
+      <g transform="translate(850,380) scale(1.1)"><use href="#icon-lightning" class="svg-icon"/></g>
+      <text class="network-label" x="850" y="432">edge-case-gen</text>
+
+      <!-- T - test-creator - CENTER inside -->
+      <circle class="network-node" cx="650" cy="300" r="52" />
+      <g transform="translate(650,300) scale(1.5)"><use href="#icon-flask" class="svg-icon"/></g>
+      <text class="network-label" x="650" y="240">test-creator</text>
+
+      <!-- I - impl-validator - bottom center ON ellipse line (bigger) -->
+      <circle class="network-node" cx="650" cy="540" r="65" />
+      <g transform="translate(650,540) scale(1.9)"><use href="#icon-search" class="svg-icon"/></g>
+      <text class="network-label" x="650" y="625">impl-validator</text>
+
+      <!-- CI - ci-fixer - RIGHT side ON ellipse line -->
+      <circle class="network-node" cx="1030" cy="300" r="60" />
+      <g transform="translate(1030,300) scale(1.8)"><use href="#icon-wrench" class="svg-icon"/></g>
+      <text class="network-label" x="1030" y="380">ci-fixer</text>
+
+      <!-- pr-pusher -->
+      <circle class="network-node" cx="1150" cy="300" r="40" />
+      <g transform="translate(1150,300) scale(1.2)"><use href="#icon-upload" class="svg-icon"/></g>
+      <text class="network-label" x="1150" y="358">pr-pusher</text>
+
+      <!-- program-reviewer -->
+      <circle class="network-node" cx="1250" cy="300" r="40" />
+      <g transform="translate(1250,300) scale(1.2)"><use href="#icon-book" class="svg-icon"/></g>
+      <text class="network-label" x="1250" y="358">program-</text>
+      <text class="network-label" x="1250" y="376">reviewer</text>
+
+      <!-- Draft PR -->
+      <circle class="network-node" cx="1350" cy="300" r="40" />
+      <g transform="translate(1350,300) scale(1.2)"><use href="#icon-document" class="svg-icon"/></g>
+      <text class="network-label" x="1350" y="358">Draft PR</text>
+    </svg>
+  </div>
+</body>
+</html>
