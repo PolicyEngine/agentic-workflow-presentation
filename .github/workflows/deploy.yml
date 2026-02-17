@@ -34,6 +34,9 @@ jobs:
         working-directory: scrolly-blog
         run: npm run build
 
+      - name: Copy root HTML files into build output
+        run: cp *.html scrolly-blog/dist/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
