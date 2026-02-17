@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolicyEngine: AI &amp; Inequality</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ══════════════════════════════════════════
+           DESIGN SYSTEM
+           ══════════════════════════════════════════ */
+        :root {
+            --teal: #0d7377;
+            --teal-dark: #095456;
+            --teal-10: rgba(13, 115, 119, 0.10);
+            --teal-06: rgba(13, 115, 119, 0.06);
+            --teal-20: rgba(13, 115, 119, 0.20);
+            --dark: #112020;
+            --text: #2a3c3c;
+            --text-secondary: #5e7878;
+            --surface: #ffffff;
+            --bg: #f6f8f8;
+            --border: #dce5e5;
+            --border-light: #eaf0f0;
+        }
+
+        /* ══════════════════════════════════════════
+           REVEAL OVERRIDES
+           ══════════════════════════════════════════ */
+        .reveal {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 28px;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .reveal .slides { text-align: left; }
+
+        .reveal .slides section {
+            padding: 48px 64px;
+            box-sizing: border-box;
+        }
+
+        .reveal .slide-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            background: none;
+            right: 24px;
+            bottom: 18px;
+        }
+
+        .reveal .controls { color: var(--teal); }
+        .reveal .progress span { background: var(--teal); }
+
+        /* ══════════════════════════════════════════
+           TYPOGRAPHY
+           ══════════════════════════════════════════ */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            text-transform: none;
+            letter-spacing: -0.025em;
+            text-shadow: none;
+        }
+
+        .reveal h1 { font-size: 2.4em; font-weight: 800; line-height: 1.12; }
+        .reveal h2 { font-size: 1.6em; font-weight: 700; line-height: 1.2; margin-bottom: 0.4em; }
+        .reveal h3 { font-size: 1.1em; font-weight: 600; color: var(--teal); margin-bottom: 0.3em; }
+
+        .reveal p {
+            font-size: 0.82em;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            margin-bottom: 0.6em;
+        }
+
+        .teal { color: var(--teal); }
+
+        /* ══════════════════════════════════════════
+           SECTION LABEL (pill)
+           ══════════════════════════════════════════ */
+        .label {
+            display: inline-block;
+            font-size: 0.52em;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--teal);
+            background: var(--teal-06);
+            border: 1px solid var(--teal-20);
+            border-radius: 100px;
+            padding: 5px 18px;
+            margin-bottom: 14px;
+        }
+
+        /* ══════════════════════════════════════════
+           TITLE SLIDE
+           ══════════════════════════════════════════ */
+        .title-slide {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            background:
+                radial-gradient(ellipse 80% 60% at 75% 85%, var(--teal-10) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 20%, var(--teal-06) 0%, transparent 60%),
+                var(--bg) !important;
+        }
+
+        .title-slide h1 {
+            font-size: 2.6em;
+            max-width: 800px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 0.88em;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 640px;
+            margin-top: 12px;
+        }
+
+        .title-slide .meta {
+            margin-top: 48px;
+            font-size: 0.65em;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        /* ══════════════════════════════════════════
+           STAT CARDS
+           ══════════════════════════════════════════ */
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px 28px;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 4px;
+            background: var(--teal);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .stat-card .number {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .stat-card .desc {
+            font-size: 0.7em;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .stat-card .source {
+            font-size: 0.55em;
+            font-weight: 600;
+            color: var(--teal);
+            margin-top: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        /* ══════════════════════════════════════════
+           CARD GRID
+           ══════════════════════════════════════════ */
+        .grid { display: grid; gap: 14px; margin: 18px 0; }
+        .grid.c3 { grid-template-columns: repeat(3, 1fr); }
+        .grid.c2 { grid-template-columns: repeat(2, 1fr); }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 22px 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(13, 115, 119, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--teal-10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .card .icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--teal);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .card h4 {
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 6px 0;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            font-size: 0.65em;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* ══════════════════════════════════════════
+           BADGES
+           ══════════════════════════════════════════ */
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55em;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: var(--teal-06);
+            color: var(--teal);
+            border: 1px solid var(--teal-20);
+        }
+
+        /* ══════════════════════════════════════════
+           TERMINAL
+           ══════════════════════════════════════════ */
+        .terminal {
+            background: #0f1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 12px 18px;
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot.r { background: #ff5f57; }
+        .dot.y { background: #febc2e; }
+        .dot.g { background: #28c840; }
+
+        .terminal pre {
+            margin: 0;
+            padding: 22px 26px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72em;
+            color: #d0e8e8;
+            line-height: 2;
+            background: none;
+            box-shadow: none;
+        }
+
+        .terminal .c { color: #5a7a7a; }
+        .terminal .g { color: #5fd4d8; }
+
+        /* ══════════════════════════════════════════
+           PIPELINE
+           ══════════════════════════════════════════ */
+        .pipeline {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 24px 0;
+        }
+
+        .pipe-step {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px 18px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .pipe-step.active {
+            border-color: var(--teal);
+            background: linear-gradient(180deg, var(--teal-06) 0%, var(--surface) 100%);
+            box-shadow: 0 2px 8px rgba(13, 115, 119, 0.08);
+        }
+
+        .pipe-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--teal);
+            color: white;
+            border-radius: 8px;
+            font-size: 0.65em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .pipe-step h4 {
+            font-size: 0.72em;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 6px 0;
+        }
+
+        .pipe-step p {
+            font-size: 0.55em;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .pipe-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--teal);
+            padding: 0 8px;
+            flex-shrink: 0;
+            font-size: 0.9em;
+            opacity: 0.6;
+        }
+
+        /* ══════════════════════════════════════════
+           CALLOUT
+           ══════════════════════════════════════════ */
+        .callout {
+            background: linear-gradient(135deg, var(--teal-06) 0%, rgba(13, 115, 119, 0.03) 100%);
+            border-left: 3px solid var(--teal);
+            border-radius: 0 10px 10px 0;
+            padding: 16px 22px;
+            margin: 18px 0;
+        }
+
+        .callout p {
+            font-size: 0.72em;
+            color: var(--teal-dark);
+            margin: 0;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ══════════════════════════════════════════
+           RESULTS
+           ══════════════════════════════════════════ */
+        .results-row {
+            display: flex;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .result {
+            flex: 1;
+            text-align: center;
+            padding: 28px 16px;
+            background: var(--surface);
+            border-radius: 14px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .result .num {
+            font-size: 2.6em;
+            font-weight: 800;
+            color: var(--teal);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .result .rlabel {
+            font-size: 0.7em;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .result .detail {
+            font-size: 0.55em;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* ══════════════════════════════════════════
+           LAYERS (commands / agents / skills)
+           ══════════════════════════════════════════ */
+        .layers { margin: 20px 0; }
+
+        .layer {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 8px 0;
+        }
+
+        .layer-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6em;
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 82px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .layer-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58em;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 8px;
+            transition: transform 0.15s;
+        }
+
+        .chip:hover { transform: translateY(-1px); }
+
+        .chip.cmd {
+            background: var(--teal);
+            color: white;
+            box-shadow: 0 2px 8px rgba(13, 115, 119, 0.25);
+        }
+
+        .chip.agent {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--dark);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .chip.skill {
+            background: var(--teal-10);
+            border: 1.5px solid var(--teal-20);
+            color: var(--teal);
+        }
+
+        .layer-arrow {
+            text-align: center;
+            padding-left: 96px;
+            color: var(--teal);
+            opacity: 0.4;
+            font-size: 1em;
+            line-height: 1;
+        }
+
+        /* ══════════════════════════════════════════
+           FINDING CARDS
+           ══════════════════════════════════════════ */
+        .finding {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px 22px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .finding .src {
+            font-size: 0.52em;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.02em;
+            margin-bottom: 6px;
+        }
+
+        .finding .ftitle {
+            font-size: 0.72em;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .finding .fbody {
+            font-size: 0.6em;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ══════════════════════════════════════════
+           MECHANISM CARDS
+           ══════════════════════════════════════════ */
+        .mech {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mech::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--teal);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .mech:hover::after { opacity: 1; }
+
+        .mech .mech-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--teal-10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            font-size: 1.2em;
+        }
+
+        .mech h4 {
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 8px 0;
+        }
+
+        .mech p {
+            font-size: 0.6em;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        .mech .mech-src {
+            display: inline-block;
+            font-size: 0.52em;
+            font-weight: 600;
+            color: var(--teal);
+            background: var(--teal-06);
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+
+        /* ══════════════════════════════════════════
+           ECOSYSTEM
+           ══════════════════════════════════════════ */
+        .eco h4 {
+            font-size: 0.65em;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--teal);
+            display: inline-block;
+        }
+
+        .eco-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .etag {
+            font-size: 0.55em;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .etag.r { background: #f3e8ff; color: #6d28d9; }
+        .etag.a { background: #e0f2fe; color: #0369a1; }
+        .etag.p { background: #ecfdf5; color: #047857; }
+        .etag.t { background: #fef9c3; color: #854d0e; }
+        .etag.f { background: #ffe4e6; color: #be123c; }
+
+        /* ══════════════════════════════════════════
+           TRANSITION SLIDES
+           ══════════════════════════════════════════ */
+        .transition-slide {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 50%, var(--teal-10) 0%, transparent 70%),
+                var(--bg) !important;
+        }
+
+        .transition-slide h2 {
+            text-align: center;
+            color: var(--teal);
+            font-size: 1.8em;
+            max-width: 700px;
+        }
+
+        .transition-slide p {
+            text-align: center;
+            max-width: 500px;
+            color: var(--text-secondary);
+        }
+
+        /* ══════════════════════════════════════════
+           CTA SLIDE
+           ══════════════════════════════════════════ */
+        .cta-slide {
+            text-align: center !important;
+        }
+
+        .cta-slide h2 { text-align: center; }
+
+        .cta-email {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--teal);
+            margin-top: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-url {
+            font-size: 0.65em;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: 6px;
+        }
+
+        /* ══════════════════════════════════════════
+           UTILITY
+           ══════════════════════════════════════════ */
+        .mt-0 { margin-top: 0; }
+        .mt-sm { margin-top: 12px; }
+        .mt-md { margin-top: 20px; }
+        .gap-sm { gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ═══════════════════════════════════════════
+                 PART 1: What is PolicyEngine
+                 ═══════════════════════════════════════════ -->
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <div class="label">PolicyEngine</div>
+                <h1>How will policy shape <span class="teal">AI's impact on inequality?</span></h1>
+                <p class="subtitle">Open-source microsimulation infrastructure to analyze how tax and benefit policies mediate AI-driven economic change.</p>
+                <div class="meta">EA Global SF &middot; February 2026</div>
+
+                <aside class="notes">
+                    This talk has three parts. I'll start by describing what PolicyEngine is at a high level. Then I'll show you how we use AI to encode policy at scale. Then I'll connect that to our AI and inequality research initiative.
+                </aside>
+            </section>
+
+            <!-- SLIDE 2: The numbers -->
+            <section>
+                <div class="label">Why this matters</div>
+                <h2>AI is reshaping the labor market</h2>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="number">11.7%</div>
+                        <div class="desc">of US labor market automatable today</div>
+                        <div class="source">MIT Iceberg Index</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">16%</div>
+                        <div class="desc">decline in early-career tech employment</div>
+                        <div class="source">Stanford DEL 2025</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">$1.2T</div>
+                        <div class="desc">in wage value at stake</div>
+                        <div class="source">MIT Iceberg Index</div>
+                    </div>
+                </div>
+
+                <p>Tax and benefit policy will determine who bears the costs and who shares the gains.</p>
+
+                <aside class="notes">
+                    These are the headline numbers. 11.7% of the US labor market is automatable today, not in the future. Early-career workers in AI-exposed occupations already saw a 16% employment decline. And there's 1.2 trillion dollars in wage value at stake. The question isn't whether AI will reshape incomes — it's whether policy can distribute the impact fairly.
+                </aside>
+            </section>
+
+            <!-- SLIDE 3: What PolicyEngine does -->
+            <section>
+                <div class="label">The model</div>
+                <h2>What PolicyEngine does</h2>
+                <p>Open-source tax-benefit microsimulation for the US, UK, and Canada.</p>
+
+                <div class="grid c3">
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h4>10,000+ parameters</h4>
+                        <p>Federal and state tax codes, benefit programs, credits, and deductions encoded as structured data.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h4>Household simulation</h4>
+                        <p>Calculate any household's taxes, benefits, and net income under current law or policy reforms.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <h4>Population analysis</h4>
+                        <p>Run reforms against representative survey data to estimate budgetary and distributional impacts.</p>
+                    </div>
+                </div>
+
+                <div class="badges">
+                    <span class="badge">AGPL-3.0</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">REST API</span>
+                    <span class="badge">US &middot; UK &middot; Canada</span>
+                </div>
+
+                <aside class="notes">
+                    PolicyEngine is three things. First, a structured database of over 10,000 policy parameters — every federal and state tax rate, benefit threshold, income limit, and deduction. Second, a simulation engine that calculates any household's taxes and benefits. Third, population-level microsimulation using enhanced CPS microdata. Everything is open source under AGPL-3.0.
+                </aside>
+            </section>
+
+            <!-- SLIDE 4: Track record -->
+            <section>
+                <div class="label">Track record</div>
+                <h2>Proven infrastructure</h2>
+
+                <div class="grid c2">
+                    <div class="card">
+                        <h4>Used by governments</h4>
+                        <p>UK government, US congressional offices, and leading think tanks use PolicyEngine for policy analysis.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Cited in research</h4>
+                        <p>Referenced by CBO, Treasury, and academic researchers. NBER TAXSIM integration for tax microsimulation.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Real-world deployment</h4>
+                        <p>MyFriendBen uses our API to power benefits screening for real families applying for assistance programs.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Active development</h4>
+                        <p>OBBBA household-by-household analysis, ACA premium tax credit calculator, AI-written policy reports.</p>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    This isn't a research prototype. The UK government uses PolicyEngine. US congressional offices use it. CBO and Treasury have cited our work. Our API partner MyFriendBen serves real families. And we just shipped an interactive tool analyzing the One Big Beautiful Bill Act across 20,000+ household types.
+                </aside>
+            </section>
+
+            <!-- SLIDE 5: The scale challenge -->
+            <section>
+                <div class="label">The bottleneck</div>
+                <h2>Encoding policy is hard</h2>
+                <p>Every state benefit program must be translated from legal language into working code.</p>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="number">~1,500</div>
+                        <div class="desc">lines of code per program</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">2-3 wks</div>
+                        <div class="desc">manual implementation time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">50+</div>
+                        <div class="desc">programs per state</div>
+                    </div>
+                </div>
+
+                <p>Parameters, variables, tests, citations, edge cases &mdash; each from dozens of pages of statutes and regulations. To study how AI reshapes the safety net, we first need the safety net encoded.</p>
+
+                <aside class="notes">
+                    Here's the bottleneck. Each state benefit program requires about 1,500 lines of code. Parameters need legal citations. Variables need test cases. It takes 2-3 weeks per program manually. Multiply that by 50+ programs across 50 states and you see the scale problem. To model how AI impacts inequality through the safety net, we first need the safety net fully encoded.
+                </aside>
+            </section>
+
+            <!-- TRANSITION -->
+            <section class="transition-slide">
+                <h2>How we use AI to build the model</h2>
+                <p></p>
+
+                <aside class="notes">
+                    Let me show you how we solved this.
+                </aside>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 2: AI Encoding
+                 ═══════════════════════════════════════════ -->
+
+            <!-- SLIDE 7: Composable architecture -->
+            <section>
+                <div class="label">Multi-agent AI</div>
+                <h2>Composable architecture</h2>
+                <p>Three layers: commands compose agents, agents load shared skills.</p>
+
+                <div class="layers" style="margin-top: 28px;">
+                    <div class="layer">
+                        <div class="layer-label">Commands</div>
+                        <div class="layer-chips">
+                            <span class="chip cmd">/encode-policy</span>
+                            <span class="chip cmd">/review-pr</span>
+                            <span class="chip cmd">/fix-pr</span>
+                        </div>
+                    </div>
+                    <div class="layer-arrow">&darr;</div>
+                    <div class="layer">
+                        <div class="layer-label">Agents</div>
+                        <div class="layer-chips">
+                            <span class="chip agent">document-collector</span>
+                            <span class="chip agent">parameter-architect</span>
+                            <span class="chip agent">test-creator</span>
+                            <span class="chip agent">rules-engineer</span>
+                            <span class="chip agent">impl-validator</span>
+                            <span class="chip agent">ci-fixer</span>
+                            <span class="chip agent" style="opacity:0.5;">...</span>
+                        </div>
+                    </div>
+                    <div class="layer-arrow">&darr;</div>
+                    <div class="layer">
+                        <div class="layer-label">Skills</div>
+                        <div class="layer-chips">
+                            <span class="chip skill">variable-patterns</span>
+                            <span class="chip skill">testing-patterns</span>
+                            <span class="chip skill">code-style</span>
+                            <span class="chip skill">parameter-patterns</span>
+                            <span class="chip skill">vectorization</span>
+                            <span class="chip skill" style="opacity:0.5;">...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout mt-md">
+                    <p>Same agents and skills compose into different workflows. The validator that checks code in /encode-policy also powers /review-pr.</p>
+                </div>
+
+                <aside class="notes">
+                    We went through five iterations to get here. The key insight is three layers. At the top: commands — entry points a user runs. In the middle: specialized agents — each handles one concern. At the bottom: skills — reusable knowledge modules agents load on demand. The same agents and skills compose into different workflows.
+                </aside>
+            </section>
+
+            <!-- SLIDE 8: The workflow -->
+            <section>
+                <div class="label">The workflow</div>
+                <h2>One command, full implementation</h2>
+
+                <div class="terminal">
+                    <div class="terminal-bar">
+                        <span class="dot r"></span>
+                        <span class="dot y"></span>
+                        <span class="dot g"></span>
+                    </div>
+                    <pre><span class="c"># One command to implement an entire state benefit program</span>
+<span class="g">/encode-policy "Oregon TANF"</span></pre>
+                </div>
+
+                <div class="pipeline">
+                    <div class="pipe-step">
+                        <div class="pipe-num">1</div>
+                        <h4>Research</h4>
+                        <p><strong>document-collector</strong> autonomously finds statutes, regulations, state plans</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step">
+                        <div class="pipe-num">2</div>
+                        <h4>Build</h4>
+                        <p>Parallel agents create parameters, tests, and variables &mdash; isolated from each other</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step">
+                        <div class="pipe-num">3</div>
+                        <h4>Validate</h4>
+                        <p>Check code patterns and citations, iterate until tests pass</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step">
+                        <div class="pipe-num">4</div>
+                        <h4>Review</h4>
+                        <p>Compare output to regulations, generate PR description</p>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <p>The document-collector is the most critical agent. It autonomously researches official sources and produces a structured reference document that every downstream agent relies on.</p>
+                </div>
+
+                <aside class="notes">
+                    Here's the complete workflow. Type one command. The document-collector autonomously researches official sources — statutes, CFR, state plans, benefit calculators. Three agents work in parallel, isolated from each other, so when tests fail it reveals real bugs. Validators check everything and iterate until tests pass. 90 minutes total.
+                </aside>
+            </section>
+
+            <!-- SLIDE 9: Results -->
+            <section>
+                <div class="label">Results</div>
+                <h2>What this produced</h2>
+
+                <div class="results-row">
+                    <div class="result">
+                        <div class="num">90 min</div>
+                        <div class="rlabel">per implementation</div>
+                        <div class="detail">down from 2-3 weeks</div>
+                    </div>
+                    <div class="result">
+                        <div class="num">42</div>
+                        <div class="rlabel">states with TANF</div>
+                        <div class="detail">plus CCDF &amp; Illinois programs</div>
+                    </div>
+                    <div class="result">
+                        <div class="num">60K+</div>
+                        <div class="rlabel">lines of code</div>
+                        <div class="detail">consistent patterns &amp; quality</div>
+                    </div>
+                </div>
+
+                <div class="callout">
+                    <p>Humans review the final PR and make the merge decision. AI handles the mechanical work &mdash; research, parameterization, testing, documentation &mdash; while humans maintain quality control.</p>
+                </div>
+
+                <aside class="notes">
+                    90 minutes per implementation, down from 2-3 weeks. 42 states now have TANF encoded. Over 60,000 lines of code with consistent patterns. And critically — humans still review every PR and make the merge decision.
+                </aside>
+            </section>
+
+            <!-- TRANSITION -->
+            <section class="transition-slide">
+                <h2>Now that we can encode policy at scale&hellip;</h2>
+                <p style="font-size: 0.85em;">What can we do with it?</p>
+
+                <aside class="notes">
+                    So now we can encode policy rapidly. The question becomes: what do we do with this capability?
+                </aside>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 PART 3: AI & Inequality
+                 ═══════════════════════════════════════════ -->
+
+            <!-- SLIDE 11: Three mechanisms -->
+            <section>
+                <div class="label">The challenge</div>
+                <h2>Three mechanisms of uncertainty</h2>
+                <p>AI could reshape market incomes through three channels:</p>
+
+                <div class="grid c3 mt-md">
+                    <div class="mech">
+                        <div class="mech-icon">&#128200;</div>
+                        <h4>Wage inequality</h4>
+                        <p>Early-career workers in AI-exposed jobs saw a 16% employment decline; senior workers gained 6-12%. Direction depends on which tasks are complemented vs. automated.</p>
+                        <div class="mech-src">Stanford DEL 2025</div>
+                    </div>
+                    <div class="mech">
+                        <div class="mech-icon">&#127970;</div>
+                        <h4>Capital-labor shift</h4>
+                        <p>Labor share of income could decline 0.5-1.6 pp per doubling of AI innovation. Capital income and wealth inequality always increase with AI adoption.</p>
+                        <div class="mech-src">IMF 2025</div>
+                    </div>
+                    <div class="mech">
+                        <div class="mech-icon">&#128101;</div>
+                        <h4>Labor displacement</h4>
+                        <p>11.7% of the US labor market is automatable today (~$1.2T in wage value). Labor force participation projected to drop to 78% by 2030.</p>
+                        <div class="mech-src">MIT Iceberg &middot; Metaculus</div>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    Three mechanisms. Wage inequality — some workers complemented, others replaced. Capital-labor shift — AI increases returns to capital, always increases wealth inequality. Labor displacement — 11.7% automatable today, 1.2 trillion in wage value. Each has enormous uncertainty about magnitude and timing.
+                </aside>
+            </section>
+
+            <!-- SLIDE 12: Key findings -->
+            <section>
+                <div class="label">Key findings (2025-2026)</div>
+                <h2>What the research shows</h2>
+
+                <div class="grid c2">
+                    <div class="finding">
+                        <div class="src">Anthropic Economic Index (2026)</div>
+                        <div class="ftitle">AI adoption accelerating across occupations</div>
+                        <div class="fbody">Share of jobs using AI for 25%+ of tasks rose from 36% to 49%. 52% augmentation vs. 45% automation. Largest productivity gains on college-level work.</div>
+                    </div>
+                    <div class="finding">
+                        <div class="src">Penn Wharton Budget Model (2025)</div>
+                        <div class="ftitle">GenAI projected to boost GDP 1.5% by 2035</div>
+                        <div class="fbody">~3% by 2055. 40% of current GDP could be substantially affected. Growth accrues unevenly across income distribution.</div>
+                    </div>
+                    <div class="finding">
+                        <div class="src">IMF Working Paper (2025)</div>
+                        <div class="ftitle">AI may reduce wage inequality but always increases wealth inequality</div>
+                        <div class="fbody">AI could compress wages by hitting high-income tasks, but capital income and wealth inequality always increase with adoption.</div>
+                    </div>
+                    <div class="finding">
+                        <div class="src">Brookings (2026)</div>
+                        <div class="ftitle">Future of tax policy in the age of AI</div>
+                        <div class="fbody">AI threatens to erode labor-based tax revenue. Consumption taxation becomes primary as labor income erodes.</div>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    The research converges on key themes. Anthropic's Economic Index shows rapid AI adoption — 49% of jobs now use AI substantially. Penn Wharton projects GDP gains but unevenly distributed. The IMF finds AI might reduce wage inequality but always increases wealth inequality. And Brookings warns AI could erode the entire basis of labor-based taxation.
+                </aside>
+            </section>
+
+            <!-- SLIDE 13: The gap -->
+            <section>
+                <div class="label">The gap</div>
+                <h2>Why current analysis falls short</h2>
+
+                <div class="grid c2 mt-md">
+                    <div class="card">
+                        <h4>Single baseline forecasts</h4>
+                        <p>CBO and traditional scoring institutions operate under one economic scenario. AI-driven change involves profound uncertainty about magnitude, timing, and distribution.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Policy depends on trajectory</h4>
+                        <p>A UBI might be transformative under rapid displacement but unnecessary under gradual augmentation. Robustness depends on which AI trajectory materializes.</p>
+                    </div>
+                </div>
+
+                <div class="callout mt-md">
+                    <p>Traditional policy analysis reports only point estimates. AI-driven economic change requires modeling ranges of scenarios to show how policy impacts vary across different trajectories.</p>
+                </div>
+
+                <div class="stats-row mt-md">
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="number" style="font-size: 1.6em; color: var(--teal);">Multiple</div>
+                        <div class="desc">AI scenarios</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="number" style="font-size: 1.6em; color: var(--teal);">Probabilistic</div>
+                        <div class="desc">Forecasts</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="number" style="font-size: 1.6em; color: var(--teal);">Robust</div>
+                        <div class="desc">Policy analysis</div>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    CBO operates under a single baseline. That worked when the economy was predictable. But AI introduces profound uncertainty. A UBI might be transformative if displacement is rapid, but wasteful if AI mostly augments. We need probabilistic analysis across multiple trajectories.
+                </aside>
+            </section>
+
+            <!-- SLIDE 14: Our approach -->
+            <section>
+                <div class="label">PolicyEngine's role</div>
+                <h2>Our approach</h2>
+
+                <div class="pipeline mt-md">
+                    <div class="pipe-step active">
+                        <div class="pipe-num">1</div>
+                        <h4>AI economic scenarios</h4>
+                        <p>Inputs from researchers, forecasters, economic models</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step active">
+                        <div class="pipe-num">2</div>
+                        <h4>PolicyEngine microsimulation</h4>
+                        <p>Open-source tax-benefit models for US, UK, Canada</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step active">
+                        <div class="pipe-num">3</div>
+                        <h4>Distributional outcomes</h4>
+                        <p>Inequality metrics, poverty rates, winners/losers</p>
+                    </div>
+                    <div class="pipe-arrow">&rarr;</div>
+                    <div class="pipe-step active">
+                        <div class="pipe-num">4</div>
+                        <h4>Policy comparison</h4>
+                        <p>Current law vs. UBI, expanded safety nets, capital taxation</p>
+                    </div>
+                </div>
+
+                <div class="callout mt-md">
+                    <p>We don't forecast AI's trajectory or prescribe optimal policies. We provide the infrastructure to translate any AI economic scenario into household-level distributional outcomes under different policy regimes.</p>
+                </div>
+
+                <aside class="notes">
+                    Four-step pipeline. Take AI scenarios from researchers. Feed into PolicyEngine's microsimulation — the same infrastructure governments already use. Measure distributional outcomes. Compare policy responses. We're not prescribing policies — we're providing infrastructure so researchers and policymakers can evaluate responses rigorously.
+                </aside>
+            </section>
+
+            <!-- SLIDE 15: Why PolicyEngine -->
+            <section>
+                <div class="label">Why PolicyEngine</div>
+                <h2>Infrastructure advantages</h2>
+
+                <div class="grid c3 mt-md">
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        </div>
+                        <h4>Open source</h4>
+                        <p>AGPL-3.0. 10,000+ parameters. Full transparency and reproducibility for any researcher.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <h4>Proven infrastructure</h4>
+                        <p>Used by governments, cited by CBO and Treasury. Production infrastructure, not a prototype.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
+                        <h4>AI-native encoding</h4>
+                        <p>Multi-agent AI encodes policy at scale. 90 minutes per program enables rapid model expansion.</p>
+                    </div>
+                </div>
+
+                <div class="grid c2">
+                    <div class="card">
+                        <h4>International coverage</h4>
+                        <p>US and UK operational, Canada in development. Analyze cross-country policy responses to AI.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Quantifying uncertainty</h4>
+                        <p>Model ranges of scenarios to show how policy impacts vary across different AI trajectories.</p>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    Why PolicyEngine? It's fully open source. It's proven — governments use it. And our AI-native encoding means we can expand the model rapidly. When a new policy gets proposed, we encode it in 90 minutes. That speed matters when comparing dozens of alternatives across multiple scenarios.
+                </aside>
+            </section>
+
+            <!-- SLIDE 16: Ecosystem -->
+            <section>
+                <div class="label">Who's working on this</div>
+                <h2>The ecosystem</h2>
+
+                <div class="grid c2 mt-md">
+                    <div class="eco">
+                        <h4>Research &amp; academia</h4>
+                        <div class="eco-tags">
+                            <span class="etag r">EconTAI Initiative (UVA)</span>
+                            <span class="etag r">Stanford Digital Economy Lab</span>
+                            <span class="etag r">MIT Future Tech Lab</span>
+                            <span class="etag r">Penn Wharton Budget Model</span>
+                            <span class="etag r">Yale Budget Lab</span>
+                            <span class="etag r">Epoch AI</span>
+                        </div>
+                    </div>
+                    <div class="eco">
+                        <h4>AI companies</h4>
+                        <div class="eco-tags">
+                            <span class="etag a">Anthropic</span>
+                            <span class="etag a">OpenAI</span>
+                            <span class="etag a">Google DeepMind</span>
+                        </div>
+                    </div>
+                    <div class="eco">
+                        <h4>Policy &amp; advocacy</h4>
+                        <div class="eco-tags">
+                            <span class="etag p">Windfall Trust</span>
+                            <span class="etag p">AGI Social Contract</span>
+                            <span class="etag p">Brookings</span>
+                            <span class="etag p">Center for AI Safety</span>
+                            <span class="etag p">AI Now Institute</span>
+                        </div>
+                    </div>
+                    <div class="eco">
+                        <h4>Models, tools &amp; funders</h4>
+                        <div class="eco-tags">
+                            <span class="etag t">PolicyEngine</span>
+                            <span class="etag t">OG-USA</span>
+                            <span class="etag t">Don't Lose Your Job</span>
+                            <span class="etag f">Open Philanthropy</span>
+                            <span class="etag f">Future of Life Institute</span>
+                            <span class="etag f">Metaculus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    This work sits in a growing ecosystem. Research groups at UVA, Stanford, MIT, Penn Wharton, and Yale. AI companies publishing economic impact research. Policy organizations working on governance frameworks. And funders recognizing this intersection needs more infrastructure.
+                </aside>
+            </section>
+
+            <!-- SLIDE 17: CTA -->
+            <section class="cta-slide">
+                <div class="label">Partner with us</div>
+                <h2>Get involved</h2>
+
+                <div class="grid c3 mt-md" style="text-align: left;">
+                    <div class="card">
+                        <h4>Research partners</h4>
+                        <p>Economists with macro modeling experience who want to integrate AI scenarios into microsimulation infrastructure.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Funders</h4>
+                        <p>AI safety, economic policy, and inequality are individually well-funded but poorly integrated. We're hiring a dedicated researcher.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Community</h4>
+                        <p>Join the TAI Econ Signal group. Share AI economic scenarios for us to model. Provide feedback on our framework.</p>
+                    </div>
+                </div>
+
+                <div class="cta-email">hello@policyengine.org</div>
+                <div class="cta-url">policyengine.org/us/ai-inequality</div>
+
+                <aside class="notes">
+                    Three ways to get involved. Research collaboration, funding support, or community participation. Reach us at hello@policyengine.org or find us here at EA Global. Thank you.
+                </aside>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            width: 1400,
+            height: 800,
+            margin: 0.04,
+            transition: 'fade',
+            transitionSpeed: 'fast',
+            center: true,
+            controlsTutorial: false,
+        });
+    </script>
+</body>
+</html>
