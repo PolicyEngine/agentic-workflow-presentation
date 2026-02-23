@@ -593,7 +593,13 @@
   <section class="section section--gray">
     <div class="container--wide">
       <div class="video-wrapper reveal">
-        <div id="yt-player"></div>
+        <iframe
+          src="https://www.youtube.com/embed/Ke_J3pOdL8k?start=575&rel=0"
+          title="PolicyEngine + Claude Code"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </section>
@@ -757,41 +763,6 @@
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
   </script>
 
-  <!-- YouTube IFrame API for start/end time support -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    var player;
-    var endTime = 1130; // 18:50
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('yt-player', {
-        videoId: 'Ke_J3pOdL8k',
-        playerVars: {
-          start: 575,  // 9:35
-          rel: 0
-        },
-        events: {
-          onStateChange: onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
-        checkTime();
-      }
-    }
-
-    function checkTime() {
-      if (player && player.getCurrentTime) {
-        if (player.getCurrentTime() >= endTime) {
-          player.pauseVideo();
-          return;
-        }
-      }
-      requestAnimationFrame(checkTime);
-    }
-  </script>
 
 </body>
 </html>
