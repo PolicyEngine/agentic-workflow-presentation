@@ -22,8 +22,16 @@ export const HeroSection = () => (
           </p>
           <p>
             We needed our AI coding agent to understand all of it. So we built{' '}
-            <strong>policyengine-claude</strong>&mdash;a Claude Code plugin that
-            packages our entire domain into something Claude can use at runtime.
+            <strong>policyengine-claude</strong>&mdash;a{' '}
+            <a
+              href="https://code.claude.com/docs/en/plugins"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Claude Code plugin
+            </a>{' '}
+            that packages our entire domain into something Claude can use at
+            runtime.
           </p>
           <p>
             <em>
