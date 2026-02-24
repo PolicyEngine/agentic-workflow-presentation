@@ -56,7 +56,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<ScrollyBlog />} />
-      <Route path="/plugin-blog" element={<PluginBlog />} />
+      <Route path="/plugin-blog/*" element={<PluginBlog />} />
     </Routes>
   );
 }
