@@ -37,6 +37,9 @@ jobs:
       - name: Copy root HTML files into build output
         run: cp *.html scrolly-blog/dist/
 
+      - name: Add SPA fallback for client-side routing
+        run: cp scrolly-blog/dist/index.html scrolly-blog/dist/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
