@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom';
 import './index.css';
 import { SVGDefs } from './components/diagrams/SVGDefs';
 import { TitleSection } from './components/sections/TitleSection';
@@ -9,9 +8,8 @@ import { ArchitectureSection } from './components/sections/ArchitectureSection';
 import { ResultsSection } from './components/sections/ResultsSection';
 import { TryItSection } from './components/sections/TryItSection';
 import { WhatsNextSection } from './components/sections/WhatsNextSection';
-import { PluginBlog } from './pages/PluginBlog';
 
-function ScrollyBlog() {
+function App() {
   return (
     <>
       <SVGDefs />
@@ -49,15 +47,6 @@ function ScrollyBlog() {
         </article>
       </div>
     </>
-  );
-}
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<ScrollyBlog />} />
-      <Route path="/plugin-blog/*" element={<PluginBlog />} />
-    </Routes>
   );
 }
 

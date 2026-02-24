@@ -37,9 +37,6 @@ jobs:
       - name: Copy root HTML files into build output
         run: cp *.html scrolly-blog/dist/
 
-      - name: Add plugin-blog route for GitHub Pages
-        run: mkdir -p scrolly-blog/dist/plugin-blog && cp scrolly-blog/dist/index.html scrolly-blog/dist/plugin-blog/index.html
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
